@@ -1,0 +1,44 @@
+diff -ur binutils-2.20.1.orig/ld/scripttempl/avr.sc binutils-2.20.1/ld/scripttempl/avr.sc
+--- ld/scripttempl/avr.sc.orig	2009-10-10 00:12:35 +1100
++++ ld/scripttempl/avr.sc	2010-08-14 09:14:07 +1000
+@@ -4,9 +4,12 @@
+ 
+ MEMORY
+ {
+-  text   (rx)   : ORIGIN = 0, LENGTH = $TEXT_LENGTH
+-  data   (rw!x) : ORIGIN = $DATA_ORIGIN, LENGTH = $DATA_LENGTH
+-  eeprom (rw!x) : ORIGIN = 0x810000, LENGTH = 64K
++  text      (rx)   : ORIGIN = 0, LENGTH = $TEXT_LENGTH
++  data      (rw!x) : ORIGIN = $DATA_ORIGIN, LENGTH = $DATA_LENGTH
++  eeprom    (rw!x) : ORIGIN = 0x810000, LENGTH = 64K
++  fuse      (rw!x) : ORIGIN = 0x820000, LENGTH = 1K
++  lock      (rw!x) : ORIGIN = 0x830000, LENGTH = 1K
++  signature (rw!x) : ORIGIN = 0x840000, LENGTH = 1K
+ }
+ 
+ SECTIONS
+@@ -196,6 +199,24 @@
+     ${RELOCATING+ __eeprom_end = . ; }
+   } ${RELOCATING+ > eeprom}
+ 
++  .fuse ${RELOCATING-0}:
++  {
++    KEEP(*(.fuse))
++    KEEP(*(.lfuse))
++    KEEP(*(.hfuse))
++    KEEP(*(.efuse))
++  } ${RELOCATING+ > fuse}
++
++  .lock ${RELOCATING-0}:
++  {
++    KEEP(*(.lock*))
++  } ${RELOCATING+ > lock}
++
++  .signature ${RELOCATING-0}:
++  {
++    KEEP(*(.signature*))
++  } ${RELOCATING+ > signature}
++
+   /* Stabs debugging sections.  */
+   .stab 0 : { *(.stab) }
+   .stabstr 0 : { *(.stabstr) }

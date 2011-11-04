@@ -1,0 +1,222 @@
+diff -ur coccinelle-0.2.5.orig//Makefile coccinelle-0.2.5/Makefile
+--- coccinelle-0.2.5.orig//Makefile	2011-04-02 19:39:28 +1100
++++ coccinelle-0.2.5/Makefile	2011-04-11 22:07:48 +1000
+@@ -48,7 +48,7 @@
+ else
+ PYCMA=
+ endif
+-OPTLIBFLAGS=
++OPTLIBFLAGS=-cclib "-L/usr/lib/w32api -L/mingw/lib"
+ 
+ ifeq ("$(SEXPDIR)","ocamlsexp")
+ SEXPLIB=sexplib.cmo
+@@ -144,7 +144,7 @@
+ OCAMLOPT=ocamlopt$(OPTBIN) $(OPTFLAGS) $(INCLUDES)
+ OCAMLLEX=ocamllex #-ml # -ml for debugging lexer, but slightly slower
+ OCAMLYACC=ocamlyacc -v
+-OCAMLDEP=ocamldep $(INCLUDEDIRSDEP:%=-I %)
++OCAMLDEP=ocamldep -slash $(INCLUDEDIRSDEP:%=-I %)
+ OCAMLMKTOP=ocamlmktop -g -custom $(INCLUDES)
+ 
+ # can also be set via 'make static'
+@@ -458,7 +458,7 @@
+ 	otags -no-mli-tags -r  .
+ 
+ dependencygraph:
+-	find  -name "*.ml" |grep -v "scripts" | xargs ocamldep -I commons -I globals -I ctl -I parsing_cocci -I parsing_c -I engine -I popl09 -I extra > /tmp/dependfull.depend
++	find  -name "*.ml" |grep -v "scripts" | xargs ocamldep -slash -I commons -I globals -I ctl -I parsing_cocci -I parsing_c -I engine -I popl09 -I extra > /tmp/dependfull.depend
+ 	ocamldot -lr /tmp/dependfull.depend > /tmp/dependfull.dot
+ 	dot -Tps /tmp/dependfull.dot > /tmp/dependfull.ps
+ 	ps2pdf /tmp/dependfull.ps /tmp/dependfull.pdf
+diff -ur coccinelle-0.2.5.orig//commons/Makefile coccinelle-0.2.5/commons/Makefile
+--- coccinelle-0.2.5.orig//commons/Makefile	2010-05-26 00:46:58 +1000
++++ coccinelle-0.2.5/commons/Makefile	2011-04-11 22:07:32 +1000
+@@ -130,7 +130,7 @@
+ OCAMLOPT=ocamlopt$(OPTBIN) $(OPTFLAGS) $(INCLUDES)
+ OCAMLLEX = ocamllex$(OPTBIN)
+ OCAMLYACC= ocamlyacc -v
+-OCAMLDEP = ocamldep$(OPTBIN) $(INCLUDES)
++OCAMLDEP = ocamldep -slash$(OPTBIN) $(INCLUDES)
+ OCAMLMKTOP=ocamlmktop -g -custom $(INCLUDES)
+ 
+ # if need C code
+@@ -323,12 +323,12 @@
+ 	$(MAKE) OPTFLAGS="-p -inline 0 " opt
+ 
+ dependencygraph:
+-	ocamldep *.mli *.ml > /tmp/dependfull.depend
++	ocamldep -slash *.mli *.ml > /tmp/dependfull.depend
+ 	ocamldot -fullgraph /tmp/dependfull.depend > /tmp/dependfull.dot
+ 	dot -Tps /tmp/dependfull.dot > /tmp/dependfull.ps
+ 
+ dependencygraph2:
+-	find  -name "*.ml" |grep -v "scripts" | xargs ocamldep -I commons -I globals -I ctl -I parsing_cocci -I parsing_c -I engine -I popl -I extra > /tmp/dependfull.depend
++	find  -name "*.ml" |grep -v "scripts" | xargs ocamldep -slash -I commons -I globals -I ctl -I parsing_cocci -I parsing_c -I engine -I popl -I extra > /tmp/dependfull.depend
+ 	ocamldot -fullgraph /tmp/dependfull.depend > /tmp/dependfull.dot
+ 	dot -Tps /tmp/dependfull.dot > /tmp/dependfull.ps
+ 
+diff -ur coccinelle-0.2.5.orig//ctl/Makefile coccinelle-0.2.5/ctl/Makefile
+--- coccinelle-0.2.5.orig//ctl/Makefile	2011-04-02 19:39:28 +1100
++++ coccinelle-0.2.5/ctl/Makefile	2011-04-11 22:07:32 +1000
+@@ -40,7 +40,7 @@
+ OCAMLCFLAGS ?= -g -dtypes
+ OCAMLC =ocamlc$(OPTBIN) $(OCAMLCFLAGS) $(INCLUDES)
+ OCAMLOPT = ocamlopt$(OPTBIN) $(OPTFLAGS) $(INCLUDES)
+-OCAMLDEP = ocamldep$(OPTBIN) $(INCLUDES)
++OCAMLDEP = ocamldep -slash$(OPTBIN) $(INCLUDES)
+ OCAMLMKTOP=ocamlmktop -g -custom $(INCLUDES)
+ 
+ 
+diff -ur coccinelle-0.2.5.orig//engine/Makefile coccinelle-0.2.5/engine/Makefile
+--- coccinelle-0.2.5.orig//engine/Makefile	2011-04-02 19:39:28 +1100
++++ coccinelle-0.2.5/engine/Makefile	2011-04-11 22:07:32 +1000
+@@ -69,7 +69,7 @@
+ OCAMLOPT=ocamlopt$(OPTBIN) $(OPTFLAGS) $(INCLUDES)
+ OCAMLLEX=ocamllex$(OPTBIN) #-ml
+ OCAMLYACC=ocamlyacc -v
+-OCAMLDEP=ocamldep$(OPTBIN) $(INCLUDES)
++OCAMLDEP=ocamldep -slash$(OPTBIN) $(INCLUDES)
+ OCAMLMKTOP=ocamlmktop -g -custom $(INCLUDES)
+ 
+ 
+diff -ur coccinelle-0.2.5.orig//extra/Makefile coccinelle-0.2.5/extra/Makefile
+--- coccinelle-0.2.5.orig//extra/Makefile	2009-04-06 17:28:21 +1000
++++ coccinelle-0.2.5/extra/Makefile	2011-04-11 22:07:32 +1000
+@@ -14,7 +14,7 @@
+ OCAMLCFLAGS ?= -g -dtypes
+ OCAMLC =ocamlc$(OPTBIN) $(OCAMLCFLAGS) $(INCLUDES)
+ OCAMLOPT = ocamlopt$(OPTBIN) $(OPTFLAGS) $(INCLUDES)
+-OCAMLDEP = ocamldep$(OPTBIN) $(INCLUDES)
++OCAMLDEP = ocamldep -slash$(OPTBIN) $(INCLUDES)
+ OCAMLMKTOP=ocamlmktop -g -custom $(INCLUDES)
+ 
+ 
+diff -ur coccinelle-0.2.5.orig//globals/Makefile coccinelle-0.2.5/globals/Makefile
+--- coccinelle-0.2.5.orig//globals/Makefile	2011-04-02 19:39:28 +1100
++++ coccinelle-0.2.5/globals/Makefile	2011-04-11 22:07:32 +1000
+@@ -39,7 +39,7 @@
+ OCAMLCFLAGS ?= -g -dtypes
+ OCAMLC =ocamlc$(OPTBIN) $(OCAMLCFLAGS) $(INCLUDES)
+ OCAMLOPT = ocamlopt$(OPTBIN) $(OPTFLAGS) $(INCLUDES)
+-OCAMLDEP = ocamldep$(OPTBIN) $(INCLUDES)
++OCAMLDEP = ocamldep -slash$(OPTBIN) $(INCLUDES)
+ OCAMLMKTOP=ocamlmktop -g -custom $(INCLUDES)
+ 
+ OBJS= $(SRC:.ml=.cmo)
+diff -ur coccinelle-0.2.5.orig//menhirlib/Makefile coccinelle-0.2.5/menhirlib/Makefile
+--- coccinelle-0.2.5.orig//menhirlib/Makefile	2009-04-21 03:38:47 +1000
++++ coccinelle-0.2.5/menhirlib/Makefile	2011-04-11 22:07:32 +1000
+@@ -26,7 +26,7 @@
+ OCAMLOPT2=ocamlopt$(OPTBIN) $(OPTFLAGS)              $(INCLUDES)
+ OCAMLLEX=ocamllex$(OPTBIN)
+ OCAMLYACC=ocamlyacc -v
+-OCAMLDEP=ocamldep$(OPTBIN) $(INCLUDES)
++OCAMLDEP=ocamldep -slash$(OPTBIN) $(INCLUDES)
+ OCAMLMKTOP=ocamlmktop -g -custom $(INCLUDES)
+ 
+ OBJS= $(SRC:.ml=.cmo)
+diff -ur coccinelle-0.2.5.orig//ocaml/Makefile coccinelle-0.2.5/ocaml/Makefile
+--- coccinelle-0.2.5.orig//ocaml/Makefile	2010-06-19 00:14:59 +1000
++++ coccinelle-0.2.5/ocaml/Makefile	2011-04-11 22:07:32 +1000
+@@ -29,7 +29,7 @@
+ OCAMLOPT=ocamlopt$(OPTBIN) $(OPTFLAGS) $(INCLUDES)
+ OCAMLLEX=ocamllex$(OPTBIN) #-ml
+ OCAMLYACC=ocamlyacc -v
+-OCAMLDEP=ocamldep$(OPTBIN) $(INCLUDES)
++OCAMLDEP=ocamldep -slash$(OPTBIN) $(INCLUDES)
+ OCAMLMKTOP=ocamlmktop -g -custom $(INCLUDES)
+ 
+ 
+diff -ur coccinelle-0.2.5.orig//ocamlsexp/Makefile coccinelle-0.2.5/ocamlsexp/Makefile
+--- coccinelle-0.2.5.orig//ocamlsexp/Makefile	2010-05-26 00:46:58 +1000
++++ coccinelle-0.2.5/ocamlsexp/Makefile	2011-04-11 22:07:32 +1000
+@@ -75,7 +75,7 @@
+ OCAMLOPT=ocamlopt$(OPTBIN) $(OPTFLAGS) $(INCLUDES) $(SYSINCLUDES) -thread
+ OCAMLLEX=ocamllex #-ml # -ml for debugging lexer, but slightly slower
+ OCAMLYACC=ocamlyacc -v
+-OCAMLDEP=ocamldep $(INCLUDES)
++OCAMLDEP=ocamldep -slash $(INCLUDES)
+ OCAMLMKTOP=ocamlmktop -g -custom $(INCLUDES) -thread
+ 
+ #-ccopt -static
+diff -ur coccinelle-0.2.5.orig//parsing_c/Makefile coccinelle-0.2.5/parsing_c/Makefile
+--- coccinelle-0.2.5.orig//parsing_c/Makefile	2010-11-14 08:06:27 +1100
++++ coccinelle-0.2.5/parsing_c/Makefile	2011-04-11 22:07:32 +1000
+@@ -70,7 +70,7 @@
+ OCAMLOPT=ocamlopt$(OPTBIN) $(OPTFLAGS) $(INCLUDES)
+ OCAMLLEX=ocamllex$(OPTBIN) #-ml
+ OCAMLYACC=ocamlyacc -v
+-OCAMLDEP=ocamldep$(OPTBIN) $(INCLUDESDEP)
++OCAMLDEP=ocamldep -slash$(OPTBIN) $(INCLUDESDEP)
+ OCAMLMKTOP=ocamlmktop -g -custom $(INCLUDES)
+ 
+ 
+diff -ur coccinelle-0.2.5.orig//parsing_cocci/Makefile coccinelle-0.2.5/parsing_cocci/Makefile
+--- coccinelle-0.2.5.orig//parsing_cocci/Makefile	2011-04-02 19:39:29 +1100
++++ coccinelle-0.2.5/parsing_cocci/Makefile	2011-04-11 22:07:32 +1000
+@@ -62,7 +62,7 @@
+ OCAMLOPT = ocamlopt$(OPTBIN) $(OPTFLAGS) $(INCLUDES)
+ OCAMLLEX = ocamllex$(OPTBIN)
+ OCAMLYACC= menhir --table
+-OCAMLDEP = ocamldep$(OPTBIN) $(INCLUDES)
++OCAMLDEP = ocamldep -slash$(OPTBIN) $(INCLUDES)
+ EXEC=$(TARGET).byte
+ EXEC=$(TARGET)
+ LIB=$(TARGET).cma
+diff -ur coccinelle-0.2.5.orig//popl/Makefile coccinelle-0.2.5/popl/Makefile
+--- coccinelle-0.2.5.orig//popl/Makefile	2011-04-02 19:39:29 +1100
++++ coccinelle-0.2.5/popl/Makefile	2011-04-11 22:07:32 +1000
+@@ -42,7 +42,7 @@
+ CAMLOPT=ocamlopt$(OPTBIN)   $(OPTFLAGS)
+ CAMLLEX = ocamllex$(OPTBIN)
+ CAMLYACC= ocamlyacc
+-CAMLDEP = ocamldep$(OPTBIN)
++CAMLDEP = ocamldep -slash$(OPTBIN)
+ CAMLMKTOP=ocamlmktop -g -custom
+ 
+ 
+diff -ur coccinelle-0.2.5.orig//popl09/Makefile coccinelle-0.2.5/popl09/Makefile
+--- coccinelle-0.2.5.orig//popl09/Makefile	2011-04-02 19:39:30 +1100
++++ coccinelle-0.2.5/popl09/Makefile	2011-04-11 22:07:32 +1000
+@@ -40,7 +40,7 @@
+ OCAMLCFLAGS ?= -g -dtypes
+ OCAMLC =ocamlc$(OPTBIN) $(OCAMLCFLAGS) $(INCLUDES)
+ OCAMLOPT = ocamlopt$(OPTBIN) $(OPTFLAGS) $(INCLUDES)
+-OCAMLDEP = ocamldep$(OPTBIN) $(INCLUDES)
++OCAMLDEP = ocamldep -slash$(OPTBIN) $(INCLUDES)
+ OCAMLMKTOP=ocamlmktop -g -custom
+ 
+ 
+diff -ur coccinelle-0.2.5.orig//python/Makefile coccinelle-0.2.5/python/Makefile
+--- coccinelle-0.2.5.orig//python/Makefile	2011-04-02 19:39:30 +1100
++++ coccinelle-0.2.5/python/Makefile	2011-04-11 22:07:32 +1000
+@@ -60,7 +60,7 @@
+ OCAMLCFLAGS ?= -g -dtypes
+ OCAMLC =ocamlc$(OPTBIN) $(OCAMLCFLAGS) $(INCLUDES)
+ OCAMLOPT = ocamlopt$(OPTBIN) $(OPTFLAGS) $(INCLUDES)
+-OCAMLDEP = ocamldep$(OPTBIN) $(INCLUDES_DEPEND)
++OCAMLDEP = ocamldep -slash$(OPTBIN) $(INCLUDES_DEPEND)
+ 
+ 
+ ##############################################################################
+diff -ur coccinelle-0.2.5.orig//tools/Makefile coccinelle-0.2.5/tools/Makefile
+--- coccinelle-0.2.5.orig//tools/Makefile	2011-04-02 19:39:30 +1100
++++ coccinelle-0.2.5/tools/Makefile	2011-04-11 22:07:32 +1000
+@@ -62,7 +62,7 @@
+ #OCAMLLEX=ocamllex$(OPTBIN) -ml
+ OCAMLLEX=ocamllex$(OPTBIN)
+ OCAMLYACC=ocamlyacc -v
+-OCAMLDEP=ocamldep$(OPTBIN) $(INCLUDE)
++OCAMLDEP=ocamldep -slash$(OPTBIN) $(INCLUDE)
+ OCAMLMKTOP=ocamlmktop -g -custom $(INCLUDE)
+ 
+ spp: spp.ml
+@@ -94,7 +94,7 @@
+ beforedepend::
+ 
+ depend:: beforedepend
+-	ocamldep $(INCLUDE) *.mli *.ml    > .depend
++	ocamldep -slash $(INCLUDE) *.mli *.ml    > .depend
+ 
+ distclean:: clean
+ 	rm -f .depend

@@ -1,0 +1,31 @@
+diff -ur make-3.82.orig//config.h.W32 make-3.82/config.h.W32
+--- make-3.82.orig//config.h.W32	2010-07-28 15:42:19 +1000
++++ make-3.82/config.h.W32	2010-08-10 11:41:32 +1000
+@@ -448,14 +448,14 @@
+ #define uid_t int
+ 
+ /* Define uintmax_t if not defined in <stdint.h> or <inttypes.h>. */
+-#define uintmax_t unsigned long
++/* #define uintmax_t unsigned long */
+ 
+ /* Define as `fork' if `vfork' does not work. */
+ /*#define vfork fork*/
+ 
+ /* Define to `unsigned long' or `unsigned long long'
+    if <inttypes.h> doesn't define.  */
+-#define uintmax_t unsigned long
++/* #define uintmax_t unsigned long */
+ 
+ /* Define if you support file names longer than 14 characters.  */
+ #define HAVE_LONG_FILE_NAMES 1
+diff -ur make-3.82.orig//make.h make-3.82/make.h
+--- make-3.82.orig//make.h	2010-07-20 23:12:06 +1000
++++ make-3.82/make.h	2010-08-10 11:40:33 +1000
+@@ -79,6 +79,7 @@
+ #endif
+ 
+ #include <errno.h>
++#include <stdint.h>
+ 
+ #ifndef errno
+ extern int errno;

@@ -1,0 +1,13 @@
+diff -ur gcc-4.5.1.orig/gcc/config/avr/avr.c gcc-4.5.1/gcc/config/avr/avr.c
+--- gcc-4.5.1.orig/gcc/config/avr/avr.c	2010-04-03 06:54:46 +1100
++++ gcc-4.5.1/gcc/config/avr/avr.c	2010-08-10 09:17:50 +1000
+@@ -201,6 +201,9 @@
+ 
+   flag_delete_null_pointer_checks = 0;
+ 
++  if (!PARAM_SET_P (PARAM_INLINE_CALL_COST))
++    set_param_value ("inline-call-cost", 5);
++
+   for (t = avr_mcu_types; t->name; t++)
+     if (strcmp (t->name, avr_mcu_name) == 0)
+       break;
