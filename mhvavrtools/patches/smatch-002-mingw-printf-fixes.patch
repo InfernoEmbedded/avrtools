@@ -54,45 +54,6 @@ diff -u smatch.orig/check_err_ptr_deref.c smatch/check_err_ptr_deref.c
  }
  
  static void match_ptr_err(const char *fn, struct expression *expr, void *unused)
-diff -u smatch.orig/check_overflow.c smatch/check_overflow.c
---- smatch.orig/check_overflow.c	2010-11-03 10:15:07 +1100
-+++ smatch/check_overflow.c	2010-11-03 13:05:57 +1100
-@@ -153,7 +153,11 @@
- 		 * literal array with 4 or less chars.
- 		 */
- 		if (name && strcmp(name, "__s1") && strcmp(name, "__s2")) {
-+#ifdef __MINGW32__
-+			sm_msg("%s: buffer overflow '%s' %d <= %I64d",
-+#else
- 			sm_msg("%s: buffer overflow '%s' %d <= %lld", 
-+#endif
- 				level, name, array_size, max);
- 		}
- 		free_string(name);
-@@ -255,7 +259,11 @@
- 		return;
- 
- 	dest_name = get_variable_from_expr_complex(dest, NULL);
-+#ifdef __MINGW32__
-+	sm_msg("error: %s() '%s' too small (%d vs %I64d)", fn, dest_name, has, needed);
-+#else
- 	sm_msg("error: %s() '%s' too small (%d vs %lld)", fn, dest_name, has, needed);
-+#endif
- 	free_string(dest_name);
- }
- 
-@@ -269,7 +277,11 @@
- 	if (!get_implied_max(arg, &offset))
- 		return;
- 	if (offset >= bound_info->size)
-+#ifdef __MINGW32__
-+		sm_msg("error: buffer overflow calling %s. param %d.  %I64d >= %d",
-+#else
- 		sm_msg("error: buffer overflow calling %s. param %d.  %lld >= %d", 
-+#endif
- 			fn, bound_info->param, offset, bound_info->size);
- }
- 
 diff -u smatch.orig/check_propagate.c smatch/check_propagate.c
 --- smatch.orig/check_propagate.c	2010-11-03 10:15:07 +1100
 +++ smatch/check_propagate.c	2010-11-03 13:06:20 +1100
@@ -492,52 +453,6 @@ diff -u smatch.orig/smatch_helper.c smatch/smatch_helper.c
  		append(buf, tmp, len);
  		return;
  	}
-diff -u smatch.orig/smatch_ranges.c smatch/smatch_ranges.c
---- smatch.orig/smatch_ranges.c	2010-11-03 10:15:07 +1100
-+++ smatch/smatch_ranges.c	2010-11-03 12:49:46 +1100
-@@ -26,9 +26,17 @@
- 	} else if (num == whole_range.max) {
- 		snprintf(buff, 255, "max");
- 	} else if (num < 0) {
-+#ifdef __MINGW32__
-+		snprintf(buff, 255, "(%I64d)", num);
-+#else
- 		snprintf(buff, 255, "(%lld)", num);
-+#endif
- 	} else {
-+#ifdef __MINGW32__
-+		snprintf(buff, 255, "%I64d", num);
-+#else
- 		snprintf(buff, 255, "%lld", num);
-+#endif
- 	}
- 	buff[255] = '\0';
- 	return buff;
-@@ -71,7 +79,11 @@
- 	struct data_range *ret;
- 
- 	if (min > max) {
-+#ifdef __MINGW32__
-+		printf("Error invalid range %I64d to %I64d\n", min, max);
-+#else
- 		printf("Error invalid range %lld to %lld\n", min, max);
-+#endif
- 	}
- 	if (min == whole_range.min && max == whole_range.max)
- 		return &whole_range;
-@@ -90,7 +102,11 @@
- 	struct data_range *ret;
- 
- 	if (min > max) {
-+#ifdef __MINGW32__
-+		printf("Error invalid range %I64d to %I64d\n", min, max);
-+#else
- 		printf("Error invalid range %lld to %lld\n", min, max);
-+#endif
- 	}
- 	if (min == whole_range.min && max == whole_range.max)
- 		return &whole_range;
-Common subdirectories: smatch.orig/smatch_scripts and smatch/smatch_scripts
 diff -u smatch.orig/sparse.c smatch/sparse.c
 --- smatch.orig/sparse.c	2010-11-03 10:15:07 +1100
 +++ smatch/sparse.c	2010-11-03 12:26:05 +1100
@@ -571,3 +486,143 @@ diff -u smatch.orig/tokenize.c smatch/tokenize.c
  		buffer[0] = '1';
  		p = buffer + 1;
 Common subdirectories: smatch.orig/validation and smatch/validation
+--- smatch/check_overflow.c.orig	2011-11-05 11:04:25 +1100
++++ smatch/check_overflow.c	2011-11-05 11:04:28 +1100
+@@ -19,10 +19,10 @@
+ };
+ 
+ /*
+- * This check has two smatch IDs.  
+- * my_used_id - keeps a record of array offsets that have been used.  
++ * This check has two smatch IDs.
++ * my_used_id - keeps a record of array offsets that have been used.
+  *              If the code checks that they are within bounds later on,
+- *              we complain about using an array offset before checking 
++ *              we complain about using an array offset before checking
+  *              that it is within bounds.
+  */
+ static int my_used_id;
+@@ -112,7 +112,7 @@
+ 
+ 		if (!option_spammy) {
+ 			struct smatch_state *state;
+-			
++
+ 			state = get_state_expr(SMATCH_EXTRA, offset);
+ 			if (state && is_whole_range(state))
+ 				return;
+@@ -124,7 +124,11 @@
+ 		 * literal array with 4 or less chars.
+ 		 */
+ 		if (name && strcmp(name, "__s1") && strcmp(name, "__s2")) {
+-			sm_msg("%s: buffer overflow '%s' %d <= %lld", 
++#ifdef __MINGW32__
++			sm_msg("%s: buffer overflow '%s' %d <= %I64d",
++#else
++			sm_msg("%s: buffer overflow '%s' %d <= %lld",
++#endif
+ 				level, name, array_size, max);
+ 		}
+ 		free_string(name);
+@@ -227,7 +231,11 @@
+ 	if (!get_implied_value(dest_size_expr, &limit_size))
+ 		return;
+ 	if (dest_size && dest_size < limit_size)
+-		sm_msg("error: snprintf() is printing too much %lld vs %d", limit_size, dest_size);
++#ifdef __MINGW32__
++	sm_msg("error: snprintf() is printing too much %I64d vs %d", limit_size, dest_size);
++#else
++	sm_msg("error: snprintf() is printing too much %lld vs %d", limit_size, dest_size);
++#endif
+ 	format = get_variable_from_expr(format_string, NULL);
+ 	if (!format)
+ 		return;
+@@ -236,8 +244,13 @@
+ 	data_name = get_variable_from_expr_complex(data, NULL);
+ 	data_size = get_array_size_bytes(data);
+ 	if (limit_size < data_size)
++#ifdef __MINGW32__
++		sm_msg("error: snprintf() chops off the last chars of '%s': %d vs %I64d",
++				data_name, data_size, limit_size);
++#else
+ 		sm_msg("error: snprintf() chops off the last chars of '%s': %d vs %lld",
+-		       data_name, data_size, limit_size);
++				data_name, data_size, limit_size);
++#endif
+ free:
+ 	free_string(data_name);
+ 	free_string(format);
+@@ -295,7 +308,11 @@
+ 		return;
+ 
+ 	dest_name = get_variable_from_expr_complex(dest, NULL);
++#ifdef __MINGW32__
++	sm_msg("error: %s() '%s' too small (%d vs %I64d)", fn, dest_name, has, needed);
++#else
+ 	sm_msg("error: %s() '%s' too small (%d vs %lld)", fn, dest_name, has, needed);
++#endif
+ 	free_string(dest_name);
+ }
+ 
+--- smatch/smatch_ranges.c.orig	2011-11-05 10:54:14 +1100
++++ smatch/smatch_ranges.c	2011-11-05 11:13:14 +1100
+@@ -26,9 +26,17 @@
+ 	} else if (num == whole_range.max) {
+ 		snprintf(buff, 255, "max");
+ 	} else if (num < 0) {
++#ifdef __MINGW32__
++		snprintf(buff, 255, "(%I64d)", num);
++#else
+ 		snprintf(buff, 255, "(%lld)", num);
++#endif
+ 	} else {
++#ifdef __MINGW32__
++		snprintf(buff, 255, "%I64d", num);
++#else
+ 		snprintf(buff, 255, "%lld", num);
++#endif
+ 	}
+ 	buff[255] = '\0';
+ 	return buff;
+@@ -83,7 +91,11 @@
+ 	struct data_range *ret;
+ 
+ 	if (min > max) {
++#ifdef __MINGW32__
++		sm_msg("Error invalid range %I64d to %I64d", min, max);
++#else
+ 		sm_msg("Error invalid range %lld to %lld", min, max);
++#endif
+ 		min = whole_range.min;
+ 		max = whole_range.max;
+ 	}
+@@ -104,7 +116,11 @@
+ 	struct data_range *ret;
+ 
+ 	if (min > max) {
++#ifdef __MINGW32__
++		sm_msg("Error invalid range %I64d to %I64d", min, max);
++#else
+ 		sm_msg("Error invalid range %lld to %lld", min, max);
++#endif
+ 		min = whole_range.min;
+ 		max = whole_range.max;
+ 	}
+@@ -125,7 +141,7 @@
+ 	struct data_range *tmp = NULL;
+ 	struct data_range *new = NULL;
+ 	int check_next = 0;
+-	
++
+  	FOR_EACH_PTR(*list, tmp) {
+ 		if (check_next) {
+ 			/* Sometimes we overlap with more than one range
+@@ -271,7 +287,7 @@
+ 	return drange->max;
+ }
+ 
+-/* 
++/*
+  * if it can be only one and only value return 1, else return 0
+  */
+ int get_single_value_from_dinfo(struct data_info *dinfo, long long *val)

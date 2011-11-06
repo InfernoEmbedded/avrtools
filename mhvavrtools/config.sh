@@ -22,7 +22,7 @@ COCCINELLE_VERSION=1.0.0-rc7
 
 TOP=`pwd`
 #PREFIX="$TOP/root"
-PREFIX="c:/mhvavrtools"
+PREFIX="c:/mhvavrtools-bin"
 export PREFIX
 LOGS="$TOP/logs"
 FAIL_SENTRY="$TOP/.failed"
@@ -42,7 +42,7 @@ export LDFLAGS
 MAKEFLAGS=""
 
 
-PATH="/mingw/bin:/bin:/c/mhvavrtools/bin:/usr/local/bin:/mingw/bin:/bin:/c/Python2.7:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/system32/wbem:/c/Program Files (x86)/Objective Caml/bin:/c/Program Files/Objective Caml/bin:/c/Program Files (x86)/flexdll:/c/Program Files/flexdll"
+PATH="/mingw/bin:/bin:/c/mhvavrtools-bin/bin:/usr/local/bin:/mingw/bin:/bin:/c/Python2.7:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/system32/wbem:/c/Program Files (x86)/Objective Caml/bin:/c/Program Files/Objective Caml/bin:/c/Program Files (x86)/flexdll:/c/Program Files/flexdll"
 export PATH
 
 

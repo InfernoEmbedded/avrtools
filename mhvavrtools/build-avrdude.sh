@@ -11,7 +11,7 @@ export CFLAGS="$CFLAGS -I$TOP/build/libusb-win32-bin-${LIBUSB_VERSION}/include"
 export LDFLAGS="$LDFLAGS -L$TOP/build/libusb-win32-bin-${LIBUSB_VERSION}/lib/gcc -lusb"
 
 test -f config.log ||  {
-	./configure --build=mingw32 --prefix=$PREFIX --sysconfdir="c:\\mhvavrtools\bin" >$LOGS/avrdude-config.log 2>&1 || \
+	./configure --build=mingw32 --prefix=$PREFIX --sysconfdir="$PREFIX\bin" >$LOGS/avrdude-config.log 2>&1 || \
 		die "Could not configure AVRDUDE ${AVRDUDE_VERSION}"
 }
 

@@ -76,6 +76,5 @@ test -f $FAIL_SENTRY && (
 cp LICENSE.txt $PREFIX
 cp README.txt $PREFIX
 cp avrvars.bat $PREFIX
-cp install.bat $PREFIX
 
 
