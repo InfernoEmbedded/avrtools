@@ -1,14 +1,14 @@
 diff -ruwN gas/config/tc-avr.c gas/config/tc-avr.c
 --- gas/config/tc-avr.c	2010-03-11 14:56:16.484109300 +0530
 +++ gas/config/tc-avr.c	2010-03-11 14:58:59.248690500 +0530
-@@ -24,6 +24,7 @@
- #include "as.h"
+@@ -25,6 +25,7 @@
  #include "safe-ctype.h"
  #include "subsegs.h"
+ #include "dw2gencfi.h"
 +#include "dwarf2dbg.h"
  
+ 
  struct avr_opcodes_s
- {
 @@ -1368,6 +1369,7 @@
  
    dwarf2_emit_insn (0);

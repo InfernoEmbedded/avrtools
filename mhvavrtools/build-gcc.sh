@@ -15,14 +15,14 @@ test -d gcc-obj || {
 cd gcc-obj || \
 	die "Could not cd to gcc-obj"
 
-GCCDIR=../gcc-${GCC_VERSION}
+GCCDIR=$BUILD/gcc-${GCC_VERSION}
 export PATH="`pwd`:$PATH"
 
 test -f config.log || {
-	$GCCDIR/configure --prefix=$PREFIX --host=i686-pc-mingw32 --target=avr \
+	../gcc-${GCC_VERSION}/configure --prefix=$PREFIX --host=i686-pc-mingw32 --target=avr \
 	       --enable-languages=c,c++ --with-dwarf2 \
 	       -enable-win32-registry=MHV-AVR-Tools --disable-nls \
-	       --with-gmp=$PREFIX --with-mpfr=$PREFIX --with-mpc=$PREFIX \
+	       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
 	       --disable-libssp >$LOGS/gcc-config.log 2>&1 || \
 		die "Could not configure GCC ${GCC_VERSION}"
 }

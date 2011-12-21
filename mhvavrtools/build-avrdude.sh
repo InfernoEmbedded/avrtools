@@ -7,8 +7,8 @@ echod "Building AVRDUDE ${AVRDUDE_VERSION}"
 cd build/avrdude-${AVRDUDE_VERSION} || \
 	die "Could not CD to build/avrdude-${AVRDUDE_VERSION}"
 
-export CFLAGS="$CFLAGS -I$TOP/build/libusb-win32-bin-${LIBUSB_VERSION}/include"
-export LDFLAGS="$LDFLAGS -L$TOP/build/libusb-win32-bin-${LIBUSB_VERSION}/lib/gcc -lusb"
+export CFLAGS="$CFLAGS -I$TOP/build/libusb-win32-device-bin-${LIBUSB_VERSION}/include"
+export LDFLAGS="$LDFLAGS -L$TOP/build/libusb-win32-device-bin-${LIBUSB_VERSION}/lib/gcc -lusb"
 
 test -f config.log ||  {
 	./configure --build=mingw32 --prefix=$PREFIX --sysconfdir="$PREFIX\bin" >$LOGS/avrdude-config.log 2>&1 || \

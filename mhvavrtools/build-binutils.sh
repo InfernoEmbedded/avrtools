@@ -11,7 +11,7 @@ mkdir obj-avr
 cd obj-avr
 
 test -f config.status || {
-	../configure --target=avr --disable-nls --prefix=$PREFIX --with-mpc=$PREFIX --with-mpfr=$PREFIX --with-gmp=$PREFIX >$LOGS/binutils-config.log 2>&1 || \
+	../configure --target=avr --disable-nls --prefix=$PREFIX --with-mpc=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-gmp=$LIBPREFIX >$LOGS/binutils-config.log 2>&1 || \
 		die "Could not configure BINUTILS ${BINUTILS_VERSION}"
 }
 

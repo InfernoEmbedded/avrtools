@@ -4,8 +4,8 @@
 
 echod "Building libusb ${LIBUSB_VERSION}"
 
-cd build/libusb-win32-bin-${LIBUSB_VERSION} || \
-	die "Could not CD to build/libusb-win32-bin-${LIBUSB_VERSION}"
+cd build/libusb-win32-device-bin-${LIBUSB_VERSION} || \
+	die "Could not CD to build/libusb-win32-device-bin-${LIBUSB_VERSION}"
 
 cp bin/x86/* $PREFIX/bin
 

@@ -6,14 +6,16 @@ test -d download || \
 	mkdir download
 
 cd download
-wget -c http://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-core-${GCC_VERSION}.tar.bz2 &
-wget -c http://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-g++-${GCC_VERSION}.tar.bz2 &
+#wget -c http://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-core-${GCC_VERSION}.tar.bz2 &
+#wget -c http://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-g++-${GCC_VERSION}.tar.bz2 &
+# Use for GCC snapshot
+wget -c http://gcc.petsads.us/snapshots/${GCC_VERSION}/gcc-${GCC_VERSION}.tar.bz2 &
 wget -c http://ftp.gnu.org/gnu/make/make-${MAKE_VERSION}.tar.bz2 &
 wget -c http://ftp.gnu.org/gnu/gmp/gmp-${GMP_VERSION}.tar.bz2 &
 wget -c http://ftp.gnu.org/gnu/mpfr/mpfr-${MPFR_VERSION}.tar.bz2 &
 wget -c http://www.multiprecision.org/mpc/download/mpc-${MPC_VERSION}.tar.gz &
 #wget -c http://www.cs.unipr.it/ppl/Download/ftp/releases/${PPL_VERSION}/ppl-${PPL_VERSION}.tar.bz2 &
-wget -c ftp://gcc.gnu.org/pub/gcc/infrastructure/cloog-ppl-${CLOOG_PPL_VERSION}.tar.gz &
+#wget -c ftp://gcc.gnu.org/pub/gcc/infrastructure/cloog-ppl-${CLOOG_PPL_VERSION}.tar.gz &
 wget -c http://download-mirror.savannah.gnu.org/releases/avrdude/avrdude-${AVRDUDE_VERSION}.tar.gz &
 wget -c http://download-mirror.savannah.gnu.org/releases/avrdude/avrdude-doc-${AVRDUDE_VERSION}.tar.gz &
 #wget -c http://ftp.gnu.org/gnu/autoconf/autoconf-${AUTOCONF_VERSION}.tar.gz &
@@ -21,7 +23,7 @@ wget -c http://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.bz2 &
 wget -c http://ftp.gnu.org/gnu/libtool/libtool-${LIBTOOL_VERSION}.tar.gz &
 wget -c http://download-mirror.savannah.gnu.org/releases/avr-libc/avr-libc-${AVRLIBC_VERSION}.tar.bz2 &
 #wget -c http://downloads.sourceforge.net/project/swig/swig/swig-${SWIG_VERSION}/swig-${SWIG_VERSION}.tar.gz &
-wget -c http://downloads.sourceforge.net/project/libusb-win32/libusb-win32-releases/${LIBUSB_VERSION}/libusb-win32-bin-${LIBUSB_VERSION}.zip &
+wget -c http://downloads.sourceforge.net/project/libusb-win32/libusb-win32-releases/${LIBUSB_VERSION}/libusb-win32-device-bin-${LIBUSB_VERSION}.zip &
 wget -c http://www.sqlite.org/sqlite-autoconf-${SQLITE_VERSION}.tar.gz &
 wget -c http://www.splint.org/downloads/splint-${SPLINT_VERSION}.src.tgz &
 wget -c http://sourceforge.net/projects/gnuwin32/files/coreutils/${GNU_COREUTILS_VERSION}/coreutils-${GNU_COREUTILS_VERSION}-bin.zip &

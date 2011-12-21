@@ -5,6 +5,7 @@
 mkdir logs
 mkdir build
 cd build
+mkdir bin
 
 for file in ../download/*.bz2; do
 	echod "Extracting $file"

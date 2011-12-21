@@ -8,9 +8,9 @@ cd build/mpc-${MPC_VERSION} || \
 	die "Could not CD to build/mpc-${MPC_VERSION}"
 
 test -f config.log || {
-	./configure --prefix=$PREFIX --enable-shared \
-	--with-mpfr-include=$PREFIX/include \
-	--with-gmp-include=$PREFIX/include >$LOGS/mpc-config.log 2>&1 || \
+	./configure --prefix=$LIBPREFIX --enable-static \
+	--with-mpfr-include=$LIBPREFIX/include \
+	--with-gmp-include=$LIBPREFIX/include >$LOGS/mpc-config.log 2>&1 || \
 		die "Could not configure MPC ${MPC_VERSION}"
 }
 
