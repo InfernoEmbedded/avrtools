@@ -28,7 +28,6 @@ for file in ../download/*.xz; do
 done
 
 cp -R ../download/smatch smatch
-cp libusb-win32-bin-${LIBUSB_VERSION}/include/lusb0_usb.h libusb-win32-bin-${LIBUSB_VERSION}/include/usb.h
 
 cd binutils-${BINUTILS_VERSION}
 for file in ../../patches/binutils-*.patch; do
