@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. config.sh
+. ./config.sh
 
 mkdir logs
 mkdir build

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. config.sh
+. ./config.sh
 
 echod "Building GCC ${GCC_VERSION}"
 
@@ -19,12 +19,24 @@ GCCDIR=$BUILD/gcc-${GCC_VERSION}
 export PATH="`pwd`:$PATH"
 
 test -f config.log || {
-	../gcc-${GCC_VERSION}/configure --prefix=$PREFIX --host=i686-pc-mingw32 --target=avr \
-	       --enable-languages=c,c++ --with-dwarf2 \
-	       -enable-win32-registry=MHV-AVR-Tools --disable-nls \
-	       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
-	       --disable-libssp >$LOGS/gcc-config.log 2>&1 || \
-		die "Could not configure GCC ${GCC_VERSION}"
+	case `uname` in
+		Linux)
+			../gcc-${GCC_VERSION}/configure --prefix=$PREFIX --target=avr \
+			       --enable-languages=c,c++ --with-dwarf2 \
+			       --disable-nls --enable-lto \
+			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
+			       --disable-libssp >$LOGS/gcc-config.log 2>&1 || \
+					die "Could not configure GCC ${GCC_VERSION}"
+			;;
+		*)
+			../gcc-${GCC_VERSION}/configure --prefix=$PREFIX --host=i686-pc-mingw32 --target=avr \
+			       --enable-languages=c,c++ --with-dwarf2 \
+			       -enable-win32-registry=MHV-AVR-Tools --disable-nls --enable-lto \
+			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
+			       --disable-libssp >$LOGS/gcc-config.log 2>&1 || \
+					die "Could not configure GCC ${GCC_VERSION}"
+			;;
+	esac
 }
 
 $MAKE $MAKEFLAGS >$LOGS/gcc-make.log 2>&1 || \

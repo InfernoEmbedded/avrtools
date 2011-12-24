@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. config.sh
+. ./config.sh
 
 echod "Building MPC ${MPC_VERSION}"
 
@@ -8,7 +8,7 @@ cd build/mpc-${MPC_VERSION} || \
 	die "Could not CD to build/mpc-${MPC_VERSION}"
 
 test -f config.log || {
-	./configure --prefix=$LIBPREFIX --enable-static \
+	./configure --prefix=$LIBPREFIX --enable-static --disable-shared \
 	--with-mpfr-include=$LIBPREFIX/include \
 	--with-gmp-include=$LIBPREFIX/include >$LOGS/mpc-config.log 2>&1 || \
 		die "Could not configure MPC ${MPC_VERSION}"

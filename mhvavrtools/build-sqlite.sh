@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. config.sh
+. ./config.sh
 
 echod "Building sqlite ${SQLITE_VERSION}"
 

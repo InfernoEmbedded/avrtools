@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. config.sh
+. ./config.sh
 
 echod "Building GMP ${GMP_VERSION}"
 
@@ -8,12 +8,12 @@ cd build/gmp-${GMP_VERSION} || \
 	die "Could not CD to build/gmp-${GMP_VERSION}"
 
 test -f config.log || {
-	./configure --prefix=$LIBPREFIX --enable-cxx --enable-static \
+	./configure --prefix=$LIBPREFIX --enable-cxx --enable-static --disable-shared \
 	   >$LOGS/gmp-config.log 2>&1 || \
 		die "Could not configure GMP ${GMP_VERSION}"
 }
 
-find . -name '*.lo' -exec dos2unix {} \;
+find . -name '*.lo' -exec dos2unix {} \; >$LOGS/gmp-dos2unix.log 2>&1
 
 $MAKE >$LOGS/gmp-make.log 2>&1 || \
 	die "Could not build GMP ${GMP_VERSION}"

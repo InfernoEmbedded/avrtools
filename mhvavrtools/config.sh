@@ -15,7 +15,8 @@ SWIG_VERSION=2.0.4
 #CLOOG_PPL_VERSION=0.15.9
 AVRLIBC_VERSION=1.7.2rc2252
 AVRDUDE_VERSION=5.11.1
-LIBUSB_VERSION=1.1.14.3
+LIBUSB_VERSION=1.0.8
+LIBUSB_WIN32_VERSION=1.1.14.3
 #SQLITE_VERSION=3.7.5
 SQLITE_VERSION=3070800
 SPLINT_VERSION=3.1.2
@@ -24,7 +25,17 @@ COCCINELLE_VERSION=1.0.0-rc7
 
 export TOP=`pwd`
 export BUILD="$TOP/build"
-export PREFIX="c:/mhvavrtools-bin"
+export PREFIX="$TOP/mhvavrtools"
+
+case `uname` in
+	Linux)
+		;;
+
+	*)
+		export PATH="/mingw/bin:/bin:/c/mhvavrtools-bin/bin:/usr/local/bin:/mingw/bin:/bin:/c/Python2.7:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/system32/wbem:/c/Program Files (x86)/Objective Caml/bin:/c/Program Files/Objective Caml/bin:/c/Program Files (x86)/flexdll:/c/Program Files/flexdll"
+		;;
+esac
+
 export LIBPREFIX="$TOP/build/bin"
 LOGS="$TOP/logs"
 FAIL_SENTRY="$TOP/.failed"
@@ -46,12 +57,10 @@ export LDFLAGS
 MAKEFLAGS=""
 
 
-PATH="/mingw/bin:/bin:/c/mhvavrtools-bin/bin:/usr/local/bin:/mingw/bin:/bin:/c/Python2.7:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/system32/wbem:/c/Program Files (x86)/Objective Caml/bin:/c/Program Files/Objective Caml/bin:/c/Program Files (x86)/flexdll:/c/Program Files/flexdll"
-export PATH
 
 
 
-MAKE="/bin/make"
+MAKE="make"
 export MAKE
 
 echod() {

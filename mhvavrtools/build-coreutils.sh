@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. config.sh
+. ./config.sh
 
 echod "Installing GNU CoreUtils ${GNUCORE_UTILS_VERSION}"
 

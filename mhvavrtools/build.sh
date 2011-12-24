@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. config.sh
+. ./config.sh
 
 mkdir $PREFIX
 mkdir $PREFIX/bin
@@ -18,8 +18,10 @@ test -d build/avrdude-${AVRDUDE_VERSION} || \
 sleep 5
 
 (
-	./build-coreutils.sh || \
-		die "coreutils build failed"
+	[ `uname` = Linux ] || {
+		./build-coreutils.sh || \
+			die "coreutils build failed"
+	}
 
 	./build-gmp.sh || \
 		die "gmp build failed"
@@ -75,6 +77,13 @@ test -f $FAIL_SENTRY && (
 
 cp LICENSE.txt $PREFIX
 cp README.txt $PREFIX
-cp avrvars.bat $PREFIX
+
+case `uname` in
+	Linux)
+		;;
+	*)
+		cp avrvars.bat $PREFIX
+		;;
+esac
 
 
