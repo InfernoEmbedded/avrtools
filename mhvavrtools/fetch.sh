@@ -37,7 +37,7 @@ case `uname` in
 		$FETCH http://downloads.sourceforge.net/project/libusb/libusb-1.0/libusb-${LIBUSB_VERSION}/libusb-${LIBUSB_VERSION}.tar.bz2
 		;;
 	*)
-		$FETCH http://downloads.sourceforge.net/project/libusb-win32/libusb-win32-releases/${LIBUSB_WIN32_VERSION}/libusb-win32-device-bin-${LIBUSB_WIN32_VERSION}.zip &
+		$FETCH http://downloads.sourceforge.net/project/libusb-win32/libusb-win32-releases/${LIBUSB_WIN32_VERSION}/libusb-win32-device-bin-${LIBUSB_WIN32_VERSION}.tar.gz &
 		$FETCH http://sourceforge.net/projects/gnuwin32/files/coreutils/${GNU_COREUTILS_VERSION}/coreutils-${GNU_COREUTILS_VERSION}-bin.zip &
 		;;
 esac
