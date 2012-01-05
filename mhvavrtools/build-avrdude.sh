@@ -8,6 +8,15 @@ cd build/avrdude-${AVRDUDE_VERSION} || \
 	die "Could not CD to build/avrdude-${AVRDUDE_VERSION}"
 
 case `uname` in
+	Darwin)
+		export CFLAGS="$CFLAGS -I$PREFIX/include"
+		export LDFLAGS="$LDFLAGS -L$PREFIX/lib -lusb-1.0"
+
+		test -f config.log ||  {
+			./configure --prefix=$PREFIX --sysconfdir="$PREFIX/bin" >$LOGS/avrdude-config.log 2>&1 || \
+				die "Could not configure AVRDUDE ${AVRDUDE_VERSION}"
+		}
+		;;
 	Linux)
 		export CFLAGS="$CFLAGS -I$PREFIX/include"
 		export LDFLAGS="$LDFLAGS -L$PREFIX/lib -lusb-1.0"

@@ -6,36 +6,39 @@ test -d download || \
 	mkdir download
 
 cd download
-#wget -c http://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-core-${GCC_VERSION}.tar.bz2 &
-#wget -c http://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-g++-${GCC_VERSION}.tar.bz2 &
+#$FETCH http://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-core-${GCC_VERSION}.tar.bz2 &
+#$FETCH http://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-g++-${GCC_VERSION}.tar.bz2 &
 # Use for GCC snapshot
-wget -c http://gcc.petsads.us/snapshots/${GCC_VERSION}/gcc-${GCC_VERSION}.tar.bz2 &
-wget -c http://ftp.gnu.org/gnu/make/make-${MAKE_VERSION}.tar.bz2 &
-wget -c http://ftp.gnu.org/gnu/gmp/gmp-${GMP_VERSION}.tar.bz2 &
-wget -c http://ftp.gnu.org/gnu/mpfr/mpfr-${MPFR_VERSION}.tar.bz2 &
-wget -c http://www.multiprecision.org/mpc/download/mpc-${MPC_VERSION}.tar.gz &
-wget -c http://www.cs.unipr.it/ppl/Download/ftp/releases/${PPL_VERSION}/ppl-${PPL_VERSION}.tar.bz2 &
-wget -c ftp://gcc.gnu.org/pub/gcc/infrastructure/cloog-ppl-${CLOOG_PPL_VERSION}.tar.gz &
-wget -c http://download-mirror.savannah.gnu.org/releases/avrdude/avrdude-${AVRDUDE_VERSION}.tar.gz &
-wget -c http://download-mirror.savannah.gnu.org/releases/avrdude/avrdude-doc-${AVRDUDE_VERSION}.tar.gz &
-#wget -c http://ftp.gnu.org/gnu/autoconf/autoconf-${AUTOCONF_VERSION}.tar.gz &
-wget -c http://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.bz2 &
-wget -c http://ftp.gnu.org/gnu/libtool/libtool-${LIBTOOL_VERSION}.tar.gz &
-wget -c http://download-mirror.savannah.gnu.org/releases/avr-libc/avr-libc-${AVRLIBC_VERSION}.tar.bz2 &
-#wget -c http://downloads.sourceforge.net/project/swig/swig/swig-${SWIG_VERSION}/swig-${SWIG_VERSION}.tar.gz &
-wget -c http://www.sqlite.org/sqlite-autoconf-${SQLITE_VERSION}.tar.gz &
-wget -c http://www.splint.org/downloads/splint-${SPLINT_VERSION}.src.tgz &
-wget -c http://coccinelle.lip6.fr/distrib/coccinelle-${COCCINELLE_VERSION}.tgz &
+$FETCH http://gcc.petsads.us/snapshots/${GCC_VERSION}/gcc-${GCC_VERSION}.tar.bz2 &
+$FETCH http://ftp.gnu.org/gnu/make/make-${MAKE_VERSION}.tar.bz2 &
+$FETCH http://ftp.gnu.org/gnu/gmp/gmp-${GMP_VERSION}.tar.bz2 &
+$FETCH http://ftp.gnu.org/gnu/mpfr/mpfr-${MPFR_VERSION}.tar.bz2 &
+$FETCH http://www.multiprecision.org/mpc/download/mpc-${MPC_VERSION}.tar.gz &
+$FETCH http://www.cs.unipr.it/ppl/Download/ftp/releases/${PPL_VERSION}/ppl-${PPL_VERSION}.tar.bz2 &
+$FETCH ftp://gcc.gnu.org/pub/gcc/infrastructure/cloog-ppl-${CLOOG_PPL_VERSION}.tar.gz &
+$FETCH http://download-mirror.savannah.gnu.org/releases/avrdude/avrdude-${AVRDUDE_VERSION}.tar.gz &
+$FETCH http://download-mirror.savannah.gnu.org/releases/avrdude/avrdude-doc-${AVRDUDE_VERSION}.tar.gz &
+#$FETCH http://ftp.gnu.org/gnu/autoconf/autoconf-${AUTOCONF_VERSION}.tar.gz &
+$FETCH http://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.bz2 &
+$FETCH http://ftp.gnu.org/gnu/libtool/libtool-${LIBTOOL_VERSION}.tar.gz &
+$FETCH http://download-mirror.savannah.gnu.org/releases/avr-libc/avr-libc-${AVRLIBC_VERSION}.tar.bz2 &
+#$FETCH http://downloads.sourceforge.net/project/swig/swig/swig-${SWIG_VERSION}/swig-${SWIG_VERSION}.tar.gz &
+$FETCH http://www.sqlite.org/sqlite-autoconf-${SQLITE_VERSION}.tar.gz &
+$FETCH http://www.splint.org/downloads/splint-${SPLINT_VERSION}.src.tgz &
+$FETCH http://coccinelle.lip6.fr/distrib/coccinelle-${COCCINELLE_VERSION}.tgz &
 
-#wget -c http://mirrors-us.seosue.com/gcc/snapshots/4.6-20110930/gcc-4.6-20110930.tar.bz2 &
+#$FETCH http://mirrors-us.seosue.com/gcc/snapshots/4.6-20110930/gcc-4.6-20110930.tar.bz2 &
 
 case `uname` in
+	Darwin)
+		$FETCH http://downloads.sourceforge.net/project/libusb/libusb-1.0/libusb-${LIBUSB_VERSION}/libusb-${LIBUSB_VERSION}.tar.bz2
+		;;
 	Linux)
-		wget -c http://downloads.sourceforge.net/project/libusb/libusb-1.0/libusb-${LIBUSB_VERSION}/libusb-${LIBUSB_VERSION}.tar.bz2
+		$FETCH http://downloads.sourceforge.net/project/libusb/libusb-1.0/libusb-${LIBUSB_VERSION}/libusb-${LIBUSB_VERSION}.tar.bz2
 		;;
 	*)
-		wget -c http://downloads.sourceforge.net/project/libusb-win32/libusb-win32-releases/${LIBUSB_VERSION}/libusb-win32-device-bin-${LIBUSB_WIN32_VERSION}.zip &
-		wget -c http://sourceforge.net/projects/gnuwin32/files/coreutils/${GNU_COREUTILS_VERSION}/coreutils-${GNU_COREUTILS_VERSION}-bin.zip &
+		$FETCH http://downloads.sourceforge.net/project/libusb-win32/libusb-win32-releases/${LIBUSB_WIN32_VERSION}/libusb-win32-device-bin-${LIBUSB_WIN32_VERSION}.zip &
+		$FETCH http://sourceforge.net/projects/gnuwin32/files/coreutils/${GNU_COREUTILS_VERSION}/coreutils-${GNU_COREUTILS_VERSION}-bin.zip &
 		;;
 esac
 

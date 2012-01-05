@@ -3,6 +3,12 @@
 . ./config.sh
 
 case `uname` in
+	Darwin)
+		for file in $PREFIX/bin/*; do
+			[ -x $file ] && \
+				strip $file
+		done
+		;;
 	Linux)
 		for file in $PREFIX/bin/*; do
 			[ -x $file ] && \

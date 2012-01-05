@@ -13,7 +13,7 @@ SWIG_VERSION=2.0.4
 # Currently using the GIT version until the release supports GMP 5
 #PPL_VERSION=0.10.2
 #CLOOG_PPL_VERSION=0.15.9
-AVRLIBC_VERSION=1.7.2rc2252
+AVRLIBC_VERSION=1.8.0
 AVRDUDE_VERSION=5.11.1
 LIBUSB_VERSION=1.0.8
 LIBUSB_WIN32_VERSION=1.1.14.3
@@ -28,6 +28,8 @@ export BUILD="$TOP/build"
 export PREFIX="$TOP/mhvavrtools"
 
 case `uname` in
+	Darwin)
+		;;
 	Linux)
 		;;
 
@@ -62,6 +64,15 @@ MAKEFLAGS=""
 
 MAKE="make"
 export MAKE
+
+FETCH="`which wget`"
+if test -x "$FETCH"; then
+	FETCH="$FETCH -c"
+else
+	FETCH=curl
+fi
+export FETCH
+
 
 echod() {
 	echo `date`: $*

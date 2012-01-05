@@ -18,7 +18,7 @@ test -d build/avrdude-${AVRDUDE_VERSION} || \
 sleep 5
 
 (
-	[ `uname` = Linux ] || {
+	[ `uname` = MINGW32_NT-6.1 ] && {
 		./build-coreutils.sh || \
 			die "coreutils build failed"
 	}
@@ -79,6 +79,8 @@ cp LICENSE.txt $PREFIX
 cp README.txt $PREFIX
 
 case `uname` in
+	Darwin)
+		;;
 	Linux)
 		;;
 	*)
