@@ -49,6 +49,7 @@ FAIL_SENTRY="$TOP/.failed"
 #export M4
 
 CFLAGS="-mtune=corei7"
+export CFLAGS
 
 CPPFLAGS="-I$PREFIX/include -I$LIBPREFIX/include"
 export CPPFLAGS
