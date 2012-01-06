@@ -42,7 +42,7 @@ case `uname` in
 		cd build/libusb-win32-device-bin-${LIBUSB_WIN32_VERSION} || \
 			die "Could not CD to build/libusb-win32-device-bin-${LIBUSB_WIN32_VERSION}"
 
-		cp bin/x86/* $PREFIX/bin
+		cp bin/* $PREFIX/bin
 		;;
 esac
 
