@@ -34,7 +34,9 @@ case `uname` in
 		;;
 
 	*)
-		export PATH="/mingw/bin:/bin:/c/mhvavrtools-bin/bin:/usr/local/bin:/mingw/bin:/bin:/c/Python2.7:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/system32/wbem:/c/Program Files (x86)/Objective Caml/bin:/c/Program Files/Objective Caml/bin:/c/Program Files (x86)/flexdll:/c/Program Files/flexdll"
+		export ABI=32
+
+		export PATH="/mingw/bin:/bin:/usr/local/bin:/bin:/c/Python2.7:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/system32/wbem:/c/Program Files (x86)/Objective Caml/bin:/c/Program Files/Objective Caml/bin:/c/Program Files (x86)/flexdll:/c/Program Files/flexdll"
 		;;
 esac
 
@@ -42,8 +44,6 @@ export LIBPREFIX="$TOP/build/bin"
 LOGS="$TOP/logs"
 FAIL_SENTRY="$TOP/.failed"
 
-ABI=32
-export ABI
 
 #M4=m4
 #export M4
