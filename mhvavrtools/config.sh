@@ -42,14 +42,14 @@ export LIBPREFIX="$TOP/build/bin"
 LOGS="$TOP/logs"
 FAIL_SENTRY="$TOP/.failed"
 
-#ABI=32
-#export ABI
+ABI=32
+export ABI
 
 #M4=m4
 #export M4
 
-CFLAGS="-mtune=corei7"
-export CFLAGS
+#CFLAGS="-mtune=corei7"
+#export CFLAGS
 
 CPPFLAGS="-I$PREFIX/include -I$LIBPREFIX/include"
 export CPPFLAGS
