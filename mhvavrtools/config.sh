@@ -31,6 +31,11 @@ case `uname` in
 	Darwin)
 		;;
 	Linux)
+		case `uname -m` in
+			i686)
+				export ABI=32
+				;;
+		esac
 		;;
 
 	*)
