@@ -8,6 +8,11 @@ cd build/avr-libc-${AVRLIBC_VERSION} || \
 	die "Could not CD to build/gmp-${AVRLIBC_VERSION}"
 
 export PATH="$PREFIX/bin:$PATH"
+case `uname` in
+	Darwin)
+	export CC="$PREFIX/bin/avr-gcc"
+	;;
+esac
 
 test -f config.status || {
 	./configure --prefix=$PREFIX --host=avr >$LOGS/avrlibc-config.log 2>&1 || \

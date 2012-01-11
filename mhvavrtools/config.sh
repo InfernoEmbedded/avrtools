@@ -29,6 +29,8 @@ export PREFIX="$TOP/mhvavrtools"
 
 case `uname` in
 	Darwin)
+		export ABI=64
+		export CC=/usr/bin/gcc-4.2
 		;;
 	Linux)
 		case `uname -m` in
@@ -75,7 +77,7 @@ FETCH="`which wget`"
 if test -x "$FETCH"; then
 	FETCH="$FETCH -c"
 else
-	FETCH=curl
+	FETCH="curl -O -C - -L"
 fi
 export FETCH
 
