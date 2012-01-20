@@ -8,18 +8,28 @@ cd build/avr-libc-${AVRLIBC_VERSION} || \
 	die "Could not CD to build/gmp-${AVRLIBC_VERSION}"
 
 export PATH="$PREFIX/bin:$PATH"
+export CC="$PREFIX/bin/avr-gcc"
+
 case `uname` in
 	Darwin)
-	export CC="$PREFIX/bin/avr-gcc"
-	;;
+		avrbuild=`./config.guess`
+		;;
+	Linux)
+		avrbuild=`./config.guess`
+		;;
+	*)
+		avrbuild='i686-pc-mingw32'
+		MAKE="/usr/bin/make"
+		;;
 esac
 
+
 test -f config.status || {
-	./configure --prefix=$PREFIX --host=avr >$LOGS/avrlibc-config.log 2>&1 || \
+	./configure --prefix=$PREFIX --build=$avrbuild --host=avr >$LOGS/avrlibc-config.log 2>&1 || \
 		die "Could not configure AVRLIBC ${AVRLIBC_VERSION}"
 }
 
-$MAKE -j 8 $MAKEFLAGS >$LOGS/avrlibc-make.log 2>&1 || \
+$MAKE $MAKEFLAGS >$LOGS/avrlibc-make.log 2>&1 || \
 	die "Could not build AVRLIBC ${AVRLIBC_VERSION}"
 
 echod "Checking AVR-libc ${AVRLIBC_VERSION}"

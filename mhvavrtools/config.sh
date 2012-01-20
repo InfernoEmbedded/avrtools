@@ -25,7 +25,7 @@ COCCINELLE_VERSION=1.0.0-rc7
 
 export TOP=`pwd`
 export BUILD="$TOP/build"
-export PREFIX="$TOP/mhvavrtools"
+export PREFIX="/c/mhvavrtools.bin"
 
 case `uname` in
 	Darwin)
