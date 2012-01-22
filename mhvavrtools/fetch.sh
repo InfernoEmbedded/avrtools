@@ -39,8 +39,11 @@ case `uname` in
 		;;
 	*)
 		$FETCH http://downloads.sourceforge.net/project/libusb-win32/libusb-win32-releases/${LIBUSB_WIN32_VERSION}/libusb-win32-device-bin-${LIBUSB_WIN32_VERSION}.tar.gz &
-		$FETCH http://sourceforge.net/projects/gnuwin32/files/coreutils/${GNU_COREUTILS_VERSION}/coreutils-${GNU_COREUTILS_VERSION}-bin.zip &
-		$FETCH http://sourceforge.net/projects/gnuwin32/files/coreutils/${GNU_COREUTILS_VERSION}/coreutils-${GNU_COREUTILS_VERSION}-dep.zip &
+		$FETCH http://downloads.sourceforge.net/project/mingw/MSYS/Base/coreutils/coreutils-5.97-3/coreutils-${COREUTILS_VERSION}-msys-1.0.13-bin.tar.lzma &
+		$FETCH http://downloads.sourceforge.net/project/mingw/MSYS/Base/coreutils/coreutils-5.97-3/coreutils-${COREUTILS_VERSION}-msys-1.0.13-lang.tar.lzma &
+		$FETCH http://downloads.sourceforge.net/project/mingw/MSYS/Base/coreutils/coreutils-5.97-3/coreutils-${COREUTILS_VERSION}-msys-1.0.13-ext.tar.lzma &
+		$FETCH http://downloads.sourceforge.net/project/mingw/MSYS/Base/coreutils/coreutils-5.97-3/coreutils-${COREUTILS_VERSION}-msys-1.0.13-doc.tar.lzma &
+		$FETCH http://downloads.sourceforge.net/project/mingw/MSYS/Base/coreutils/coreutils-5.97-3/coreutils-${COREUTILS_VERSION}-msys-1.0.13-lic.tar.lzma &
 		;;
 esac
 

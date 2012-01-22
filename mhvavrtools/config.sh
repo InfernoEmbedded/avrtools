@@ -20,12 +20,12 @@ LIBUSB_WIN32_VERSION=0.1.12.2
 #SQLITE_VERSION=3.7.5
 SQLITE_VERSION=3070800
 SPLINT_VERSION=3.1.2
-GNU_COREUTILS_VERSION=5.3.0
+COREUTILS_VERSION=5.97-3
 COCCINELLE_VERSION=1.0.0-rc7
 
 export TOP=`pwd`
 export BUILD="$TOP/build"
-export PREFIX="/c/mhvavrtools.bin"
+export PREFIX="$TOP/mhvavrtools"
 
 case `uname` in
 	Darwin)

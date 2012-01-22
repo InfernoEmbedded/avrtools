@@ -8,21 +8,29 @@ cd build
 mkdir bin
 
 for file in ../download/*.bz2; do
+	test -e $file || \
+		continue
 	echod "Extracting $file"
 	tar jxf $file
 done
 
 for file in ../download/*.gz ../download/*.tgz; do
+	test -e $file || \
+		continue
 	echod "Extracting $file"
 	tar zxf $file
 done
 
 for file in ../download/*.zip; do
+	test -e $file || \
+		continue
 	echod "Extracting $file"
 	unzip $file
 done
 
 for file in ../download/*.xz; do
+	test -e $file || \
+		continue
 	echod "Extracting $file"
 	xz -d -c $file | tar xf -
 done
