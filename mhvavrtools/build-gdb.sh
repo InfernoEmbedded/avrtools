@@ -12,7 +12,7 @@ test -f config.status || {
 		die "Could not configure GDB ${GDB_VERSION}"
 }
 
-make configure-host >$LOGS/binutils-configure-host.log 2>&1 || \
+make configure-host >$LOGS/gdb-configure-host.log 2>&1 || \
 	die "Could not make configure-host for GDB ${GDB_VERSION}"
 
 $MAKE >$LOGS/gdb-make.log 2>&1 || \
