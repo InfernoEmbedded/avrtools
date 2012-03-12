@@ -20,7 +20,10 @@ LIBUSB_WIN32_VERSION=0.1.12.2
 #SQLITE_VERSION=3.7.5
 SQLITE_VERSION=3070800
 SPLINT_VERSION=3.1.2
-GNU_COREUTILS_VERSION=5.3.0
+COREUTILS_VERSION=5.97-3
+MSYS_CORE_VERSION=1.0.17
+GETTEXT_VERSION=0.18.1.1-1
+LIBICONV_VERSION=1.14
 COCCINELLE_VERSION=1.0.0-rc7
 GLUT_VERSION=3.7.6
 GDB_VERSION=7.4
@@ -34,14 +37,20 @@ export PREFIX="$TOP/mhvavrtools"
 
 case `uname` in
 	Darwin)
+		export ABI=64
+		export CC=/usr/bin/gcc-4.2
 		export EXE=
 		;;
 	Linux)
+		case `uname -m` in
+			i686)
+				export ABI=32
 		export EXE=
 		;;
 
 	*)
-		export PATH="/mingw/bin:/bin:/c/mhvavrtools-bin/bin:/usr/local/bin:/c/Python2.7:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/system32/wbem:/c/Program Files (x86)/Objective Caml/bin:/c/Program Files/Objective Caml/bin:/c/Program Files (x86)/flexdll:/c/Program Files/flexdll:/c/Program Files (x86)/Git/bin:/c/Program Files/Git/bin"
+		export ABI=32
+		export PATH="/mingw/bin:/bin:/usr/local/bin:/bin:/c/Python2.7:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/system32/wbem:/c/Program Files (x86)/Objective Caml/bin:/c/Program Files/Objective Caml/bin:/c/Program Files (x86)/flexdll:/c/Program Files/flexdll"
 		export EXE=".exe"
 		;;
 esac
@@ -49,14 +58,6 @@ esac
 export LIBPREFIX="$TOP/build/bin"
 LOGS="$TOP/logs"
 FAIL_SENTRY="$TOP/.failed"
-
-#ABI=32
-#export ABI
-
-#M4=m4
-#export M4
-
-CFLAGS="-mtune=corei7"
 
 CPPFLAGS="-I$PREFIX/include -I$LIBPREFIX/include"
 export CPPFLAGS
@@ -66,10 +67,6 @@ export LDFLAGS
 
 MAKEFLAGS=""
 
-
-
-
-
 MAKE="make"
 export MAKE
 
@@ -77,7 +74,7 @@ FETCH="`which wget`"
 if test -x "$FETCH"; then
 	FETCH="$FETCH -c"
 else
-	FETCH=curl
+	FETCH="curl -O -C - -L"
 fi
 export FETCH
 

@@ -2,9 +2,14 @@
 
 . ./config.sh
 
-echod "Installing GNU CoreUtils ${GNUCORE_UTILS_VERSION}"
+echod "Installing CoreUtils ${COREUTILS_VERSION}"
+cd $PREFIX
 
-unzip -o download/coreutils-${GNU_COREUTILS_VERSION}-bin.zip -d $PREFIX
-unzip -o download/coreutils-${GNU_COREUTILS_VERSION}-dep.zip -d $PREFIX
+for file in ../download/coreutils-*.lzma ../download/msysCORE*.lzma ../download/libintl-*.lzma ../download/libiconv-*.lzma; do
+        test -e $file || \
+                continue
+        echod "Extracting $file"
+        lzcat $file | tar xf -
+done
 
-echod "Done building GNU CoreUtils ${GNUCORE_UTILS_VERSION}"
+echod "Done building CoreUtils ${COREUTILS_VERSION}"

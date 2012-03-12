@@ -15,8 +15,8 @@ $FETCH http://ftp.gnu.org/gnu/gmp/gmp-${GMP_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/mpfr/mpfr-${MPFR_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/gdb/gdb-${GDB_VERSION}.tar.bz2 &
 $FETCH http://www.multiprecision.org/mpc/download/mpc-${MPC_VERSION}.tar.gz &
-$FETCH http://www.cs.unipr.it/ppl/Download/ftp/releases/${PPL_VERSION}/ppl-${PPL_VERSION}.tar.bz2 &
-$FETCH ftp://gcc.gnu.org/pub/gcc/infrastructure/cloog-ppl-${CLOOG_PPL_VERSION}.tar.gz &
+# $FETCH http://www.cs.unipr.it/ppl/Download/ftp/releases/${PPL_VERSION}/ppl-${PPL_VERSION}.tar.bz2 &
+# $FETCH ftp://gcc.gnu.org/pub/gcc/infrastructure/cloog-ppl-${CLOOG_PPL_VERSION}.tar.gz &
 $FETCH http://download-mirror.savannah.gnu.org/releases/avrdude/avrdude-${AVRDUDE_VERSION}.tar.gz &
 $FETCH http://download-mirror.savannah.gnu.org/releases/avrdude/avrdude-doc-${AVRDUDE_VERSION}.tar.gz &
 #$FETCH http://ftp.gnu.org/gnu/autoconf/autoconf-${AUTOCONF_VERSION}.tar.gz &
@@ -31,17 +31,25 @@ $FETCH http://www.mr511.de/software/libelf-${LIBELF_VERSION}.tar.gz &
 
 case `uname` in
 	Darwin)
-		$FETCH http://downloads.sourceforge.net/project/libusb/libusb-1.0/libusb-${LIBUSB_VERSION}/libusb-${LIBUSB_VERSION}.tar.bz2
+		$FETCH http://sourceforge.net/projects/libusb/files/libusb-1.0/libusb-${LIBUSB_VERSION}/libusb-${LIBUSB_VERSION}.tar.bz2/download
+		mv download libusb-${LIBUSB_VERSION}.tar.bz2&
 		;;
 	Linux)
 		$FETCH http://downloads.sourceforge.net/project/libusb/libusb-1.0/libusb-${LIBUSB_VERSION}/libusb-${LIBUSB_VERSION}.tar.bz2
 		;;
 	*)
 		$FETCH http://downloads.sourceforge.net/project/libusb-win32/libusb-win32-releases/${LIBUSB_WIN32_VERSION}/libusb-win32-device-bin-${LIBUSB_WIN32_VERSION}.tar.gz &
-		$FETCH http://sourceforge.net/projects/gnuwin32/files/coreutils/${GNU_COREUTILS_VERSION}/coreutils-${GNU_COREUTILS_VERSION}-bin.zip &
-		$FETCH http://sourceforge.net/projects/gnuwin32/files/coreutils/${GNU_COREUTILS_VERSION}/coreutils-${GNU_COREUTILS_VERSION}-dep.zip &
+		$FETCH http://downloads.sourceforge.net/project/mingw/MSYS/Base/coreutils/coreutils-5.97-3/coreutils-${COREUTILS_VERSION}-msys-1.0.13-bin.tar.lzma &
+		$FETCH http://downloads.sourceforge.net/project/mingw/MSYS/Base/coreutils/coreutils-5.97-3/coreutils-${COREUTILS_VERSION}-msys-1.0.13-lang.tar.lzma &
+		$FETCH http://downloads.sourceforge.net/project/mingw/MSYS/Base/coreutils/coreutils-5.97-3/coreutils-${COREUTILS_VERSION}-msys-1.0.13-ext.tar.lzma &
+		$FETCH http://downloads.sourceforge.net/project/mingw/MSYS/Base/coreutils/coreutils-5.97-3/coreutils-${COREUTILS_VERSION}-msys-1.0.13-doc.tar.lzma &
+		$FETCH http://downloads.sourceforge.net/project/mingw/MSYS/Base/coreutils/coreutils-5.97-3/coreutils-${COREUTILS_VERSION}-msys-1.0.13-lic.tar.lzma &
+		$FETCH http://downloads.sourceforge.net/project/mingw/MSYS/Base/msys-core/msys-${MSYS_CORE_VERSION}-1/msysCORE-${MSYS_CORE_VERSION}-1-msys-${MSYS_CORE_VERSION}-bin.tar.lzma &
+		$FETCH http://downloads.sourceforge.net/project/mingw/MSYS/Base/gettext/gettext-${GETTEXT_VERSION}/libintl-${GETTEXT_VERSION}-msys-${MSYS_CORE_VERSION}-dll-8.tar.lzma &
+		$FETCH http://downloads.sourceforge.net/project/mingw/MSYS/Base/libiconv/libiconv-${LIBICONV_VERSION}-1/libiconv-${LIBICONV_VERSION}-1-msys-${MSYS_CORE_VERSION}-dll-2.tar.lzma &
+		$FETCH http://downloads.sourceforge.net/project/mingw/MinGW/Base/libiconv/libiconv-${LIBICONV_VERSION}-2/libiconv-${LIBICONV_VERSION}-2-mingw32-dll-2.tar.lzma &
 		$FETCH http://www.xmission.com/~nate/glut/glut-${GLUT_VERSION}-bin.zip &
-				;;
+		;;
 esac
 
 wait
