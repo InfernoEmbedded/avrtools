@@ -7,7 +7,8 @@ echod "Building AVR-libc ${AVRLIBC_VERSION}"
 cd build/avr-libc-${AVRLIBC_VERSION} || \
 	die "Could not CD to build/gmp-${AVRLIBC_VERSION}"
 
-export PATH="$PREFIX/bin:$PATH"
+export PATH="$PATH:$PREFIX/bin"
+export CC="$PREFIX/bin/avr-gcc"
 
 test -f config.status || {
 	./configure --prefix=$PREFIX --host=avr >$LOGS/avrlibc-config.log 2>&1 || \

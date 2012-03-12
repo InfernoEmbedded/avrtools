@@ -28,6 +28,8 @@ for file in ../download/*.xz; do
 done
 
 cp -R ../download/smatch smatch
+cp -R ../download/mhvlib mhvlib
+cp -R ../download/simavr simavr
 
 cd binutils-${BINUTILS_VERSION}
 for file in ../../patches/binutils-*.patch; do
@@ -37,21 +39,21 @@ for file in ../../patches/binutils-*.patch; do
 done
 cd ..
 
-cd avr-libc-${AVRLIBC_VERSION}
-for file in ../../patches/avr-libc-*.patch; do
-	echod Patching with $file
-	patch -p0 < $file || \
-		die "Patch failed"
-done
-cd ..
+#cd avr-libc-${AVRLIBC_VERSION}
+#for file in ../../patches/avr-libc-*.patch; do
+#	echod Patching with $file
+#	patch -p0 < $file || \
+#		die "Patch failed"
+#done
+#cd ..
 
-cd gcc-${GCC_VERSION}
-for file in ../../patches/gcc-*.patch; do
-	echod Patching with $file
-	patch -p0 < $file || \
-		die "Patch failed"
-done
-cd ..
+#cd gcc-${GCC_VERSION}
+#for file in ../../patches/gcc-*.patch; do
+#	echod Patching with $file
+#	patch -p0 < $file || \
+#		die "Patch failed"
+#done
+#cd ..
 
 cd gmp-${GMP_VERSION}
 for file in ../../patches/gmp-*.patch; do
@@ -76,6 +78,15 @@ for file in ../../patches/smatch-*.patch; do
 		die "Patch failed"
 done
 cd ..
+
+cd simavr
+for file in ../../patches/simavr-*.patch; do
+	echod Patching with $file
+	patch -p1 < $file || \
+		die "Patch failed"
+done
+cd ..
+
 
 #cd coccinelle-${COCCINELLE_VERSION}
 #for file in ../../patches/coccinelle-*.patch; do

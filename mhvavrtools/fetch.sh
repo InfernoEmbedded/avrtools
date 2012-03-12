@@ -13,6 +13,7 @@ $FETCH http://gcc.petsads.us/snapshots/${GCC_VERSION}/gcc-${GCC_VERSION}.tar.bz2
 $FETCH http://ftp.gnu.org/gnu/make/make-${MAKE_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/gmp/gmp-${GMP_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/mpfr/mpfr-${MPFR_VERSION}.tar.bz2 &
+$FETCH http://ftp.gnu.org/gnu/gdb/gdb-${GDB_VERSION}.tar.bz2 &
 $FETCH http://www.multiprecision.org/mpc/download/mpc-${MPC_VERSION}.tar.gz &
 $FETCH http://www.cs.unipr.it/ppl/Download/ftp/releases/${PPL_VERSION}/ppl-${PPL_VERSION}.tar.bz2 &
 $FETCH ftp://gcc.gnu.org/pub/gcc/infrastructure/cloog-ppl-${CLOOG_PPL_VERSION}.tar.gz &
@@ -26,8 +27,7 @@ $FETCH http://download-mirror.savannah.gnu.org/releases/avr-libc/avr-libc-${AVRL
 $FETCH http://www.sqlite.org/sqlite-autoconf-${SQLITE_VERSION}.tar.gz &
 $FETCH http://www.splint.org/downloads/splint-${SPLINT_VERSION}.src.tgz &
 $FETCH http://coccinelle.lip6.fr/distrib/coccinelle-${COCCINELLE_VERSION}.tgz &
-
-#$FETCH http://mirrors-us.seosue.com/gcc/snapshots/4.6-20110930/gcc-4.6-20110930.tar.bz2 &
+$FETCH http://www.mr511.de/software/libelf-${LIBELF_VERSION}.tar.gz &
 
 case `uname` in
 	Darwin)
@@ -39,7 +39,9 @@ case `uname` in
 	*)
 		$FETCH http://downloads.sourceforge.net/project/libusb-win32/libusb-win32-releases/${LIBUSB_WIN32_VERSION}/libusb-win32-device-bin-${LIBUSB_WIN32_VERSION}.tar.gz &
 		$FETCH http://sourceforge.net/projects/gnuwin32/files/coreutils/${GNU_COREUTILS_VERSION}/coreutils-${GNU_COREUTILS_VERSION}-bin.zip &
-		;;
+		$FETCH http://sourceforge.net/projects/gnuwin32/files/coreutils/${GNU_COREUTILS_VERSION}/coreutils-${GNU_COREUTILS_VERSION}-dep.zip &
+		$FETCH http://www.xmission.com/~nate/glut/glut-${GLUT_VERSION}-bin.zip &
+				;;
 esac
 
 wait
@@ -57,6 +59,9 @@ test ! -f "$GIT" && \
 
 #test -d simulavr || \
 #	"$GIT" clone git://git.sv.gnu.org/simulavr.git &
+
+test -d simavr || \
+	"$GIT" clone git://gitorious.org/simavr/simavr.git &
 
 test -d mhvlib || \
 	"$GIT" clone http://git.makehackvoid.com/mhvlib.git &

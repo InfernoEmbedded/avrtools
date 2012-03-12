@@ -23,7 +23,7 @@ test -f config.log || {
 		Darwin)
 			../gcc-${GCC_VERSION}/configure --prefix=$PREFIX --target=avr \
 			       --enable-languages=c,c++ --with-dwarf2 \
-			       --disable-nls --enable-lto \
+			       --enable-lto \
 			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
 			       --disable-libssp >$LOGS/gcc-config.log 2>&1 || \
 					die "Could not configure GCC ${GCC_VERSION}"
@@ -31,7 +31,7 @@ test -f config.log || {
 		Linux)
 			../gcc-${GCC_VERSION}/configure --prefix=$PREFIX --target=avr \
 			       --enable-languages=c,c++ --with-dwarf2 \
-			       --disable-nls --enable-lto \
+			       --enable-lto \
 			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
 			       --disable-libssp >$LOGS/gcc-config.log 2>&1 || \
 					die "Could not configure GCC ${GCC_VERSION}"
@@ -39,7 +39,7 @@ test -f config.log || {
 		*)
 			../gcc-${GCC_VERSION}/configure --prefix=$PREFIX --host=i686-pc-mingw32 --target=avr \
 			       --enable-languages=c,c++ --with-dwarf2 \
-			       -enable-win32-registry=MHV-AVR-Tools --disable-nls --enable-lto \
+			       -enable-win32-registry=MHV-AVR-Tools --enable-lto \
 			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
 			       --disable-libssp >$LOGS/gcc-config.log 2>&1 || \
 					die "Could not configure GCC ${GCC_VERSION}"
@@ -55,6 +55,17 @@ $MAKE $MAKEFLAGS >$LOGS/gcc-make.log 2>&1 || \
 
 $MAKE install >$LOGS/gcc-install.log 2>&1 || \
 	die "Could not install ${GCC_VERSION}"
+
+case `uname` in
+	Darwin)
+		;;
+	Linux)
+		;;
+	*)
+		cp /mingw/bin/libiconv-2.dll $PREFIX/bin
+		cp /mingw/bin/libintl-8.dll $PREFIX/bin
+				;;
+esac
 
 cd $GCCDIR
 for file in COPYING*; do

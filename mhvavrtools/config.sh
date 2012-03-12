@@ -2,7 +2,7 @@
 #AUTOCONF_VERSION=2.61
 BINUTILS_VERSION=2.22
 LIBTOOL_VERSION=2.4
-GCC_VERSION=4.6-20111216
+GCC_VERSION=4.7.0-RC-20120302
 MAKE_VERSION=3.82
 GMP_VERSION=5.0.2
 MPFR_VERSION=3.1.0
@@ -22,6 +22,11 @@ SQLITE_VERSION=3070800
 SPLINT_VERSION=3.1.2
 GNU_COREUTILS_VERSION=5.3.0
 COCCINELLE_VERSION=1.0.0-rc7
+GLUT_VERSION=3.7.6
+GDB_VERSION=7.4
+
+# SimAVR derendancies
+LIBELF_VERSION=0.8.9
 
 export TOP=`pwd`
 export BUILD="$TOP/build"
@@ -29,12 +34,15 @@ export PREFIX="$TOP/mhvavrtools"
 
 case `uname` in
 	Darwin)
+		export EXE=
 		;;
 	Linux)
+		export EXE=
 		;;
 
 	*)
-		export PATH="/mingw/bin:/bin:/c/mhvavrtools-bin/bin:/usr/local/bin:/mingw/bin:/bin:/c/Python2.7:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/system32/wbem:/c/Program Files (x86)/Objective Caml/bin:/c/Program Files/Objective Caml/bin:/c/Program Files (x86)/flexdll:/c/Program Files/flexdll"
+		export PATH="/mingw/bin:/bin:/c/mhvavrtools-bin/bin:/usr/local/bin:/c/Python2.7:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/system32/wbem:/c/Program Files (x86)/Objective Caml/bin:/c/Program Files/Objective Caml/bin:/c/Program Files (x86)/flexdll:/c/Program Files/flexdll:/c/Program Files (x86)/Git/bin:/c/Program Files/Git/bin"
+		export EXE=".exe"
 		;;
 esac
 

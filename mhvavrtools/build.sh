@@ -26,20 +26,34 @@ sleep 5
 	./build-gmp.sh || \
 		die "gmp build failed"
 
- 	./build-mpfr.sh || \
+	./build-mpfr.sh || \
 		die "mpfr build failed"
 
 	./build-mpc.sh || \
 		die "mpc build failed"
-	
+
 	./build-binutils.sh || \
 		die "binutils build failed"
 
 	./build-gcc.sh || \
 		die "gcc build failed"
 
+	./build-gdb.sh || \
+		die "gcc build failed"
+
 	./build-avrlibc.sh || \
 		die "avrlibc build failed"
+
+	./build-libelf.sh || \
+		die "avrlibc build failed"
+
+	[ `uname` = MINGW32_NT-6.1 ] && {
+			./build-glut.sh  || \
+					die "avrlibc build failed"
+	}
+
+	./build-simavr.sh || \
+		die "simavr build failed"
 ) &
 
 # Need this sleep here otherwise the configure for gmp fails - unable to rm test executables
@@ -73,7 +87,7 @@ test -f $FAIL_SENTRY && (
 	exit 1
 )
 
-./strip.sh 
+./strip.sh
 
 cp LICENSE.txt $PREFIX
 cp README.txt $PREFIX

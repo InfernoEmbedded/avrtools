@@ -7,7 +7,7 @@ RequestExecutionLevel admin
 
 # General Symbol Definitions
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 20120105
+!define VERSION 20120312
 !define COMPANY "Make, Hack, Void, Inc."
 !define URL http://www.makehackvoid.com
 
@@ -51,7 +51,7 @@ InstallDir "$PROGRAMFILES\MHV AVR Tools"
 CRCCheck on
 XPStyle on
 ShowInstDetails show
-VIProductVersion 2012.01.05.00
+VIProductVersion 2012.03.12.00
 VIAddVersionKey ProductName "MHV AVR Tools"
 VIAddVersionKey ProductVersion "${VERSION}"
 VIAddVersionKey CompanyName "${COMPANY}"

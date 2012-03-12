@@ -16,11 +16,11 @@ test -f config.status || {
 }
 
 make configure-host >$LOGS/binutils-configure-host.log 2>&1 || \
-	die "Could not make configure-host"
+	die "Could not make configure-host for BINUTILS ${BINUTILS_VERSION}"
 
 cd bfd
 $MAKE headers >$LOGS/binutils-headers.log 2>&1 || \
-	die "Could not build bfd headers"
+	die "Could not build bfd headers for BINUTILS ${BINUTILS_VERSION}"
 cd ..
 
 

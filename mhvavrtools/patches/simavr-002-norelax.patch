@@ -1,0 +1,20 @@
+--- simavr/Makefile.common.orig	2012-03-10 19:05:42 +1100
++++ simavr/Makefile.common	2012-03-10 19:05:52 +1100
+@@ -106,7 +106,7 @@
+ 			-DF_CPU=8000000 \
+ 			-fno-inline-small-functions \
+ 			-ffunction-sections -fdata-sections \
+-			-Wl,--relax,--gc-sections \
++			-Wl,--gc-sections \
+ 			-Wl,--undefined=_mmcu,--section-start=.mmcu=0x910000 \
+ 			-I../include -I../../include \
+ 			${^} -o ${@}
+@@ -119,7 +119,7 @@
+ 			-DF_CPU=8000000 \
+ 			-fno-inline-small-functions \
+ 			-ffunction-sections -fdata-sections \
+-			-Wl,--relax,--gc-sections \
++			-Wl,--gc-sections \
+ 			-Wl,--undefined=_mmcu,--section-start=.mmcu=0x910000 \
+ 			-I../include -I../../include \
+ 			${^} -o ${@}

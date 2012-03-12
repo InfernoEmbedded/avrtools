@@ -1,0 +1,163 @@
+diff -ur simavr.orig//examples/parts/uart_udp.c simavr//examples/parts/uart_udp.c
+--- simavr.orig//examples/parts/uart_udp.c	2012-03-11 12:05:39 +1100
++++ simavr//examples/parts/uart_udp.c	2012-03-12 10:33:15 +1100
+@@ -41,6 +41,13 @@
+ 
+ DEFINE_FIFO(uint8_t,uart_udp_fifo, 512);
+ 
++#ifdef __MINGW32__
++#define UART_SOCKET_ERROR "Winsock error"
++#else
++#define UART_SOCKET_ERROR (strerror(errno))
++#endif
++
++
+ /*
+  * called when a byte is send via the uart on the AVR
+  */
+@@ -140,14 +147,36 @@
+ 	[IRQ_UART_UDP_BYTE_OUT] = "8>uart_udp.out",
+ };
+ 
++void avr_gdb_cleanup() {
++#if __MINGW32__
++	WSACleanup();
++#endif
++}
++
+ void uart_udp_init(struct avr_t * avr, uart_udp_t * p)
+ {
++#if __MINGW32__
++    WSADATA t_wsa; // WSADATA structure
++    WORD wVers; // version number
++    int i_error; // error number
++
++    wVers = MAKEWORD(2, 2); // Set the version number to 2.2
++    i_error = WSAStartup(wVers, &t_wsa); // Start the WSADATA
++    if(i_error != NO_ERROR){
++    	fprintf(stderr, "Error at WSAStartup(): %ld\n", i_error);
++    	uart_udp_cleanup();
++    	return;
++    }
++#endif
++
++
+ 	p->avr = avr;
+ 	p->irq = avr_alloc_irq(&avr->irq_pool, 0, IRQ_UART_UDP_COUNT, irq_names);
+ 	avr_irq_register_notify(p->irq + IRQ_UART_UDP_BYTE_IN, uart_udp_in_hook, p);
+ 
+ 	if ((p->s = socket(PF_INET, SOCK_DGRAM, 0)) < 0) {
+-		fprintf(stderr, "%s: Can't create socket: %s", __FUNCTION__, strerror(errno));
++		fprintf(stderr, "%s: Can't create socket: %s", __FUNCTION__, UART_SOCKET_ERROR);
++    	uart_udp_cleanup();
+ 		return ;
+ 	}
+ 
+@@ -156,7 +185,8 @@
+ 	address.sin_port = htons (4321);
+ 
+ 	if (bind(p->s, (struct sockaddr *) &address, sizeof(address))) {
+-		fprintf(stderr, "%s: Can not bind socket: %s", __FUNCTION__, strerror(errno));
++		fprintf(stderr, "%s: Can not bind socket: %s", __FUNCTION__, UART_SOCKET_ERROR);
++    	uart_udp_cleanup();
+ 		return ;
+ 	}
+ 
+diff -ur simavr.orig//simavr/sim/sim_gdb.c simavr//simavr/sim/sim_gdb.c
+--- simavr.orig//simavr/sim/sim_gdb.c	2012-03-11 12:05:39 +1100
++++ simavr//simavr/sim/sim_gdb.c	2012-03-12 10:34:32 +1100
+@@ -43,6 +43,12 @@
+ 
+ #define DBG(w)
+ 
++#ifdef __MINGW32__
++#define GDB_SOCKET_ERROR "Winsock error"
++#else
++#define GDB_SOCKET_ERROR (strerror(errno))
++#endif
++
+ typedef struct avr_gdb_t {
+ 	avr_t * avr;
+ 	int		listen;	// listen socket
+@@ -407,38 +413,69 @@
+ 	return gdb_network_handler(g, sleep);
+ }
+ 
++void avr_gdb_cleanup(avr_gdb_t ** gdb) {
++	if (NULL != *gdb) {
++		free(*gdb);
++		*gdb = NULL;
++	}
++
++#if __MINGW32__
++	WSACleanup();
++#endif
++}
+ 
+ int avr_gdb_init(avr_t * avr)
+ {
+-	avr_gdb_t * g = malloc(sizeof(avr_gdb_t));
+-	memset(g, 0, sizeof(avr_gdb_t));
+-
+ 	avr->gdb = NULL;
+ 
+-	if ((g->listen = socket(PF_INET, SOCK_STREAM, 0)) < 0) {
+-		fprintf(stderr, "Can't create socket: %s", strerror(errno));
++	avr_gdb_t * gdb = malloc(sizeof(avr_gdb_t));
++	if (NULL == gdb) {
++		fprintf(stderr, "Could not malloc gdb");
++		return -1;
++	}
++	memset(gdb, 0, sizeof(avr_gdb_t));
++
++#if __MINGW32__
++    WSADATA t_wsa; // WSADATA structure
++    WORD wVers; // version number
++    int i_error; // error number
++
++    wVers = MAKEWORD(2, 2); // Set the version number to 2.2
++    i_error = WSAStartup(wVers, &t_wsa); // Start the WSADATA
++    if(i_error != NO_ERROR){
++    	fprintf(stderr, "Error at WSAStartup(): %d\n", i_error);
++    	avr_gdb_cleanup(&gdb);
++    	return -1;
++    }
++#endif
++
++	if ((gdb->listen = socket(PF_INET, SOCK_STREAM, 0)) < 0) {
++		fprintf(stderr, "Can't create socket: %s\n", GDB_SOCKET_ERROR);
++    	avr_gdb_cleanup(&gdb);
+ 		return -1;
+ 	}
+ 
+ 	char i = 1;
+-	setsockopt(g->listen, SOL_SOCKET, SO_REUSEADDR, &i, sizeof(i));
++	setsockopt(gdb->listen, SOL_SOCKET, SO_REUSEADDR, &i, sizeof(i));
+ 
+ 	struct sockaddr_in address = { 0 };
+ 	address.sin_family = AF_INET;
+ 	address.sin_port = htons (avr->gdb_port);
+ 
+-	if (bind(g->listen, (struct sockaddr *) &address, sizeof(address))) {
+-		fprintf(stderr, "Can not bind socket: %s", strerror(errno));
++	if (bind(gdb->listen, (struct sockaddr *) &address, sizeof(address))) {
++		fprintf(stderr, "Can not bind socket: %s\n", GDB_SOCKET_ERROR);
++    	avr_gdb_cleanup(&gdb);
+ 		return -1;
+ 	}
+-	if (listen(g->listen, 1)) {
++	if (listen(gdb->listen, 1)) {
+ 		perror("listen");
++    	avr_gdb_cleanup(&gdb);
+ 		return -1;
+ 	}
+ 	printf("avr_gdb_init listening on port %d\n", avr->gdb_port);
+-	g->avr = avr;
+-	g->s = -1;
+-	avr->gdb = g;
++	gdb->avr = avr;
++	gdb->s = -1;
++	avr->gdb = gdb;
+ 	// change default run behaviour to use the slightly slower versions
+ 	avr->run = avr_callback_run_gdb;
+ 	avr->sleep = avr_callback_sleep_gdb;
