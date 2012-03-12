@@ -1,4 +1,7 @@
 #!/bin/sh
 
-rm -rf build logs mhvavrtools
+mkdir old
+mv build logs mhvavrtools old
+rm -rf old
+
 
