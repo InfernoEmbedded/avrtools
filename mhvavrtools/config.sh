@@ -45,12 +45,13 @@ case `uname` in
 		case `uname -m` in
 			i686)
 				export ABI=32
+				;;
+			esac
 		export EXE=
 		;;
-
 	*)
 		export ABI=32
-		export PATH="/mingw/bin:/bin:/usr/local/bin:/bin:/c/Python2.7:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/system32/wbem:/c/Program Files (x86)/Objective Caml/bin:/c/Program Files/Objective Caml/bin:/c/Program Files (x86)/flexdll:/c/Program Files/flexdll"
+		export PATH="/mingw/bin:/bin:/usr/local/bin:/c/Python2.7:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/system32/wbem:/c/Program Files (x86)/Objective Caml/bin:/c/Program Files/Objective Caml/bin:/c/Program Files (x86)/flexdll:/c/Program Files/flexdll"
 		export EXE=".exe"
 		;;
 esac

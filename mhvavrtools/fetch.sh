@@ -1,5 +1,4 @@
 #!/bin/sh
-
 . ./config.sh
 
 test -d download || \
