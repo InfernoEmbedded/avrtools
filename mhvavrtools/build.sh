@@ -45,11 +45,11 @@ sleep 5
 		die "avrlibc build failed"
 
 	./build-libelf.sh || \
-		die "avrlibc build failed"
+		die "libelf build failed"
 
 	[ `uname` = MINGW32_NT-6.1 ] && {
 			./build-glut.sh  || \
-					die "avrlibc build failed"
+					die "glut build failed"
 	}
 
 	./build-simavr.sh || \
