@@ -7,8 +7,9 @@ test -d download || \
 cd download
 #$FETCH http://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-core-${GCC_VERSION}.tar.bz2 &
 #$FETCH http://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-g++-${GCC_VERSION}.tar.bz2 &
+$FETCH http://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-${GCC_VERSION}.tar.bz2 &
 # Use for GCC snapshot
-$FETCH http://gcc.petsads.us/snapshots/${GCC_VERSION}/gcc-${GCC_VERSION}.tar.bz2 &
+#$FETCH http://gcc.petsads.us/snapshots/${GCC_VERSION}/gcc-${GCC_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/make/make-${MAKE_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/gmp/gmp-${GMP_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/mpfr/mpfr-${MPFR_VERSION}.tar.bz2 &
