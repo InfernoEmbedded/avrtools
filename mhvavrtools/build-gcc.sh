@@ -28,6 +28,7 @@ test -f config.log || {
 					die "Could not configure GCC ${GCC_VERSION}"
 			;;
 		Linux)
+			export CFLAGS="-fvisibility=hidden"
 			../gcc-${GCC_VERSION}/configure --prefix=$PREFIX --target=avr \
 			       --enable-languages=c,c++ --with-dwarf2 \
 			       --enable-lto \
