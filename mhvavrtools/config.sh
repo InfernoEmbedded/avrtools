@@ -26,7 +26,7 @@ GETTEXT_VERSION=0.18.1.1-1
 LIBICONV_VERSION=1.14
 COCCINELLE_VERSION=1.0.0-rc7
 GLUT_VERSION=3.7.6
-GDB_VERSION=7.4
+GDB_VERSION=7.4.1
 
 # SimAVR derendancies
 LIBELF_VERSION=0.8.9
@@ -52,7 +52,7 @@ case `uname` in
 		export EXE=
 		export CFLAGS="-flto"
 		export CPPFLAGS="-flto"
-		ekport LOCALCC="gcc"
+		export LOCALCC="gcc"
 		;;
 	*)
 		export ABI=32
