@@ -1,7 +1,7 @@
---- smatch.orig/Makefile	2010-10-29 14:05:56 +1100
-+++ smatch/Makefile	2010-10-29 14:05:22 +1100
+--- smatch/Makefile.orig	2012-05-12 11:16:10 +1000
++++ smatch/Makefile	2012-05-12 13:45:37 +1000
 @@ -1,11 +1,11 @@
- VERSION=0.4.2
+ VERSION=0.4.3
  
 -OS = linux
 +OS = mingw
@@ -10,7 +10,7 @@
 -CFLAGS = -O2 -finline-functions -fno-strict-aliasing -g
 -CFLAGS += -Wall -Wwrite-strings
 -LDFLAGS += -g -lm -lsqlite3
-+CFLAGS = -O2 -finline-functions -fno-strict-aliasing
++CFLAGS = -O2 -finline-functions -fno-strict-aliasing -flto
 +CFLAGS += -Wall -Wwrite-strings -I$(PREFIX)/include
 +LDFLAGS += -lm -lsqlite3
  AR = ar
@@ -24,16 +24,12 @@
  BINDIR=$(PREFIX)/bin
  LIBDIR=$(PREFIX)/lib
  MANDIR=$(PREFIX)/share/man
-@@ -151,10 +150,10 @@
- 
- $(foreach p,$(PROGRAMS),$(eval $(p): $($(p)_EXTRA_DEPS) $(LIBS)))
- $(PROGRAMS): % : %.o 
--	$(QUIET_LINK)$(CC) $(LDFLAGS) -o $@ $^ $($@_EXTRA_OBJS) 
-+	$(QUIET_LINK)$(CC) $(LDFLAGS) -o $@ $^ $($@_EXTRA_OBJS)
+@@ -155,7 +154,7 @@
+ 	$(QUIET_LINK)$(CC) -o $@ $^ $($@_EXTRA_OBJS) $(LDFLAGS)
  
  smatch: smatch.o $(SMATCH_FILES) $(SMATCH_CHECKS) $(LIBS) 
--	$(CC) $(LDFLAGS) -o $@ $< $(SMATCH_FILES) $(SMATCH_CHECKS) $(LIBS) 
-+	$(CC) $(LDFLAGS) -o $@ $< $(SMATCH_FILES) $(SMATCH_CHECKS) $(LIBS) -lsqlite3
+-	$(CC) -o $@ $< $(SMATCH_FILES) $(SMATCH_CHECKS) $(LIBS) $(LDFLAGS)
++	$(CC) -o $@ $< $(SMATCH_FILES) $(SMATCH_CHECKS) $(LIBS) $(LDFLAGS) -lsqlite3
  
  $(LIB_FILE): $(LIB_OBJS)
  	$(QUIET_AR)$(AR) rcs $@ $(LIB_OBJS)

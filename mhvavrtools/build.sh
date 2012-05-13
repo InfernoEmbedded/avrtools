@@ -23,6 +23,26 @@ sleep 5
 			die "coreutils build failed"
 	}
 
+	export CC="$LOCALCC"
+
+	./build-gmp-native.sh || \
+		die "gmp build failed"
+
+	./build-mpfr-native.sh || \
+		die "mpfr build failed"
+
+	./build-mpc-native.sh || \
+		die "mpc build failed"
+
+	./build-binutils-native.sh || \
+		die "binutils build failed"
+
+	./build-gcc-native.sh || \
+		die "gcc build failed"
+
+
+	export CC="$LIBPREFIX/bin/gcc"
+
 	./build-gmp.sh || \
 		die "gmp build failed"
 

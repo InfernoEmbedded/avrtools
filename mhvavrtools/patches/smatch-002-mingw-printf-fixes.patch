@@ -1,38 +1,5 @@
 Common subdirectories: smatch.orig/.git and smatch/.git
 Common subdirectories: smatch.orig/Documentation and smatch/Documentation
-diff -u smatch.orig/check_db_info.c smatch/check_db_info.c
---- smatch.orig/check_db_info.c	2010-11-03 10:15:07 +1100
-+++ smatch/check_db_info.c	2010-11-03 12:53:04 +1100
-@@ -17,9 +17,17 @@
- 	static char buff[256];
- 
- 	if (num < 0) {
-+#ifdef __MINGW32__
-+		snprintf(buff, 255, "(%I64d)", num);
-+#else
- 		snprintf(buff, 255, "(%lld)", num);
-+#endif
- 	} else {
-+#ifdef __MINGW32__
-+		snprintf(buff, 255, "%I64d", num);
-+#else
- 		snprintf(buff, 255, "%lld", num);
-+#endif
- 	}
- 	buff[255] = '\0';
- 	return buff;
-@@ -58,7 +66,11 @@
- 		return;
- 	}
- 	if (get_value(ret_value, &val)) {
-+#ifdef __MINGW32__
-+		sm_msg("info: return_value %I64d", val);
-+#else
- 		sm_msg("info: return_value %lld", val);
-+#endif
- 		return;
- 	}
- 	state = get_state_expr(SMATCH_EXTRA, ret_value);
 diff -u smatch.orig/check_err_ptr_deref.c smatch/check_err_ptr_deref.c
 --- smatch.orig/check_err_ptr_deref.c	2010-11-03 10:15:07 +1100
 +++ smatch/check_err_ptr_deref.c	2010-11-03 12:53:53 +1100
@@ -564,65 +531,38 @@ Common subdirectories: smatch.orig/validation and smatch/validation
  	free_string(dest_name);
  }
  
---- smatch/smatch_ranges.c.orig	2011-11-05 10:54:14 +1100
-+++ smatch/smatch_ranges.c	2011-11-05 11:13:14 +1100
-@@ -26,9 +26,17 @@
- 	} else if (num == whole_range.max) {
+--- smatch.orig/smatch_ranges.c	2012-05-12 14:36:58 +1000
++++ smatch/smatch_ranges.c	2012-05-12 14:47:34 +1000
+@@ -31,10 +31,17 @@
+ 	else if (num == whole_range.max)
  		snprintf(buff, 255, "max");
- 	} else if (num < 0) {
+ 	else if (num < 0)
+-		snprintf(buff, 255, "(%lld)", num);
 +#ifdef __MINGW32__
 +		snprintf(buff, 255, "(%I64d)", num);
 +#else
- 		snprintf(buff, 255, "(%lld)", num);
++ 		snprintf(buff, 255, "(%lld)", num);
 +#endif
- 	} else {
+ 	else
+-		snprintf(buff, 255, "%lld", num);
+-
 +#ifdef __MINGW32__
 +		snprintf(buff, 255, "%I64d", num);
 +#else
- 		snprintf(buff, 255, "%lld", num);
++ 		snprintf(buff, 255, "%lld", num);
 +#endif
- 	}
  	buff[255] = '\0';
  	return buff;
-@@ -83,7 +91,11 @@
- 	struct data_range *ret;
- 
- 	if (min > max) {
-+#ifdef __MINGW32__
-+		sm_msg("Error invalid range %I64d to %I64d", min, max);
-+#else
- 		sm_msg("Error invalid range %lld to %lld", min, max);
-+#endif
- 		min = whole_range.min;
- 		max = whole_range.max;
- 	}
-@@ -104,7 +116,11 @@
- 	struct data_range *ret;
- 
- 	if (min > max) {
-+#ifdef __MINGW32__
-+		sm_msg("Error invalid range %I64d to %I64d", min, max);
-+#else
- 		sm_msg("Error invalid range %lld to %lld", min, max);
-+#endif
- 		min = whole_range.min;
- 		max = whole_range.max;
- 	}
-@@ -125,7 +141,7 @@
- 	struct data_range *tmp = NULL;
- 	struct data_range *new = NULL;
- 	int check_next = 0;
--	
-+
-  	FOR_EACH_PTR(*list, tmp) {
- 		if (check_next) {
- 			/* Sometimes we overlap with more than one range
-@@ -271,7 +287,7 @@
- 	return drange->max;
  }
+@@ -164,7 +171,11 @@
+ 	struct data_range *ret;
  
--/* 
-+/*
-  * if it can be only one and only value return 1, else return 0
-  */
- int get_single_value_from_dinfo(struct data_info *dinfo, long long *val)
+ 	if (min > max) {
++#ifdef __MINGW32__
++		sm_msg("Error invalid range %I64d to %I64d", min, max);
++#else
+ 		sm_msg("Error invalid range %lld to %lld", min, max);
++#endif
+ 		min = whole_range.min;
+ 		max = whole_range.max;
+ 	}

@@ -1,8 +1,8 @@
 #AUTOCONF_VERSION=2.67
 #AUTOCONF_VERSION=2.61
-BINUTILS_VERSION=2.22
+BINUTILS_VERSION=2.22.52
 LIBTOOL_VERSION=2.4
-GCC_VERSION=4.7.0
+GCC_VERSION=4.7-20120421
 MAKE_VERSION=3.82
 GMP_VERSION=5.0.2
 MPFR_VERSION=3.1.0
@@ -38,7 +38,9 @@ export PREFIX="$TOP/mhvavrtools"
 case `uname` in
 	Darwin)
 		export ABI=64
-		export CC=/usr/bin/gcc-4.2
+		export CFLAGS="-flto"
+		export CPPFLAGS="-flto"
+		export LOCALCC="/usr/bin/gcc-4.2"
 		export EXE=
 		;;
 	Linux)
@@ -48,12 +50,17 @@ case `uname` in
 				;;
 			esac
 		export EXE=
+		export CFLAGS="-flto"
+		export CPPFLAGS="-flto"
+		ekport LOCALCC="gcc"
 		;;
 	*)
 		export ABI=32
-		export CC=gcc
+		export LOCALCC="gcc"
 		export PATH="/mingw/bin:/bin:/usr/local/bin:/c/Python2.7:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/system32/wbem:/c/Program Files (x86)/Objective Caml/bin:/c/Program Files/Objective Caml/bin:/c/Program Files (x86)/flexdll:/c/Program Files/flexdll"
 		export EXE=".exe"
+		export CFLAGS="-flto"
+		export CPPFLAGS="-flto"
 		;;
 esac
 
@@ -61,13 +68,13 @@ export LIBPREFIX="$TOP/build/bin"
 LOGS="$TOP/logs"
 FAIL_SENTRY="$TOP/.failed"
 
-CPPFLAGS="-I$PREFIX/include -I$LIBPREFIX/include"
+CPPFLAGS="$CPPFLAGS -I$PREFIX/include -I$LIBPREFIX/include"
 export CPPFLAGS
 
 LDFLAGS="-L$PREFIX/lib -L$LIBPREFIX/lib"
 export LDFLAGS
 
-MAKEFLAGS=""
+MAKEFLAGS="-j 8"
 
 MAKE="make"
 export MAKE
