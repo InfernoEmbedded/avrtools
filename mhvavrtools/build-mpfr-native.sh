@@ -2,7 +2,7 @@
 
 . ./config.sh
 
-echod "Building MPFR ${MPFR_VERSION}"
+echod "Building Native MPFR ${MPFR_VERSION}"
 
 cd build/mpfr-${MPFR_VERSION} || \
 	die "Could not CD to build/mpfr-${MPFR_VERSION}"
@@ -24,7 +24,7 @@ $MAKE install >$LOGS/mpfr-install-native.log 2>&1 || \
 
 $MAKE distclean >$LOGS/mpfr-distclean-native.log 2>&1
 
-cd ../gmp-${GMP-VERSION}
+cd ../gmp-${GMP_VERSION}
 $MAKE distclean >$LOGS/gmp-distclean-native.log 2>&1
 
 echod "Done building MPFR ${MPFR_VERSION}"

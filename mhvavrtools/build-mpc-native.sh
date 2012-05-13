@@ -2,7 +2,7 @@
 
 . ./config.sh
 
-echod "Building MPC ${MPC_VERSION}"
+echod "Building Native MPC ${MPC_VERSION}"
 
 cd build/mpc-${MPC_VERSION} || \
 	die "Could not CD to build/mpc-${MPC_VERSION}"

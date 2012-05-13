@@ -2,7 +2,7 @@
 
 . ./config.sh
 
-echod "Building binutils ${BINUTILS_VERSION}"
+echod "Building Native binutils ${BINUTILS_VERSION}"
 
 cd build/binutils-${BINUTILS_VERSION} || \
 	die "Could not CD to build/binutils-${BINUTILS_VERSION}"

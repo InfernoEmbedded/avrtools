@@ -17,6 +17,8 @@ cd gcc-native || \
 
 GCCDIR=$BUILD/gcc-${GCC_VERSION}
 
+export PATH="$LIBPREFIX:$PATH"
+
 test -f config.log || {
 	case `uname` in
 		Darwin)
@@ -24,6 +26,7 @@ test -f config.log || {
 			       --enable-languages=c \
 			       --enable-lto \
 			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
+                               --with-binutils=$LIBPREFIX \
 			       --disable-libssp >$LOGS/gcc-config-native.log 2>&1 || \
 					die "Could not configure GCC ${GCC_VERSION}"
 			;;
@@ -33,6 +36,7 @@ test -f config.log || {
 			       --enable-languages=c \
 			       --enable-lto \
 			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
+                               --with-binutils=$LIBPREFIX \
 			       --disable-libssp >$LOGS/gcc-config-native.log 2>&1 || \
 					die "Could not configure GCC ${GCC_VERSION}"
 			;;
@@ -42,6 +46,7 @@ test -f config.log || {
 			       --enable-languages=c \
 			       --enable-lto \
 			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
+                               --with-binutils=$LIBPREFIX \
 			       --disable-libssp >$LOGS/gcc-config-native.log 2>&1 || \
 					die "Could not configure GCC ${GCC_VERSION}"
 			;;

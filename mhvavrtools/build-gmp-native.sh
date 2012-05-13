@@ -2,7 +2,7 @@
 
 . ./config.sh
 
-echod "Building GMP ${GMP_VERSION}"
+echod "Building Native GMP ${GMP_VERSION}"
 
 cd build/gmp-${GMP_VERSION} || \
 	die "Could not CD to build/gmp-${GMP_VERSION}"
