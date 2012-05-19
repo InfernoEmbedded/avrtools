@@ -38,8 +38,11 @@ export PREFIX="$TOP/mhvavrtools"
 case `uname` in
 	Darwin)
 		export ABI=64
-		export CFLAGS="-flto"
-		export CPPFLAGS="-flto"
+		export NATIVECFLAGS=""
+		export NATIVECPPFLAGS=""
+		export CFLAGS="-flto -O3"
+		export CPPFLAGS="-flto -O3"
+		export LDFLAGS="-flto"
 		export LOCALCC="/usr/bin/gcc-4.2"
 		export EXE=
 		;;
@@ -50,8 +53,11 @@ case `uname` in
 				;;
 			esac
 		export EXE=
-		export CFLAGS="-flto"
-		export CPPFLAGS="-flto"
+		export NATIVECFLAGS="-flto"
+		export NATIVECPPFLAGS="-flto"
+		export CFLAGS="-flto -O3"
+		export CPPFLAGS="-flto -O3"
+		export LDFLAGS="-flto"
 		export LOCALCC="gcc"
 		;;
 	*)
@@ -59,20 +65,19 @@ case `uname` in
 		export LOCALCC="gcc"
 		export PATH="/mingw/bin:/bin:/usr/local/bin:/c/Python2.7:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/system32/wbem:/c/Program Files (x86)/Objective Caml/bin:/c/Program Files/Objective Caml/bin:/c/Program Files (x86)/flexdll:/c/Program Files/flexdll"
 		export EXE=".exe"
-		export CFLAGS="-flto"
-		export CPPFLAGS="-flto"
+		export NATIVECFLAGS="-flto"
+		export NATIVECPPFLAGS="-flto"
+		export CFLAGS="-flto -O3"
+		export CPPFLAGS="-flto -O3"
+		export LDFLAGS="-flto"
 		;;
 esac
 
 export LIBPREFIX="$TOP/build/bin"
+export NATIVEPREFIX="$TOP/build/native"
 LOGS="$TOP/logs"
 FAIL_SENTRY="$TOP/.failed"
 
-CPPFLAGS="$CPPFLAGS -I$PREFIX/include -I$LIBPREFIX/include"
-export CPPFLAGS
-
-LDFLAGS="-L$PREFIX/lib -L$LIBPREFIX/lib"
-export LDFLAGS
 
 MAKEFLAGS="-j 8"
 
@@ -88,6 +93,14 @@ fi
 export FETCH
 
 
+export CC="$NATIVEPREFIX/bin/gcc"
+
+CPPFLAGS="$CPPFLAGS -I$PREFIX/include -I$LIBPREFIX/include"
+export CPPFLAGS
+
+LDFLAGS="-L$PREFIX/lib -L$LIBPREFIX/lib"
+export LDFLAGS
+
 echod() {
 	echo `date`: $*
 }
@@ -97,4 +110,18 @@ die() {
 	touch "$FAIL_SENTRY"
 	exit 1
 }
+
+native() {
+	CFLAGS="$NATIVECFLAGS -I$NATIVEPREFIX/include"
+	export CFLAGS
+
+	CPPFLAGS="$NATIVECPPFLAGS -I$NATIVEPREFIX/include"
+	export CPPFLAGS
+
+	LDFLAGS="-L$NATIVEPREFIX/lib"
+	export LDFLAGS
+
+	export CC="$LOCALCC"
+}
+
 

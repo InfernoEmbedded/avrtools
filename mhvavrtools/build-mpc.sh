@@ -14,20 +14,14 @@ test -f config.log || {
 		die "Could not configure MPC ${MPC_VERSION}"
 }
 
-$MAKE $MAKEFLAGS >$LOGS/mpc-make-native.log 2>&1 || \
+$MAKE $MAKEFLAGS >$LOGS/mpc-make.log 2>&1 || \
 	die "Could not build MPC ${MPC_VERSION}"
 
 
 #$MAKE check || \
 #	die "MPC ${MPC_VERSION} tests failed"
 
-$MAKE install >$LOGS/mpc-install-native.log 2>&1 || \
+$MAKE install >$LOGS/mpc-install.log 2>&1 || \
 	die "Could not install ${MPC_VERSION}"
-
-$MAKE distclean >$LOGS/mpc-distclean-native.log 2>&1
-
-cd ../gmp-${GMP_VERSION}
-
-$MAKE distclean >$LOGS/gmp-distclean-native.log 2>&1
 
 echod "Done building MPC ${MPC_VERSION}"

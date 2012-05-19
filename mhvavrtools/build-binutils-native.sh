@@ -2,6 +2,8 @@
 
 . ./config.sh
 
+native
+
 echod "Building Native binutils ${BINUTILS_VERSION}"
 
 cd build/binutils-${BINUTILS_VERSION} || \
@@ -11,7 +13,7 @@ mkdir obj
 cd obj
 
 test -f config.status || {
-	../configure --disable-nls --prefix=$LIBPREFIX --with-mpc=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-gmp=$LIBPREFIX >$LOGS/binutils-config-native.log 2>&1 || \
+	../configure --disable-nls --prefix=$NATIVEPREFIX --with-mpc=$NATIVEPREFIX --with-mpfr=$NATIVEPREFIX --with-gmp=$NATIVEPREFIX >$LOGS/binutils-config-native.log 2>&1 || \
 		die "Could not configure BINUTILS ${BINUTILS_VERSION}"
 }
 
@@ -35,4 +37,4 @@ $MAKE install >$LOGS/binutils-install-native.log 2>&1 || \
 
 cd ..
 
-echod "Done building binutils ${BINUTILS_VERSION}"
+echod "Done building Native binutils ${BINUTILS_VERSION}"

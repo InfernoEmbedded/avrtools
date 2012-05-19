@@ -16,7 +16,6 @@ cd gcc-obj || \
 	die "Could not cd to gcc-obj"
 
 GCCDIR=$BUILD/gcc-${GCC_VERSION}
-export CC="$LOCALCC"
 
 test -f config.log || {
 	case `uname` in

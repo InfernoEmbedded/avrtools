@@ -2,7 +2,10 @@
 
 . ./config.sh
 
-echod "Building GCC ${GCC_VERSION}"
+native
+
+
+echod "Building Native GCC ${GCC_VERSION}"
 
 cd build || \
 	die "Could not CD to build"
@@ -17,36 +20,36 @@ cd gcc-native || \
 
 GCCDIR=$BUILD/gcc-${GCC_VERSION}
 
-export PATH="$LIBPREFIX:$PATH"
+export PATH="$NATIVEPREFIX/bin:$PATH"
 
 test -f config.log || {
 	case `uname` in
 		Darwin)
-			../gcc-${GCC_VERSION}/configure --prefix=$LIBPREFIX \
+			../gcc-${GCC_VERSION}/configure --prefix=$NATIVEPREFIX \
 			       --enable-languages=c \
 			       --enable-lto \
-			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
-                               --with-binutils=$LIBPREFIX \
+			       --with-gmp=$NATIVEPREFIX --with-mpfr=$NATIVEPREFIX --with-mpc=$NATIVEPREFIX \
+                               --with-binutils=$NATIVEPREFIX \
 			       --disable-libssp >$LOGS/gcc-config-native.log 2>&1 || \
 					die "Could not configure GCC ${GCC_VERSION}"
 			;;
 		Linux)
 			export CFLAGS="-fvisibility=hidden"
-			../gcc-${GCC_VERSION}/configure --prefix=$LIBPREFIX \
+			../gcc-${GCC_VERSION}/configure --prefix=$NATIVEPREFIX \
 			       --enable-languages=c \
 			       --enable-lto \
-			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
-                               --with-binutils=$LIBPREFIX \
+			       --with-gmp=$NATIVEPREFIX --with-mpfr=$NATIVEPREFIX --with-mpc=$NATIVEPREFIX \
+                               --with-binutils=$NATIVEPREFIX \
 			       --disable-libssp >$LOGS/gcc-config-native.log 2>&1 || \
 					die "Could not configure GCC ${GCC_VERSION}"
 			;;
 		*)
 			export PATH="`pwd`:$PATH"
-			../gcc-${GCC_VERSION}/configure --prefix=$LIBPREFIX --host=i686-pc-mingw32 \
+			../gcc-${GCC_VERSION}/configure --prefix=$NATIVEPREFIX --host=i686-pc-mingw32 \
 			       --enable-languages=c \
 			       --enable-lto \
-			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
-                               --with-binutils=$LIBPREFIX \
+			       --with-gmp=$NATIVEPREFIX --with-mpfr=$NATIVEPREFIX --with-mpc=$NATIVEPREFIX \
+                               --with-binutils=$NATIVEPREFIX \
 			       --disable-libssp >$LOGS/gcc-config-native.log 2>&1 || \
 					die "Could not configure GCC ${GCC_VERSION}"
 			;;
@@ -62,20 +65,5 @@ $MAKE $MAKEFLAGS >$LOGS/gcc-make-native.log 2>&1 || \
 $MAKE install >$LOGS/gcc-install-native.log 2>&1 || \
 	die "Could not install ${GCC_VERSION}"
 
-case `uname` in
-	Darwin)
-		;;
-	Linux)
-		;;
-	*)
-		cp /mingw/bin/libiconv-2.dll $PREFIX/bin
-		cp /mingw/bin/libintl-8.dll $PREFIX/bin
-				;;
-esac
 
-cd $GCCDIR
-for file in COPYING*; do
-	cp $file $PREFIX/licenses/$file.gcc
-done
-
-echod "Done building GCC ${GCC_VERSION}"
+echod "Done building Native GCC ${GCC_VERSION}"

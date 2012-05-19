@@ -23,8 +23,6 @@ sleep 5
 			die "coreutils build failed"
 	}
 
-	export CC="$LOCALCC"
-
 	./build-gmp-native.sh || \
 		die "gmp build failed"
 
@@ -39,9 +37,15 @@ sleep 5
 
 	./build-gcc-native.sh || \
 		die "gcc build failed"
+) 
+
+test -f $FAIL_SENTRY && (
+	rm $FAIL_SENTRY
+	exit 1
+)
 
 
-	export CC="$LIBPREFIX/bin/gcc"
+(
 
 	./build-gmp.sh || \
 		die "gmp build failed"

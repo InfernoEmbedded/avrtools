@@ -10,7 +10,7 @@ cd build/simavr || \
 	die "Could not CD to build/simavr"
 
 $MAKE V=1 AVR_ROOT=$PREFIX AVR_INC=$PREFIX/avr \
-	IPATH+=.:`pwd`/include:`pwd`/simavr/sim:`pwd`/examples/parts:$PREFIX/include \
+	IPATH+=.:`pwd`/include:`pwd`/simavr/sim:`pwd`/examples/parts:`pwd`/examples/shared:$PREFIX/include \
 	AVR=$PREFIX/bin/avr- \
 		>$LOGS/simavr-make.log 2>&1 || \
 			die "Could not make simavr"
