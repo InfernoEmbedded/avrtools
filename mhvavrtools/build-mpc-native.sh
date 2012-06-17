@@ -7,7 +7,7 @@ native
 
 echod "Building Native MPC ${MPC_VERSION}"
 
-cd build/mpc-${MPC_VERSION} || \
+cd build/native/mpc-${MPC_VERSION} || \
 	die "Could not CD to build/mpc-${MPC_VERSION}"
 
 test -f config.log || {
@@ -26,11 +26,5 @@ $MAKE $MAKEFLAGS >$LOGS/mpc-native-make.log 2>&1 || \
 
 $MAKE install >$LOGS/mpc-native-install.log 2>&1 || \
 	die "Could not install ${MPC_VERSION}"
-
-$MAKE distclean >$LOGS/mpc-native-distclean.log 2>&1
-
-cd ../gmp-${GMP_VERSION}
-
-$MAKE distclean >$LOGS/gmp-distclean.log 2>&1
 
 echod "Done building Native MPC ${MPC_VERSION}"

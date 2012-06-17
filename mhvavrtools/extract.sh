@@ -7,6 +7,14 @@ mkdir build
 cd build
 mkdir bin
 
+mkdir native
+cd native
+tar jxvf ../../download/binutils*.bz2
+tar jxvf ../../download/gmp*.bz2
+tar jxvf ../../download/mpfr*.bz2
+tar zxvf ../../download/mpc*.tar.gz
+cd ..
+
 for file in ../download/*.bz2; do
 	test -e $file || \
 		continue

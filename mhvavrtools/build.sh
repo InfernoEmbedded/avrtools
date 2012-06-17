@@ -17,7 +17,7 @@ test -d build/avrdude-${AVRDUDE_VERSION} || \
 # Need this sleep here otherwise the configure for gmp fails - unable to rm test executables
 sleep 5
 
-(
+test -e build/native/bin/gcc || (
 	[ `uname` = MINGW32_NT-6.1 ] && {
 		./build-coreutils.sh || \
 			die "coreutils build failed"

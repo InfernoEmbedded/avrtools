@@ -7,7 +7,7 @@ native
 
 echod "Building Native GMP ${GMP_VERSION}"
 
-cd build/gmp-${GMP_VERSION} || \
+cd build/native/gmp-${GMP_VERSION} || \
 	die "Could not CD to build/gmp-${GMP_VERSION}"
 
 test -f config.log || {

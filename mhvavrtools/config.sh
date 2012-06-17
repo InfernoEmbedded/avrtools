@@ -2,7 +2,7 @@
 #AUTOCONF_VERSION=2.61
 BINUTILS_VERSION=2.22.52
 LIBTOOL_VERSION=2.4
-GCC_VERSION=4.7-20120512
+GCC_VERSION=4.7-20120609
 MAKE_VERSION=3.82
 GMP_VERSION=5.0.2
 MPFR_VERSION=3.1.0
@@ -53,8 +53,8 @@ case `uname` in
 				;;
 			esac
 		export EXE=
-		export NATIVECFLAGS="-flto"
-		export NATIVECPPFLAGS="-flto"
+		export NATIVECFLAGS=""
+		export NATIVECPPFLAGS=""
 		export CFLAGS="-flto -O3"
 		export CPPFLAGS="-flto -O3"
 		export LDFLAGS="-flto"
@@ -65,8 +65,8 @@ case `uname` in
 		export LOCALCC="gcc"
 		export PATH="/mingw/bin:/bin:/usr/local/bin:/c/Python2.7:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/system32/wbem:/c/Program Files (x86)/Objective Caml/bin:/c/Program Files/Objective Caml/bin:/c/Program Files (x86)/flexdll:/c/Program Files/flexdll"
 		export EXE=".exe"
-		export NATIVECFLAGS="-flto"
-		export NATIVECPPFLAGS="-flto"
+		export NATIVECFLAGS=""
+		export NATIVECPPFLAGS=""
 		export CFLAGS="-flto -O3"
 		export CPPFLAGS="-flto -O3"
 		export LDFLAGS="-flto"
