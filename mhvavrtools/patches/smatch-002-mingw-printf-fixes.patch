@@ -455,38 +455,14 @@ diff -u smatch.orig/tokenize.c smatch/tokenize.c
 Common subdirectories: smatch.orig/validation and smatch/validation
 --- smatch/check_overflow.c.orig	2011-11-05 11:04:25 +1100
 +++ smatch/check_overflow.c	2011-11-05 11:04:28 +1100
-@@ -19,10 +19,10 @@
- };
- 
- /*
-- * This check has two smatch IDs.  
-- * my_used_id - keeps a record of array offsets that have been used.  
-+ * This check has two smatch IDs.
-+ * my_used_id - keeps a record of array offsets that have been used.
-  *              If the code checks that they are within bounds later on,
-- *              we complain about using an array offset before checking 
-+ *              we complain about using an array offset before checking
-  *              that it is within bounds.
-  */
- static int my_used_id;
-@@ -112,7 +112,7 @@
- 
- 		if (!option_spammy) {
- 			struct smatch_state *state;
--			
-+
- 			state = get_state_expr(SMATCH_EXTRA, offset);
- 			if (state && is_whole_range(state))
- 				return;
-@@ -124,7 +124,11 @@
+@@ -125,7 +125,11 @@
  		 * literal array with 4 or less chars.
  		 */
  		if (name && strcmp(name, "__s1") && strcmp(name, "__s2")) {
--			sm_msg("%s: buffer overflow '%s' %d <= %lld", 
 +#ifdef __MINGW32__
 +			sm_msg("%s: buffer overflow '%s' %d <= %I64d",
 +#else
-+			sm_msg("%s: buffer overflow '%s' %d <= %lld",
+ 			sm_msg("%s: buffer overflow '%s' %d <= %lld",
 +#endif
  				level, name, array_size, max);
  		}
