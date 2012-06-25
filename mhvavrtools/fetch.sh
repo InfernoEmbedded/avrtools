@@ -5,11 +5,9 @@ test -d download || \
 	mkdir download
 
 cd download
-#$FETCH http://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-core-${GCC_VERSION}.tar.bz2 &
-#$FETCH http://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-g++-${GCC_VERSION}.tar.bz2 &
-#$FETCH http://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-${GCC_VERSION}.tar.bz2 &
+$FETCH http://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-${GCC_VERSION}.tar.bz2 &
 # Use for GCC snapshot
-$FETCH http://gcc.parentingamerica.com/snapshots/${GCC_VERSION}/gcc-${GCC_VERSION}.tar.bz2 &
+#$FETCH http://gcc.parentingamerica.com/snapshots/${GCC_VERSION}/gcc-${GCC_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/make/make-${MAKE_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/gmp/gmp-${GMP_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/mpfr/mpfr-${MPFR_VERSION}.tar.bz2 &
@@ -70,13 +68,24 @@ test ! -f "$GIT" && \
 #test -d simulavr || \
 #	"$GIT" clone git://git.sv.gnu.org/simulavr.git &
 
-test -d simavr || \
+test -d simavr && ( \
+		cd simavr
+		"$GIT" pull
+		cd ..
+	) || \
 	"$GIT" clone git://gitorious.org/simavr/simavr.git &
 
-test -d mhvlib || \
+test -d mhvlib && ( \
+		cd mhvlib
+		"$GIT" pull
+		cd ..
+	) || \
 	"$GIT" clone http://git.makehackvoid.com/mhvlib.git &
 
-test -d smatch || \
+test -d smatch && ( \
+		cd smatch
+		"$GIT" pull
+	) || \
 	"$GIT" clone git://repo.or.cz/smatch.git &
 
 

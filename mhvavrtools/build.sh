@@ -39,11 +39,9 @@ test -e build/native/bin/gcc || (
 		die "gcc build failed"
 ) 
 
-test -f $FAIL_SENTRY && (
-	rm $FAIL_SENTRY
+test -f $FAIL_SENTRY && \
+	rm $FAIL_SENTRY && \
 	exit 1
-)
-
 
 (
 
@@ -106,10 +104,9 @@ sleep 30
 
 wait
 
-test -f $FAIL_SENTRY && (
-	rm $FAIL_SENTRY
+test -f $FAIL_SENTRY && \
+	rm $FAIL_SENTRY && \
 	exit 1
-)
 
 ./strip.sh
 

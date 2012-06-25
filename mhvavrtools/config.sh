@@ -2,7 +2,7 @@
 #AUTOCONF_VERSION=2.61
 BINUTILS_VERSION=2.22.52
 LIBTOOL_VERSION=2.4
-GCC_VERSION=4.7-20120609
+GCC_VERSION=4.7.1
 MAKE_VERSION=3.82
 GMP_VERSION=5.0.2
 MPFR_VERSION=3.1.0
@@ -28,7 +28,7 @@ COCCINELLE_VERSION=1.0.0-rc7
 GLUT_VERSION=3.7.6
 GDB_VERSION=7.4.1
 
-# SimAVR derendancies
+# SimAVR dependancies
 LIBELF_VERSION=0.8.9
 
 export TOP=`pwd`
@@ -40,9 +40,9 @@ case `uname` in
 		export ABI=64
 		export NATIVECFLAGS=""
 		export NATIVECPPFLAGS=""
-		export CFLAGS="-flto -O3"
-		export CPPFLAGS="-flto -O3"
-		export LDFLAGS="-flto"
+		export CFLAGS="-march=corei7 -O3"
+		export CPPFLAGS="-march=corei7 -O3"
+		export LDFLAGS=""
 		export LOCALCC="/usr/bin/gcc-4.2"
 		export EXE=
 		;;
@@ -50,13 +50,17 @@ case `uname` in
 		case `uname -m` in
 			i686)
 				export ABI=32
+				export CFLAGS="-march=atom -flto -O3"
+				export CPPFLAGS="-march=atom -flto -O3"
+				;;
+			*)
+				export CFLAGS="-march=corei7 -flto -O3"
+				export CPPFLAGS="-march=corei7 -flto -O3"
 				;;
 			esac
 		export EXE=
 		export NATIVECFLAGS=""
 		export NATIVECPPFLAGS=""
-		export CFLAGS="-flto -O3"
-		export CPPFLAGS="-flto -O3"
 		export LDFLAGS="-flto"
 		export LOCALCC="gcc"
 		;;
@@ -67,12 +71,14 @@ case `uname` in
 		export EXE=".exe"
 		export NATIVECFLAGS=""
 		export NATIVECPPFLAGS=""
-		export CFLAGS="-flto -O3"
-		export CPPFLAGS="-flto -O3"
+		export CFLAGS="-march=atom -flto -O3"
+		export CPPFLAGS="-march=atom -flto -O3"
 		export LDFLAGS="-flto"
 		;;
 esac
 
+export AVRCFLAGS="-flto -Os"
+export AVRCPPFLAGS="-flto -Os"
 export LIBPREFIX="$TOP/build/bin"
 export NATIVEPREFIX="$TOP/build/native"
 LOGS="$TOP/logs"

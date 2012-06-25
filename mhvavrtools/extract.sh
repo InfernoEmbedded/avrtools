@@ -7,12 +7,13 @@ mkdir build
 cd build
 mkdir bin
 
+echod Extracting native toolchain
 mkdir native
 cd native
-tar jxvf ../../download/binutils*.bz2
-tar jxvf ../../download/gmp*.bz2
-tar jxvf ../../download/mpfr*.bz2
-tar zxvf ../../download/mpc*.tar.gz
+tar jxf ../../download/binutils*.bz2
+tar jxf ../../download/gmp*.bz2
+tar jxf ../../download/mpfr*.bz2
+tar zxf ../../download/mpc*.tar.gz
 cd ..
 
 for file in ../download/*.bz2; do
