@@ -16,6 +16,7 @@ cd gcc-obj || \
 	die "Could not cd to gcc-obj"
 
 GCCDIR=$BUILD/gcc-${GCC_VERSION}
+export CFLAGS_FOR_TARGET="$AVRCFLAGS"
 
 test -f config.log || {
 	case `uname` in
@@ -40,7 +41,8 @@ test -f config.log || {
 			export PATH="`pwd`:$PATH"
 			../gcc-${GCC_VERSION}/configure --prefix=$PREFIX --host=i686-pc-mingw32 --target=avr \
 			       --enable-languages=c,c++ --with-dwarf2 \
-			       -enable-win32-registry=MHV-AVR-Tools --enable-lto \
+			       -enable-win32-registry=MHV-AVR-Tools \
+				   --enable-lto \
 			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
 			       --disable-libssp >$LOGS/gcc-config.log 2>&1 || \
 					die "Could not configure GCC ${GCC_VERSION}"

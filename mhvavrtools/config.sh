@@ -41,7 +41,7 @@ case `uname` in
 		export NATIVECFLAGS=""
 		export NATIVECPPFLAGS=""
 		export CFLAGS="-march=corei7 -O3"
-		export CPPFLAGS="-march=corei7 -O3"
+		export CXXFLAGS="-march=corei7 -O3"
 		export LDFLAGS=""
 		export LOCALCC="/usr/bin/gcc-4.2"
 		export EXE=
@@ -51,16 +51,16 @@ case `uname` in
 			i686)
 				export ABI=32
 				export CFLAGS="-march=atom -flto -O3"
-				export CPPFLAGS="-march=atom -flto -O3"
+				export CXXFLAGS="-march=atom -flto -O3"
 				;;
 			*)
 				export CFLAGS="-march=corei7 -flto -O3"
-				export CPPFLAGS="-march=corei7 -flto -O3"
+				export CXXFLAGS="-march=corei7 -flto -O3"
 				;;
 			esac
 		export EXE=
 		export NATIVECFLAGS=""
-		export NATIVECPPFLAGS=""
+		export NATIVECXXFLAGS=""
 		export LDFLAGS="-flto"
 		export LOCALCC="gcc"
 		;;
@@ -72,13 +72,13 @@ case `uname` in
 		export NATIVECFLAGS=""
 		export NATIVECPPFLAGS=""
 		export CFLAGS="-march=atom -flto -O3"
-		export CPPFLAGS="-march=atom -flto -O3"
+		export CXXFLAGS="-march=atom -flto -O3"
 		export LDFLAGS="-flto"
 		;;
 esac
 
 export AVRCFLAGS="-flto -Os"
-export AVRCPPFLAGS="-flto -Os"
+export AVRCXXFLAGS="-flto -Os"
 export LIBPREFIX="$TOP/build/bin"
 export NATIVEPREFIX="$TOP/build/native"
 LOGS="$TOP/logs"
@@ -121,7 +121,7 @@ native() {
 	CFLAGS="$NATIVECFLAGS -I$NATIVEPREFIX/include"
 	export CFLAGS
 
-	CPPFLAGS="$NATIVECPPFLAGS -I$NATIVEPREFIX/include"
+	CXXFLAGS="$NATIVECPPFLAGS -I$NATIVEPREFIX/include"
 	export CPPFLAGS
 
 	LDFLAGS="-L$NATIVEPREFIX/lib"
