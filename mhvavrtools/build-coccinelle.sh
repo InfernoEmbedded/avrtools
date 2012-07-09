@@ -1,6 +1,7 @@
 #!/bin/sh
 
 . ./config.sh
+bootstrap coccinelle
 
 echod "Building coccinelle ${COCCINELLE_VERSION}"
 

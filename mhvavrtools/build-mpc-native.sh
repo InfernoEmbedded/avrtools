@@ -2,8 +2,7 @@
 
 . ./config.sh
 
-native
-
+native mpc
 
 echod "Building Native MPC ${MPC_VERSION}"
 

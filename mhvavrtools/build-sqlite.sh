@@ -2,6 +2,8 @@
 
 . ./config.sh
 
+bootstrap sqlite
+
 echod "Building sqlite ${SQLITE_VERSION}"
 
 cd build/sqlite-autoconf-${SQLITE_VERSION} || \

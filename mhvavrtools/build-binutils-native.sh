@@ -2,7 +2,7 @@
 
 . ./config.sh
 
-native
+native binutils
 
 echod "Building Native binutils ${BINUTILS_VERSION}"
 

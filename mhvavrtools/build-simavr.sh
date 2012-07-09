@@ -2,6 +2,8 @@
 
 . ./config.sh
 
+bootstrap simavr
+
 echod "Building simavr"
 
 export PATH="$PATH:$PREFIX/bin"

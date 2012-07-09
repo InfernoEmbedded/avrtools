@@ -2,6 +2,8 @@
 
 . ./config.sh
 
+bootstrap gcc
+
 echod "Building GCC ${GCC_VERSION}"
 
 cd build || \

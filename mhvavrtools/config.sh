@@ -38,8 +38,8 @@ export PREFIX="$TOP/mhvavrtools"
 case `uname` in
 	Darwin)
 		export ABI=64
-		export NATIVECFLAGS=""
-		export NATIVECPPFLAGS=""
+		export NATIVECFLAGS="-O2"
+		export NATIVECXXFLAGS="-O2"
 		export CFLAGS="-march=corei7 -O3"
 		export CXXFLAGS="-march=corei7 -O3"
 		export LDFLAGS=""
@@ -59,26 +59,24 @@ case `uname` in
 				;;
 			esac
 		export EXE=
-		export NATIVECFLAGS=""
-		export NATIVECXXFLAGS=""
+		export NATIVECFLAGS="-O2"
+		export NATIVECXXFLAGS="-O2"
 		export LDFLAGS="-flto"
 		export LOCALCC="gcc"
 		;;
 	*)
-		export ABI=32
+#		export ABI=32
 		export LOCALCC="gcc"
 		export PATH="/mingw/bin:/bin:/usr/local/bin:/c/Python2.7:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/system32/wbem:/c/Program Files (x86)/Objective Caml/bin:/c/Program Files/Objective Caml/bin:/c/Program Files (x86)/flexdll:/c/Program Files/flexdll"
 		export EXE=".exe"
-		export NATIVECFLAGS=""
-		export NATIVECPPFLAGS=""
+		export NATIVECFLAGS="-O2"
+		export NATIVECXXFLAGS="-O2"
 		export CFLAGS="-march=atom -flto -O3"
 		export CXXFLAGS="-march=atom -flto -O3"
 		export LDFLAGS="-flto"
 		;;
 esac
 
-export AVRCFLAGS="-flto -Os"
-export AVRCXXFLAGS="-flto -Os"
 export LIBPREFIX="$TOP/build/bin"
 export NATIVEPREFIX="$TOP/build/native"
 LOGS="$TOP/logs"
@@ -98,15 +96,6 @@ else
 fi
 export FETCH
 
-
-export CC="$NATIVEPREFIX/bin/gcc"
-
-CPPFLAGS="$CPPFLAGS -I$PREFIX/include -I$LIBPREFIX/include"
-export CPPFLAGS
-
-LDFLAGS="-L$PREFIX/lib -L$LIBPREFIX/lib"
-export LDFLAGS
-
 echod() {
 	echo `date`: $*
 }
@@ -118,16 +107,55 @@ die() {
 }
 
 native() {
-	CFLAGS="$NATIVECFLAGS -I$NATIVEPREFIX/include"
-	export CFLAGS
+	product="$1"
 
-	CXXFLAGS="$NATIVECPPFLAGS -I$NATIVEPREFIX/include"
-	export CPPFLAGS
+	case $product in
+	*)
+		CFLAGS="$NATIVECFLAGS -I$NATIVEPREFIX/include"
+		export CFLAGS
 
-	LDFLAGS="-L$NATIVEPREFIX/lib"
-	export LDFLAGS
+		CXXFLAGS="$NATIVECXXFLAGS -I$NATIVEPREFIX/include"
+		export CPPFLAGS
 
-	export CC="$LOCALCC"
+		LDFLAGS="-L$NATIVEPREFIX/lib"
+		export LDFLAGS
+
+		export CC="$LOCALCC"
+		export LD="ld"
+		;;
+	esac
 }
 
+avr() {
+	product="$1"
 
+	case $product in
+	*)
+		export CFLAGS="-flto -Os"
+		export CXXFLAGS="-flto -Os"
+		export PATH="$PATH:$PREFIX/bin"
+		export CC="$PREFIX/bin/avr-gcc"
+		export LD="$PREFIX/bin/avr-ld"
+		;;
+	esac
+}
+
+bootstrap() {
+	product="$1"
+
+	export CFLAGS="$CFLAGS -I$PREFIX/include -I$LIBPREFIX/include"
+	export CXXFLAGS="$CXXFLAGS -I$PREFIX/include -I$LIBPREFIX/include"
+	export LDFLAGS="-flto -L$PREFIX/lib -L$LIBPREFIX/lib"
+	export CC="$NATIVEPREFIX/bin/gcc"
+	export LD="$NATIVEPREFIX/bin/ld"
+
+	case $product in
+	binutils|gcc)
+		case `uname` in
+			MINGW32_NT-6.1)
+				native $product
+			;;
+		esac
+		;;
+	esac
+}

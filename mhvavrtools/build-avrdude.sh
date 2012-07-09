@@ -2,6 +2,8 @@
 
 . ./config.sh
 
+bootstrap avrdude
+
 echod "Building AVRDUDE ${AVRDUDE_VERSION}"
 
 cd build/avrdude-${AVRDUDE_VERSION} || \

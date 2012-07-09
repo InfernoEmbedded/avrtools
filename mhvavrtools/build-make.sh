@@ -2,6 +2,8 @@
 
 . ./config.sh
 
+bootstrap make
+
 echod "Building make ${MAKE_VERSION}"
 
 cd build/make-${MAKE_VERSION} || \

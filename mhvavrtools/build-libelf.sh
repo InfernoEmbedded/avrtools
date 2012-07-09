@@ -2,6 +2,8 @@
 
 . ./config.sh
 
+bootstrap libelf
+
 echod "Building LibELF ${LIBELF_VERSION}"
 
 cd build/libelf-${LIBELF_VERSION} || \

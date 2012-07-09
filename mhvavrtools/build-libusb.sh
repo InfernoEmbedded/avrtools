@@ -2,6 +2,8 @@
 
 . ./config.sh
 
+bootstrap libusb
+
 case `uname` in
 	Darwin)
 		echod "Building libusb ${LIBUSB_VERSION}"

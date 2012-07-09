@@ -2,6 +2,8 @@
 
 . ./config.sh
 
+bootstrap mpc
+
 echod "Building MPC ${MPC_VERSION}"
 
 cd build/mpc-${MPC_VERSION} || \

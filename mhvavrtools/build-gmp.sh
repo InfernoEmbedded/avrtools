@@ -2,6 +2,8 @@
 
 . ./config.sh
 
+bootstrap gmp
+
 echod "Building GMP ${GMP_VERSION}"
 
 cd build/gmp-${GMP_VERSION} || \

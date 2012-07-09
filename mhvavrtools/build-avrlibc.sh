@@ -2,15 +2,12 @@
 
 . ./config.sh
 
+avr avrlibc
+
 echod "Building AVR-libc ${AVRLIBC_VERSION}"
 
 cd build/avr-libc-${AVRLIBC_VERSION} || \
 	die "Could not CD to build/gmp-${AVRLIBC_VERSION}"
-
-export PATH="$PATH:$PREFIX/bin"
-export CC="$PREFIX/bin/avr-gcc"
-export CFLAGS="$AVRCFLAGS"
-export CPPFLAGS="$AVRCPPFLAGS"
 
 case `uname` in
 	Darwin)

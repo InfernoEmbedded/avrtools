@@ -2,6 +2,8 @@
 
 . ./config.sh
 
+bootstrap smatch
+
 echod "Building smatch"
 
 cd build/smatch || \

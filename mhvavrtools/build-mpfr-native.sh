@@ -2,7 +2,7 @@
 
 . ./config.sh
 
-native
+native mpfr
 
 echod "Building Native MPFR ${MPFR_VERSION}"
 

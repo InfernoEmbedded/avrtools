@@ -2,6 +2,8 @@
 
 . ./config.sh
 
+bootstrap mpfr
+
 echod "Building MPFR ${MPFR_VERSION}"
 
 cd build/mpfr-${MPFR_VERSION} || \

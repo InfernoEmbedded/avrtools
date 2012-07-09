@@ -2,7 +2,7 @@
 
 . ./config.sh
 
-native
+native gcc
 
 
 echod "Building Native GCC ${GCC_VERSION}"

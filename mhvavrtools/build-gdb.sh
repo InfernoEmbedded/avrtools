@@ -2,6 +2,8 @@
 
 . ./config.sh
 
+bootstrap gdb
+
 echod "Building GDB ${GDB_VERSION}"
 
 cd build/gdb-${GDB_VERSION} || \
@@ -28,7 +30,7 @@ case `uname` in
 		;;
 	*)
 		cp /mingw/bin/libgcc_s_dw2-1.dll $PREFIX/bin
-				;;
+		;;
 esac
 
 for file in COPYING*; do

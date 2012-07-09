@@ -2,7 +2,7 @@
 
 . ./config.sh
 
-native
+native gmp
 
 
 echod "Building Native GMP ${GMP_VERSION}"

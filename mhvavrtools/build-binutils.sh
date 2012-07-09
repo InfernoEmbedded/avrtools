@@ -2,6 +2,8 @@
 
 . ./config.sh
 
+bootstrap binutils
+
 echod "Building binutils ${BINUTILS_VERSION}"
 
 cd build/binutils-${BINUTILS_VERSION} || \
