@@ -16,7 +16,7 @@ tar jxf ../../download/mpfr*.bz2
 tar zxf ../../download/mpc*.tar.gz
 cd ..
 
-for file in ../download/*.bz2; do
+for file in ../download/*.bz2 ../download/gcc-4.7-binary/*.bz2; do
 	test -e $file || \
 		continue
 	echod "Extracting $file"

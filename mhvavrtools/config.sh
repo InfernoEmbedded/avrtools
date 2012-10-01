@@ -37,13 +37,14 @@ export PREFIX="$TOP/mhvavrtools"
 
 case `uname` in
 	Darwin)
-		export ABI=64
-		export NATIVECFLAGS="-O2"
-		export NATIVECXXFLAGS="-O2"
+#		export ABI=32
+#		export NATIVECFLAGS="-O3 -m32 -v --save-temps"
+		export NATIVECFLAGS="-O3"
+		export NATIVECXXFLAGS="-O3"
 		export CFLAGS="-march=corei7 -O3"
 		export CXXFLAGS="-march=corei7 -O3"
 		export LDFLAGS=""
-		export LOCALCC="/usr/bin/gcc-4.2"
+		export LOCALCC="/usr/gcc-4.7/bin/gcc-4.7"
 		export EXE=
 		;;
 	Linux)
@@ -120,7 +121,16 @@ native() {
 		LDFLAGS="-L$NATIVEPREFIX/lib"
 		export LDFLAGS
 
-		export CC="$LOCALCC"
+		case `uname` in
+			Darwin)
+				export CC="$TOP/patches/gcc-wrapper.sh"
+				export PATH="/usr/gcc-4.7/bin/:/usr/bin:$PATH"
+				;;
+			*)
+				export CC="$LOCALCC"
+				;;
+		esac
+
 		export LD="ld"
 		;;
 	esac

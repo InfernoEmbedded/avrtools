@@ -20,7 +20,6 @@ cd gcc-native || \
 
 GCCDIR=$BUILD/gcc-${GCC_VERSION}
 
-export PATH="$NATIVEPREFIX/bin:$PATH"
 
 test -f config.log || {
 	case `uname` in
@@ -34,6 +33,7 @@ test -f config.log || {
 					die "Could not configure Native GCC ${GCC_VERSION}"
 			;;
 		Linux)
+			export PATH="$NATIVEPREFIX/bin:$PATH"
 #			export CFLAGS="-fvisibility=hidden"
 			../../gcc-${GCC_VERSION}/configure --prefix=$NATIVEPREFIX \
 			       --enable-languages=c \
@@ -44,6 +44,7 @@ test -f config.log || {
 					die "Could not configure Native GCC ${GCC_VERSION}"
 			;;
 		*)
+			export PATH="$NATIVEPREFIX/bin:$PATH"
 			export PATH="`pwd`:$PATH"
 			../../gcc-${GCC_VERSION}/configure --prefix=$NATIVEPREFIX --host=i686-pc-mingw32 \
 			       --enable-languages=c \
