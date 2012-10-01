@@ -66,9 +66,9 @@ diff -ur simavr.orig//examples/parts/uart_udp.c simavr//examples/parts/uart_udp.
 diff -ur simavr.orig//simavr/sim/sim_gdb.c simavr//simavr/sim/sim_gdb.c
 --- simavr.orig//simavr/sim/sim_gdb.c	2012-03-11 12:05:39 +1100
 +++ simavr//simavr/sim/sim_gdb.c	2012-03-12 10:34:32 +1100
-@@ -43,6 +43,12 @@
- 
- #define DBG(w)
+@@ -55,6 +55,12 @@
+ 	} points[WATCH_LIMIT];
+ } avr_gdb_watchpoints_t;
  
 +#ifdef __MINGW32__
 +#define GDB_SOCKET_ERROR "Winsock error"
@@ -79,7 +79,7 @@ diff -ur simavr.orig//simavr/sim/sim_gdb.c simavr//simavr/sim/sim_gdb.c
  typedef struct avr_gdb_t {
  	avr_t * avr;
  	int		listen;	// listen socket
-@@ -407,38 +413,69 @@
+@@ -541,38 +547,67 @@
  	return gdb_network_handler(g, sleep);
  }
  
@@ -98,11 +98,6 @@ diff -ur simavr.orig//simavr/sim/sim_gdb.c simavr//simavr/sim/sim_gdb.c
  {
 -	avr_gdb_t * g = malloc(sizeof(avr_gdb_t));
 -	memset(g, 0, sizeof(avr_gdb_t));
--
- 	avr->gdb = NULL;
- 
--	if ((g->listen = socket(PF_INET, SOCK_STREAM, 0)) < 0) {
--		fprintf(stderr, "Can't create socket: %s", strerror(errno));
 +	avr_gdb_t * gdb = malloc(sizeof(avr_gdb_t));
 +	if (NULL == gdb) {
 +		fprintf(stderr, "Could not malloc gdb");
@@ -111,22 +106,25 @@ diff -ur simavr.orig//simavr/sim/sim_gdb.c simavr//simavr/sim/sim_gdb.c
 +	memset(gdb, 0, sizeof(avr_gdb_t));
 +
 +#if __MINGW32__
-+    WSADATA t_wsa; // WSADATA structure
-+    WORD wVers; // version number
-+    int i_error; // error number
++	WSADATA t_wsa; // WSADATA structure
++	WORD wVers; // version number
++	int i_error; // error number
 +
-+    wVers = MAKEWORD(2, 2); // Set the version number to 2.2
-+    i_error = WSAStartup(wVers, &t_wsa); // Start the WSADATA
-+    if(i_error != NO_ERROR){
-+    	fprintf(stderr, "Error at WSAStartup(): %d\n", i_error);
-+    	avr_gdb_cleanup(&gdb);
-+    	return -1;
-+    }
++	wVers = MAKEWORD(2, 2); // Set the version number to 2.2
++	i_error = WSAStartup(wVers, &t_wsa); // Start the WSADATA
++	if(i_error != NO_ERROR){
++	    	fprintf(stderr, "Error at WSAStartup(): %d\n", i_error);
++	    	avr_gdb_cleanup(&gdb);
++	    	return -1;
++	}
 +#endif
-+
+ 
+ 	avr->gdb = NULL;
+ 
+-	if ((g->listen = socket(PF_INET, SOCK_STREAM, 0)) < 0) {
 +	if ((gdb->listen = socket(PF_INET, SOCK_STREAM, 0)) < 0) {
-+		fprintf(stderr, "Can't create socket: %s\n", GDB_SOCKET_ERROR);
-+    	avr_gdb_cleanup(&gdb);
+ 		AVR_LOG(avr, LOG_ERROR, "GDB: Can't create socket: %s", strerror(errno));
++		avr_gdb_cleanup(&gdb);
  		return -1;
  	}
  
@@ -139,16 +137,13 @@ diff -ur simavr.orig//simavr/sim/sim_gdb.c simavr//simavr/sim/sim_gdb.c
  	address.sin_port = htons (avr->gdb_port);
  
 -	if (bind(g->listen, (struct sockaddr *) &address, sizeof(address))) {
--		fprintf(stderr, "Can not bind socket: %s", strerror(errno));
 +	if (bind(gdb->listen, (struct sockaddr *) &address, sizeof(address))) {
-+		fprintf(stderr, "Can not bind socket: %s\n", GDB_SOCKET_ERROR);
-+    	avr_gdb_cleanup(&gdb);
+ 		AVR_LOG(avr, LOG_ERROR, "GDB: Can not bind socket: %s", strerror(errno));
  		return -1;
  	}
 -	if (listen(g->listen, 1)) {
 +	if (listen(gdb->listen, 1)) {
  		perror("listen");
-+    	avr_gdb_cleanup(&gdb);
  		return -1;
  	}
  	printf("avr_gdb_init listening on port %d\n", avr->gdb_port);

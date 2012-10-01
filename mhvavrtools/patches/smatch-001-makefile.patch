@@ -1,7 +1,7 @@
 --- smatch/Makefile.orig	2012-05-12 11:16:10 +1000
 +++ smatch/Makefile	2012-05-12 13:45:37 +1000
 @@ -1,11 +1,11 @@
- VERSION=0.4.3
+ VERSION=0.4.4
  
 -OS = linux
 +OS = mingw
@@ -13,10 +13,10 @@
 +CFLAGS = -O2 -finline-functions -fno-strict-aliasing -flto
 +CFLAGS += -Wall -Wwrite-strings -I$(PREFIX)/include
 +LDFLAGS += -lm -lsqlite3
+ LD = gcc
  AR = ar
  
- #
-@@ -27,7 +27,6 @@
+@@ -33,7 +33,6 @@
  endif
  
  DESTDIR=
@@ -24,8 +24,8 @@
  BINDIR=$(PREFIX)/bin
  LIBDIR=$(PREFIX)/lib
  MANDIR=$(PREFIX)/share/man
-@@ -155,7 +154,7 @@
- 	$(QUIET_LINK)$(CC) -o $@ $^ $($@_EXTRA_OBJS) $(LDFLAGS)
+@@ -187,7 +186,7 @@
+ 	$(QUIET_LINK)$(LD) -o $@ $^ $($@_EXTRA_OBJS) $(LDFLAGS)
  
  smatch: smatch.o $(SMATCH_FILES) $(SMATCH_CHECKS) $(LIBS) 
 -	$(CC) -o $@ $< $(SMATCH_FILES) $(SMATCH_CHECKS) $(LIBS) $(LDFLAGS)
