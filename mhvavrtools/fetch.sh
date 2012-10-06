@@ -77,6 +77,13 @@ wait
 #	"$GIT" clone git://git.sv.gnu.org/simulavr.git &
 
 
+test -d simavr && ( \
+		cd simavr
+		"$GIT" pull
+		cd ..
+	) || \
+	"$GIT" clone git://gitorious.org/simavr/simavr.git &
+
 test -d mhvlib && ( \
 		cd mhvlib
 		"$GIT" pull

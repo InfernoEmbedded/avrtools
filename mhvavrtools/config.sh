@@ -41,8 +41,8 @@ case `uname` in
 #		export NATIVECFLAGS="-O3 -m32 -v --save-temps"
 		export NATIVECFLAGS="-O3"
 		export NATIVECXXFLAGS="-O3"
-		export CFLAGS="-march=corei7 -O3"
-		export CXXFLAGS="-march=corei7 -O3"
+		export CFLAGS="-O3"
+		export CXXFLAGS="-O3"
 		export LDFLAGS=""
 		export LOCALCC="/usr/gcc-4.7/bin/gcc-4.7"
 		export EXE=
@@ -158,6 +158,7 @@ bootstrap() {
 	export LDFLAGS="-flto -L$PREFIX/lib -L$LIBPREFIX/lib"
 	export CC="$NATIVEPREFIX/bin/gcc"
 	export LD="$NATIVEPREFIX/bin/ld"
+	export PATH="$NATIVEPREFIX/bin:$PATH"
 
 	case $product in
 	binutils|gcc)

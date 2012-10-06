@@ -7,6 +7,16 @@ native gcc
 
 echod "Building Native GCC ${GCC_VERSION}"
 
+case `uname` in
+Darwin)
+	oldname=$NATIVEPREFIX/x86_64-apple-darwin*/bin/strip
+	newname="$oldname.orig"
+
+	test -e "$oldname" &&
+		mv "$oldname" "$newname"
+	;;
+esac
+
 cd build/native || \
 	die "Could not CD to build"
 
@@ -24,6 +34,7 @@ GCCDIR=$BUILD/gcc-${GCC_VERSION}
 test -f config.log || {
 	case `uname` in
 		Darwin)
+			export STRIP=/usr/bin/strip
 			../../gcc-${GCC_VERSION}/configure --prefix=$NATIVEPREFIX \
 			       --enable-languages=c \
 			       --enable-lto \
