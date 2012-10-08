@@ -530,15 +530,3 @@ Common subdirectories: smatch.orig/validation and smatch/validation
  	buff[255] = '\0';
  	return buff;
  }
-@@ -164,7 +171,11 @@
- 	struct data_range *ret;
- 
- 	if (min > max) {
-+#ifdef __MINGW32__
-+		sm_msg("Error invalid range %I64d to %I64d", min, max);
-+#else
- 		sm_msg("Error invalid range %lld to %lld", min, max);
-+#endif
- 		min = whole_range.min;
- 		max = whole_range.max;
- 	}

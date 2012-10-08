@@ -40,6 +40,8 @@ test -f config.log || {
 			       --enable-lto \
 			       --with-gmp=$NATIVEPREFIX --with-mpfr=$NATIVEPREFIX --with-mpc=$NATIVEPREFIX \
                                --with-binutils=$NATIVEPREFIX \
+                               --without-cloog \
+                               --without-ppl \
 			       --disable-libssp >$LOGS/gcc-config-native.log 2>&1 || \
 					die "Could not configure Native GCC ${GCC_VERSION}"
 			;;

@@ -44,7 +44,8 @@ case `uname` in
 		export CFLAGS="-O3"
 		export CXXFLAGS="-O3"
 		export LDFLAGS=""
-		export LOCALCC="/usr/gcc-4.7/bin/gcc-4.7"
+		export LOCALCC="$BUILD/gcc-4.7.1/bin/gcc-4.7"
+		export DYLD_LIBRARY_PATH="$BUILD/gcc-4.7.1/lib"
 		export EXE=
 		;;
 	Linux)
@@ -122,10 +123,8 @@ native() {
 		export LDFLAGS
 
 		case `uname` in
-			Darwin)
-				export CC="$TOP/patches/gcc-wrapper.sh"
-				export PATH="/usr/gcc-4.7/bin/:/usr/bin:$PATH"
-				;;
+#			Darwin)
+#				;;
 			*)
 				export CC="$LOCALCC"
 				;;
