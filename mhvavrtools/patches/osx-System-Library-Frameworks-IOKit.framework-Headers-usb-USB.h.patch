@@ -1,0 +1,88 @@
+--- /System/Library/Frameworks/IOKit.framework/Headers/usb/USB.h.orig	2012-10-09 20:08:14.000000000 +1100
++++ /System/Library/Frameworks/IOKit.framework/Headers/usb/USB.h	2012-10-09 20:10:17.000000000 +1100
+@@ -502,7 +502,7 @@
+ typedef struct IOUSBDescriptorHeader		IOUSBDescriptorHeader;
+ typedef IOUSBDescriptorHeader *			IOUSBDescriptorHeaderPtr;
+ 
+-#pragma pack(1)
++#pragma pack(push,1)
+ 	/*!
+ 	 @typedef IOUSBBOSDescriptor
+ 	 @discussion BOS Descriptor for a USB Device.  .
+@@ -577,7 +577,7 @@
+ 	};
+ 	typedef struct IOUSBDeviceCapabilityContainerID		IOUSBDeviceCapabilityContainerID;
+ 	typedef IOUSBDeviceCapabilityContainerID *			IOUSBDeviceCapabilityContainerIDPtr;
+-#pragma options align=reset
++#pragma pack(pop)
+ 	
+ /*!
+     @typedef IOUSBConfigurationDescriptor
+@@ -642,7 +642,7 @@
+ typedef struct IOUSBEndpointDescriptor	IOUSBEndpointDescriptor;
+ typedef IOUSBEndpointDescriptor *	IOUSBEndpointDescriptorPtr;
+ 
+-#pragma pack(1)
++#pragma pack(push,1)
+ 	/*!
+ 	 @typedef IOUSBSuperSpeedEndpointCompanionDescriptor
+ 	 @discussion Descriptor for a SuperSpeed USB Endpoint Cpmpanion.  See the USB Specification at <a href="http://www.usb.org"TARGET="_blank">http://www.usb.org</a>.
+@@ -656,7 +656,7 @@
+ 	};
+ 	typedef struct IOUSBSuperSpeedEndpointCompanionDescriptor	IOUSBSuperSpeedEndpointCompanionDescriptor;
+ 	typedef IOUSBSuperSpeedEndpointCompanionDescriptor *	IOUSBSuperSpeedEndpointCompanionDescriptorPtr;
+-#pragma options align=reset
++#pragma pack(pop)
+ 
+ enum{addPacketShift = 11};  // Bits for additional packets in maxPacketField. (Table 9-13)
+ #define mungeMaxPacketSize(w) ((w>1024)?(((w>>(addPacketShift))+1)*(w&((1<<addPacketShift)-1))):w)
+@@ -696,7 +696,7 @@
+     @typedef IOUSBDeviceQualifierDescriptor
+     @discussion USB Device Qualifier Descriptor.  See the USB Specification at <a href="http://www.usb.org"TARGET="_blank">http://www.usb.org</a>.
+ */
+-#pragma pack(1)
++#pragma pack(push,1)
+ struct IOUSBDeviceQualifierDescriptor
+ {
+ 	UInt8 			bLength;
+@@ -711,13 +711,13 @@
+ };
+ typedef struct IOUSBDeviceQualifierDescriptor	IOUSBDeviceQualifierDescriptor;
+ typedef IOUSBDeviceQualifierDescriptor *	IOUSBDeviceQualifierDescriptorPtr;
+-#pragma options align=reset
++#pragma pack(pop)
+ 
+ /*!
+     @typedef IOUSBDFUDescriptor
+     @discussion USB Device Firmware Update Descriptor.  See the USB Device Firmware Update Specification at <a href="http://www.usb.org"TARGET="_blank">http://www.usb.org</a>.
+ */
+-#pragma pack(1)
++#pragma pack(push,1)
+ struct IOUSBDFUDescriptor 
+ {
+         UInt8 			bLength;
+@@ -729,13 +729,13 @@
+ typedef struct 	IOUSBDFUDescriptor 		IOUSBDFUDescriptor;
+ typedef 		IOUSBDFUDescriptor *	IOUSBDFUDescriptorPtr;
+ 
+-#pragma options align=reset
++#pragma pack(pop)
+ 
+ /*!
+ @typedef IOUSBInterfaceAssociationDescriptor
+  @discussion USB Inerface Association Descriptor.  ECN to the USB 2.0 Spec.  See the USB Specification at <a href="http://www.usb.org"TARGET="_blank">http://www.usb.org</a>.
+  */
+-#pragma pack(1)
++#pragma pack(push,1)
+ struct IOUSBInterfaceAssociationDescriptor
+ {
+     UInt8 			bLength;
+@@ -749,7 +749,7 @@
+ };
+ typedef struct IOUSBInterfaceAssociationDescriptor	IOUSBInterfaceAssociationDescriptor;
+ typedef IOUSBInterfaceAssociationDescriptor *	IOUSBInterfaceAssociationDescriptorPtr;
+-#pragma options align=reset
++#pragma pack(pop)
+ 
+ /*!
+     @typedef USBStatus
