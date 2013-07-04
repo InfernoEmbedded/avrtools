@@ -50,12 +50,12 @@ case `uname` in
 		case `uname -m` in
 			i686)
 				export ABI=32
-				export CFLAGS="-march=atom -flto -O3"
-				export CXXFLAGS="-march=atom -flto -O3"
+				export CFLAGS="-march=atom -flto -O2"
+				export CXXFLAGS="-march=atom -flto -O2"
 				;;
 			*)
-				export CFLAGS="-march=corei7 -flto -O3"
-				export CXXFLAGS="-march=corei7 -flto -O3"
+				export CFLAGS="-march=corei7 -flto -O2"
+				export CXXFLAGS="-march=corei7 -flto -O2"
 				;;
 			esac
 		export EXE=
