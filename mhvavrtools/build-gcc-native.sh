@@ -7,6 +7,16 @@ native gcc
 
 echod "Building Native GCC ${GCC_VERSION}"
 
+case `uname` in
+Darwin)
+	oldname=$NATIVEPREFIX/x86_64-apple-darwin*/bin/strip
+	newname="$oldname.orig"
+
+	test -e "$oldname" &&
+		mv "$oldname" "$newname"
+	;;
+esac
+
 cd build/native || \
 	die "Could not CD to build"
 
@@ -20,20 +30,23 @@ cd gcc-native || \
 
 GCCDIR=$BUILD/gcc-${GCC_VERSION}
 
-export PATH="$NATIVEPREFIX/bin:$PATH"
 
 test -f config.log || {
 	case `uname` in
 		Darwin)
+			export STRIP=/usr/bin/strip
 			../../gcc-${GCC_VERSION}/configure --prefix=$NATIVEPREFIX \
 			       --enable-languages=c \
 			       --enable-lto \
 			       --with-gmp=$NATIVEPREFIX --with-mpfr=$NATIVEPREFIX --with-mpc=$NATIVEPREFIX \
                                --with-binutils=$NATIVEPREFIX \
+                               --without-cloog \
+                               --without-ppl \
 			       --disable-libssp >$LOGS/gcc-config-native.log 2>&1 || \
 					die "Could not configure Native GCC ${GCC_VERSION}"
 			;;
 		Linux)
+			export PATH="$NATIVEPREFIX/bin:$PATH"
 #			export CFLAGS="-fvisibility=hidden"
 			../../gcc-${GCC_VERSION}/configure --prefix=$NATIVEPREFIX \
 			       --enable-languages=c \
@@ -44,6 +57,7 @@ test -f config.log || {
 					die "Could not configure Native GCC ${GCC_VERSION}"
 			;;
 		*)
+			export PATH="$NATIVEPREFIX/bin:$PATH"
 			export PATH="`pwd`:$PATH"
 			../../gcc-${GCC_VERSION}/configure --prefix=$NATIVEPREFIX --host=i686-pc-mingw32 \
 			       --enable-languages=c \

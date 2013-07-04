@@ -32,8 +32,10 @@ test -e build/native/bin/gcc || (
 	./build-mpc-native.sh || \
 		die "mpc build failed"
 
-	./build-binutils-native.sh || \
-		die "binutils build failed"
+	test "`uname`" = 'Darwin' || (
+		./build-binutils-native.sh || \
+			die "binutils build failed"
+	)
 
 	./build-gcc-native.sh || \
 		die "gcc build failed"

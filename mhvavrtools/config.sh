@@ -42,7 +42,8 @@ case `uname` in
 		export CFLAGS="-march=corei7 -O2"
 		export CXXFLAGS="-march=corei7 -O2"
 		export LDFLAGS=""
-		export LOCALCC="/usr/bin/gcc-4.2"
+		export LOCALCC="$BUILD/gcc-4.7.1/bin/gcc-4.7"
+		export DYLD_LIBRARY_PATH="$BUILD/gcc-4.7.1/lib"
 		export EXE=
 		;;
 	Linux)
@@ -53,8 +54,8 @@ case `uname` in
 				export CXXFLAGS="-march=atom -flto -O3"
 				;;
 			*)
-				export CFLAGS="-march=corei7 -flto -O2"
-				export CXXFLAGS="-march=corei7 -flto -O2"
+				export CFLAGS="-march=corei7 -flto -O3"
+				export CXXFLAGS="-march=corei7 -flto -O3"
 				;;
 			esac
 		export EXE=
@@ -119,7 +120,14 @@ native() {
 		LDFLAGS="-L$NATIVEPREFIX/lib"
 		export LDFLAGS
 
-		export CC="$LOCALCC"
+		case `uname` in
+#			Darwin)
+#				;;
+			*)
+				export CC="$LOCALCC"
+				;;
+		esac
+
 		export LD="ld"
 		;;
 	esac
@@ -147,6 +155,7 @@ bootstrap() {
 	export LDFLAGS="-flto -L$PREFIX/lib -L$LIBPREFIX/lib"
 	export CC="$NATIVEPREFIX/bin/gcc"
 	export LD="$NATIVEPREFIX/bin/ld"
+	export PATH="$NATIVEPREFIX/bin:$PATH"
 
 	PATH="$NATIVEPREFIX/bin:$PATH"
 

@@ -1,6 +1,14 @@
 #!/bin/sh
 . ./config.sh
 
+GIT="`which git`"
+test -z "$GIT" && \
+	GIT="/c/Program Files (x86)/git/bin/git.exe"
+test ! -f "$GIT" && \
+	GIT="/c/Program Files/git/bin/git.exe"
+test ! -f "$GIT" && \
+	die "git not found"
+
 test -d download || \
 	mkdir download
 
@@ -33,7 +41,15 @@ case `uname` in
 	Darwin)
 		$FETCH http://sourceforge.net/projects/libusb/files/libusb-1.0/libusb-${LIBUSB_VERSION}/libusb-${LIBUSB_VERSION}.tar.bz2/download
 		mv download libusb-${LIBUSB_VERSION}.tar.bz2&
+
+		test -d gcc-4.7-binary && ( \
+				cd gcc-4.7-binary
+				"$GIT" pull
+				cd ..
+			) || \
+			"$GIT" clone git://github.com/sol-prog/gcc-4.7-binary.git &
 		;;
+
 	Linux)
 		$FETCH http://downloads.sourceforge.net/project/libusb/libusb-1.0/libusb-${LIBUSB_VERSION}/libusb-${LIBUSB_VERSION}.tar.bz2
 		;;
@@ -69,6 +85,7 @@ SVN="`which SVN`"
 
 #test -d simulavr || \
 #	"$GIT" clone git://git.sv.gnu.org/simulavr.git &
+
 
 test -d simavr && ( \
 		cd simavr
