@@ -60,7 +60,7 @@ diff -ur ../download/simavr/Makefile.common simavr/Makefile.common
 +			-ffunction-sections -fdata-sections \
 +			-Wl,--relax,--gc-sections \
 +			-Wl,--undefined=_mmcu,--section-start=.mmcu=0x910000 \
-+			-I../include -I../../include \
++			-I../simavr/sim/avr -I../../simavr/sim/avr \
 +			${^} -o ${@}
 +	${AVR}size ${@}|sed '1d'    
 +else
@@ -200,18 +200,16 @@ diff -ur ../download/simavr/examples/parts/uart_udp.h simavr/examples/parts/uart
 diff -ur ../download/simavr/simavr/Makefile simavr/simavr/Makefile
 --- ../download/simavr/simavr/Makefile	2012-03-11 10:53:05 +1100
 +++ simavr/simavr/Makefile	2012-03-11 10:52:50 +1100
-@@ -43,7 +43,10 @@
+@@ -40,6 +40,9 @@
+ IPATH	= sim
  IPATH	+= .
  IPATH	+= ../../shared
- IPATH	+= ../include
--    
 +ifeq (${shell uname}, MINGW32_NT-6.1)
 +IPATH       += ${PREFIX}/include
 +endif
-+
+     
  #
  # Static library
- #
 diff -ur ../download/simavr/simavr/cores/sim_tiny13.c simavr/simavr/cores/sim_tiny13.c
 --- ../download/simavr/simavr/cores/sim_tiny13.c	2012-03-11 10:53:05 +1100
 +++ simavr/simavr/cores/sim_tiny13.c	2012-03-11 10:52:49 +1100

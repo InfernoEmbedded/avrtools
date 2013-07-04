@@ -57,6 +57,12 @@ test -f $FAIL_SENTRY && \
 	./build-binutils.sh || \
 		die "binutils build failed"
 
+	./build-isl.sh || \
+		die "gcc build failed"
+
+	./build-cloog.sh || \
+		die "gcc build failed"
+
 	./build-gcc.sh || \
 		die "gcc build failed"
 

@@ -28,7 +28,8 @@ test -f config.log || {
 			       --enable-lto \
 			        --with-avrlibc=yes \
 			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
-			       --disable-libssp >$LOGS/gcc-config.log 2>&1 || \
+				--with-ppl=$LIBPREFIX --with-cloog=$LIBPREFIX \
+			       --disable-libssp --disable-nls >$LOGS/gcc-config.log 2>&1 || \
 					die "Could not configure GCC ${GCC_VERSION}"
 			;;
 		Linux)
@@ -38,7 +39,8 @@ test -f config.log || {
 			       --enable-lto \
 			        --with-avrlibc=yes \
 			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
-			       --disable-libssp >$LOGS/gcc-config.log 2>&1 || \
+				--with-ppl=$LIBPREFIX --with-cloog=$LIBPREFIX \
+			       --disable-libssp --disable-nls >$LOGS/gcc-config.log 2>&1 || \
 					die "Could not configure GCC ${GCC_VERSION}"
 			;;
 		*)
@@ -49,7 +51,8 @@ test -f config.log || {
 				   --enable-lto \
 			        --with-avrlibc=yes \
 			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
-			       --disable-libssp >$LOGS/gcc-config.log 2>&1 || \
+				--with-ppl=$LIBPREFIX --with-cloog=$LIBPREFIX \
+			       --disable-libssp --disable-nls >$LOGS/gcc-config.log 2>&1 || \
 					die "Could not configure GCC ${GCC_VERSION}"
 			;;
 	esac

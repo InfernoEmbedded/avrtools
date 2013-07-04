@@ -13,16 +13,16 @@ $FETCH http://ftp.gnu.org/gnu/gmp/gmp-${GMP_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/mpfr/mpfr-${MPFR_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/gdb/gdb-${GDB_VERSION}.tar.bz2 &
 $FETCH http://www.multiprecision.org/mpc/download/mpc-${MPC_VERSION}.tar.gz &
-# $FETCH http://www.cs.unipr.it/ppl/Download/ftp/releases/${PPL_VERSION}/ppl-${PPL_VERSION}.tar.bz2 &
-# $FETCH ftp://gcc.gnu.org/pub/gcc/infrastructure/cloog-ppl-${CLOOG_PPL_VERSION}.tar.gz &
+$FETCH ftp://gcc.gnu.org/pub/gcc/infrastructure/isl-${ISL_VERSION}.tar.bz2 &
+$FETCH ftp://gcc.gnu.org/pub/gcc/infrastructure/cloog-${CLOOG_VERSION}.tar.gz &
 $FETCH http://download-mirror.savannah.gnu.org/releases/avrdude/avrdude-${AVRDUDE_VERSION}.tar.gz &
 $FETCH http://download-mirror.savannah.gnu.org/releases/avrdude/avrdude-doc-${AVRDUDE_VERSION}.tar.gz &
 #$FETCH http://ftp.gnu.org/gnu/autoconf/autoconf-${AUTOCONF_VERSION}.tar.gz &
-#$FETCH http://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.bz2 &
+$FETCH http://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.bz2 &
 # Used for binutils snapshots
-$FETCH ftp://sourceware.org/pub/binutils/snapshots/binutils-${BINUTILS_VERSION}.tar.bz2 &
+#$FETCH ftp://sourceware.org/pub/binutils/snapshots/binutils-${BINUTILS_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/libtool/libtool-${LIBTOOL_VERSION}.tar.gz &
-$FETCH http://download-mirror.savannah.gnu.org/releases/avr-libc/avr-libc-${AVRLIBC_VERSION}.tar.bz2 &
+#$FETCH http://download-mirror.savannah.gnu.org/releases/avr-libc/avr-libc-${AVRLIBC_VERSION}.tar.bz2 &
 #$FETCH http://downloads.sourceforge.net/project/swig/swig/swig-${SWIG_VERSION}/swig-${SWIG_VERSION}.tar.gz &
 $FETCH http://www.sqlite.org/sqlite-autoconf-${SQLITE_VERSION}.tar.gz &
 $FETCH http://www.splint.org/downloads/splint-${SPLINT_VERSION}.src.tgz &
@@ -62,6 +62,8 @@ test ! -f "$GIT" && \
 test ! -f "$GIT" && \
 	die "git not found"
 
+SVN="`which SVN`"
+
 #test -d ppl || \
 #	"$GIT" clone git://git.cs.unipr.it/ppl/ppl.git &
 
@@ -88,6 +90,11 @@ test -d smatch && ( \
 	) || \
 	"$GIT" clone git://repo.or.cz/smatch.git &
 
+test -d avr-libc && ( \
+		cd avr-libc
+		"$SVN" update
+	) || \
+	"$SVN" co svn://svn.sv.gnu.org/avr-libc/trunk/avr-libc  &
 
 wait
 

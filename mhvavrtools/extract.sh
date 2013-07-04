@@ -47,6 +47,7 @@ done
 cp -R ../download/smatch smatch
 cp -R ../download/mhvlib mhvlib
 cp -R ../download/simavr simavr
+cp -R ../download/avr-libc avr-libc
 
 cd binutils-${BINUTILS_VERSION}
 for file in ../../patches/binutils-*.patch; do

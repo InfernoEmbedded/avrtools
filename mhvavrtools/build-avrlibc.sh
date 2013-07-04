@@ -6,8 +6,14 @@ avr avrlibc
 
 echod "Building AVR-libc ${AVRLIBC_VERSION}"
 
-cd build/avr-libc-${AVRLIBC_VERSION} || \
-	die "Could not CD to build/gmp-${AVRLIBC_VERSION}"
+#cd build/avr-libc-${AVRLIBC_VERSION} || \
+#	die "Could not CD to build/avr-libc-${AVRLIBC_VERSION}"
+cd build/avr-libc || \
+	die "Could not CD to build/avr-libc"
+
+test -f configure || \
+	./bootstrap >$LOGS/avrlibc-bootstrap.log 2>&1 || \
+	die "Bootstrap avr-libc failed"
 
 case `uname` in
 	Darwin)

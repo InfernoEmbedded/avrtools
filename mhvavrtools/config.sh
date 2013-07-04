@@ -1,21 +1,20 @@
 #AUTOCONF_VERSION=2.67
 #AUTOCONF_VERSION=2.61
-BINUTILS_VERSION=2.22.90
-LIBTOOL_VERSION=2.4
-GCC_VERSION=4.7.2
+BINUTILS_VERSION=2.23.2
+LIBTOOL_VERSION=2.4.2
+GCC_VERSION=4.8.1
 MAKE_VERSION=3.82
-GMP_VERSION=5.0.2
-MPFR_VERSION=3.1.0
-MPC_VERSION=0.8.2
+GMP_VERSION=5.1.2
+MPFR_VERSION=3.1.2
+MPC_VERSION=1.0.1
 # MPC 0.9 does not build on win32
 #MPC_VERSION=0.9
-SWIG_VERSION=2.0.4
-# Currently using the GIT version until the release supports GMP 5
-#PPL_VERSION=0.10.2
-#CLOOG_PPL_VERSION=0.15.9
+SWIG_VERSION=2.0.10
+ISL_VERSION=0.11.1
+CLOOG_VERSION=0.18.0
 AVRLIBC_VERSION=1.8.0
-AVRDUDE_VERSION=5.11.1
-LIBUSB_VERSION=1.0.8
+AVRDUDE_VERSION=6.0rc1
+LIBUSB_VERSION=1.0.9
 LIBUSB_WIN32_VERSION=0.1.12.2
 #SQLITE_VERSION=3.7.5
 SQLITE_VERSION=3070800
@@ -24,9 +23,9 @@ COREUTILS_VERSION=5.97-3
 MSYS_CORE_VERSION=1.0.17
 GETTEXT_VERSION=0.18.1.1-1
 LIBICONV_VERSION=1.14
-COCCINELLE_VERSION=1.0.0-rc7
+COCCINELLE_VERSION=1.0.0-rc17
 GLUT_VERSION=3.7.6
-GDB_VERSION=7.5
+GDB_VERSION=7.6
 
 # SimAVR dependancies
 LIBELF_VERSION=0.8.9
@@ -40,8 +39,8 @@ case `uname` in
 		export ABI=64
 		export NATIVECFLAGS="-O2"
 		export NATIVECXXFLAGS="-O2"
-		export CFLAGS="-march=corei7 -O3"
-		export CXXFLAGS="-march=corei7 -O3"
+		export CFLAGS="-march=corei7 -O2"
+		export CXXFLAGS="-march=corei7 -O2"
 		export LDFLAGS=""
 		export LOCALCC="/usr/bin/gcc-4.2"
 		export EXE=
@@ -54,8 +53,8 @@ case `uname` in
 				export CXXFLAGS="-march=atom -flto -O3"
 				;;
 			*)
-				export CFLAGS="-march=corei7 -flto -O3"
-				export CXXFLAGS="-march=corei7 -flto -O3"
+				export CFLAGS="-march=corei7 -flto -O2"
+				export CXXFLAGS="-march=corei7 -flto -O2"
 				;;
 			esac
 		export EXE=
@@ -148,6 +147,8 @@ bootstrap() {
 	export LDFLAGS="-flto -L$PREFIX/lib -L$LIBPREFIX/lib"
 	export CC="$NATIVEPREFIX/bin/gcc"
 	export LD="$NATIVEPREFIX/bin/ld"
+
+	PATH="$NATIVEPREFIX/bin:$PATH"
 
 	case $product in
 	binutils|gcc)
