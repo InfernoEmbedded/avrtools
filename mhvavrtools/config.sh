@@ -43,8 +43,10 @@ case `uname` in
 		export CXXFLAGS="-march=corei7 -O2"
 		export LDFLAGS=""
 		export LOCALCC="$BUILD/gcc-4.7.1/bin/gcc-4.7"
+		export LOCALCXX="$BUILD/gcc-4.7.1/bin/g++-4.7"
 		export DYLD_LIBRARY_PATH="$BUILD/gcc-4.7.1/lib"
 		export EXE=
+		export PATH="`dirname $LOCALCC`:$PATH"
 		;;
 	Linux)
 		case `uname -m` in
@@ -63,10 +65,12 @@ case `uname` in
 		export NATIVECXXFLAGS="-O2"
 		export LDFLAGS="-flto"
 		export LOCALCC="gcc"
+		export LOCALCXX="g++"
 		;;
 	*)
 		export ABI=32
 		export LOCALCC="gcc"
+		export LOCALCXX="g++"
 		export PATH="/mingw/bin:/bin:/usr/local/bin:/c/Python2.7:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/system32/wbem:/c/Program Files (x86)/Objective Caml/bin:/c/Program Files/Objective Caml/bin:/c/Program Files (x86)/flexdll:/c/Program Files/flexdll"
 		export EXE=".exe"
 		export NATIVECFLAGS="-O2"
@@ -120,13 +124,8 @@ native() {
 		LDFLAGS="-L$NATIVEPREFIX/lib"
 		export LDFLAGS
 
-		case `uname` in
-#			Darwin)
-#				;;
-			*)
-				export CC="$LOCALCC"
-				;;
-		esac
+		export CC="$LOCALCC"
+		export CXX="$LOCALCXX"
 
 		export LD="ld"
 		;;
@@ -142,6 +141,7 @@ avr() {
 		export CXXFLAGS="-flto -Os"
 		export PATH="$PATH:$PREFIX/bin"
 		export CC="$PREFIX/bin/avr-gcc"
+		export CXX="$PREFIX/bin/avr-g++"
 		export LD="$PREFIX/bin/avr-ld"
 		;;
 	esac
@@ -154,17 +154,36 @@ bootstrap() {
 	export CXXFLAGS="$CXXFLAGS -I$PREFIX/include -I$LIBPREFIX/include"
 	export LDFLAGS="-flto -L$PREFIX/lib -L$LIBPREFIX/lib"
 	export CC="$NATIVEPREFIX/bin/gcc"
+	export CXX="$NATIVEPREFIX/bin/g++"
 	export LD="$NATIVEPREFIX/bin/ld"
 	export PATH="$NATIVEPREFIX/bin:$PATH"
 
 	PATH="$NATIVEPREFIX/bin:$PATH"
 
 	case $product in
-	binutils|gcc)
+	libusb)
+		case `uname` in
+			Darwin)
+				CC=/usr/bin/gcc
+				CFLAGS="$NATIVECFLAGS"
+				;;
+		esac
+		;;
+	gcc)
+		case `uname` in
+			Darwin)
+				CFLAGS="$NATIVECFLAGS"
+				;;
+			MINGW32_NT-6.1)
+				native $product
+				;;
+		esac
+		;;
+	binutils)
 		case `uname` in
 			MINGW32_NT-6.1)
 				native $product
-			;;
+				;;
 		esac
 		;;
 	esac

@@ -36,7 +36,7 @@ test -f config.log || {
 		Darwin)
 			export STRIP=/usr/bin/strip
 			../../gcc-${GCC_VERSION}/configure --prefix=$NATIVEPREFIX \
-			       --enable-languages=c \
+			       --enable-languages=c,c++ \
 			       --enable-lto \
 			       --with-gmp=$NATIVEPREFIX --with-mpfr=$NATIVEPREFIX --with-mpc=$NATIVEPREFIX \
                                --with-binutils=$NATIVEPREFIX \
@@ -49,7 +49,7 @@ test -f config.log || {
 			export PATH="$NATIVEPREFIX/bin:$PATH"
 #			export CFLAGS="-fvisibility=hidden"
 			../../gcc-${GCC_VERSION}/configure --prefix=$NATIVEPREFIX \
-			       --enable-languages=c \
+			       --enable-languages=c,c++ \
 			       --enable-lto \
 			       --with-gmp=$NATIVEPREFIX --with-mpfr=$NATIVEPREFIX --with-mpc=$NATIVEPREFIX \
                                --with-binutils=$NATIVEPREFIX \
@@ -60,7 +60,7 @@ test -f config.log || {
 			export PATH="$NATIVEPREFIX/bin:$PATH"
 			export PATH="`pwd`:$PATH"
 			../../gcc-${GCC_VERSION}/configure --prefix=$NATIVEPREFIX --host=i686-pc-mingw32 \
-			       --enable-languages=c \
+			       --enable-languages=c,c++ \
 			       --enable-lto \
 			       --with-gmp=$NATIVEPREFIX --with-mpfr=$NATIVEPREFIX --with-mpc=$NATIVEPREFIX \
                                --with-binutils=$NATIVEPREFIX \

@@ -9,7 +9,7 @@ case `uname` in
 		echod "Building libusb ${LIBUSB_VERSION}"
 
 		cd build/libusb-${LIBUSB_VERSION} || \
-			die "Could not CD to build/libusb-$LIBUS_VERSION"
+			die "Could not CD to build/libusb-$LIBUSB_VERSION"
 
 		test -f config.log || {
 			./configure --prefix=$PREFIX >$LOGS/libusb-config.log 2>&1 || \
