@@ -65,14 +65,14 @@ case `uname` in
 		export LOCALCC="gcc"
 		;;
 	*)
-#		export ABI=32
+		export ABI=32
 		export LOCALCC="gcc"
 		export PATH="/mingw/bin:/bin:/usr/local/bin:/c/Python2.7:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/system32/wbem:/c/Program Files (x86)/Objective Caml/bin:/c/Program Files/Objective Caml/bin:/c/Program Files (x86)/flexdll:/c/Program Files/flexdll"
 		export EXE=".exe"
 		export NATIVECFLAGS="-O2"
 		export NATIVECXXFLAGS="-O2"
-		export CFLAGS="-march=atom -flto -O3"
-		export CXXFLAGS="-march=atom -flto -O3"
+		export CFLAGS="-march=atom -flto -O2"
+		export CXXFLAGS="-march=atom -flto -O2"
 		export LDFLAGS="-flto"
 		;;
 esac

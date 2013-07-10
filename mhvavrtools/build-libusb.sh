@@ -52,4 +52,4 @@ for file in COPYING*; do
 	cp $file $PREFIX/licenses/$file.libusb
 done
 
-echod "Done building libusb ${LIBUSB_VERSION}"
+echod "Done building libusb"
