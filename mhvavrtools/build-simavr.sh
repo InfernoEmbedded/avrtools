@@ -23,6 +23,6 @@ for file in `find examples -name '*.elf'`; do
 	newname="`basename $file .elf`"
 	cp $file $PREFIX/simavr/examples/${newname}${EXE}
 done
-cp COPYING $PREFIX/licenses/COPYING.simavr
 
+cp COPYING $PREFIX/licenses/COPYING.simavr
 echod "Done building simavr"

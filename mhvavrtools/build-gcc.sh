@@ -28,8 +28,9 @@ test -f config.log || {
 			       --enable-lto \
 			        --with-avrlibc=yes \
 			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
-				--with-ppl=$LIBPREFIX --with-cloog=$LIBPREFIX \
-			       --disable-libssp --disable-nls >$LOGS/gcc-config.log 2>&1 || \
+				--with-ppl=$LIBPREFIX --with-cloog=$LIBPREFIX --with-isl=$LIBPREFIX \
+					--disable-isl-version-check $GCCCONFIGFLAGS \
+			       --disable-libssp >$LOGS/gcc-config.log 2>&1 || \
 					die "Could not configure GCC ${GCC_VERSION}"
 			;;
 		Linux)
@@ -39,20 +40,23 @@ test -f config.log || {
 			       --enable-lto \
 			        --with-avrlibc=yes \
 			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
-				--with-ppl=$LIBPREFIX --with-cloog=$LIBPREFIX \
-			       --disable-libssp --disable-nls >$LOGS/gcc-config.log 2>&1 || \
+					--with-ppl=$LIBPREFIX --with-cloog=$LIBPREFIX --with-isl=$LIBPREFIX \
+					--disable-isl-version-check $GCCCONFIGFLAGS \
+			       --disable-libssp >$LOGS/gcc-config.log 2>&1 || \
 					die "Could not configure GCC ${GCC_VERSION}"
 			;;
 		*)
 			export PATH="`pwd`:$PATH"
-			../gcc-${GCC_VERSION}/configure --prefix=$PREFIX --host=i686-pc-mingw32 --target=avr \
+#			../gcc-${GCC_VERSION}/configure --prefix=$PREFIX --host=i686-pc-mingw32 --target=avr \
+			../gcc-${GCC_VERSION}/configure --prefix=$PREFIX --target=avr \
 			       --enable-languages=c,c++ --with-dwarf2 \
 			       -enable-win32-registry=MHV-AVR-Tools \
 				   --enable-lto \
 			        --with-avrlibc=yes \
 			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
-				--with-ppl=$LIBPREFIX --with-cloog=$LIBPREFIX \
-			       --disable-libssp --disable-nls >$LOGS/gcc-config.log 2>&1 || \
+					--with-ppl=$LIBPREFIX --with-cloog=$LIBPREFIX --with-isl=$LIBPREFIX \
+					--disable-isl-version-check $GCCCONFIGFLAGS \
+			       --disable-libssp >$LOGS/gcc-config.log 2>&1 || \
 					die "Could not configure GCC ${GCC_VERSION}"
 			;;
 	esac

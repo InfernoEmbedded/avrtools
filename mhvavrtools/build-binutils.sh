@@ -13,7 +13,7 @@ mkdir obj-avr
 cd obj-avr
 
 test -f config.status || {
-	../configure --target=avr --disable-werror --enable-lto --disable-nls --prefix=$PREFIX --with-mpc=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-gmp=$LIBPREFIX >$LOGS/binutils-config.log 2>&1 || \
+	../configure --target=avr --disable-werror --enable-lto --prefix=$PREFIX --with-mpc=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-gmp=$LIBPREFIX >$LOGS/binutils-config.log 2>&1 || \
 		die "Could not configure BINUTILS ${BINUTILS_VERSION}"
 }
 
@@ -35,6 +35,16 @@ $MAKE >$LOGS/binutils-make.log 2>&1 || \
 $MAKE install >$LOGS/binutils-install.log 2>&1 || \
 	die "Could not install ${BINUTILS_VERSION}"
 
+# The libtools stubs get copied on Windows, rather that the executables
+# Workaround it for now
+if test `uname` = 'MINGW32_NT-6.1'; then
+	for file in `find . -name '*.exe' | grep '.libs'`; do
+		newname="`basename $file`"
+		newname="avr-`echo $newname | sed s/-new//`"
+		cp $file $PREFIX/bin/$newname
+	done
+ fi
+	
 cd ..
 for file in COPYING*; do
 	cp $file $PREFIX/licenses/$file.binutils

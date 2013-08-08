@@ -10,8 +10,9 @@ cd build/gdb-${GDB_VERSION} || \
 	die "Could not CD to build/gdb-${GDB_VERSION}"
 
 test -f config.status || {
-	./configure --target=avr --prefix=$PREFIX --with-mpc=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-gmp=$LIBPREFIX >$LOGS/gdb-config.log 2>&1 || \
-		die "Could not configure GDB ${GDB_VERSION}"
+	./configure $GDBCONFIGFLAGS --target=avr --prefix=$PREFIX --with-mpc=$LIBPREFIX --with-mpfr=$LIBPREFIX \
+		--with-gmp=$LIBPREFIX --with-cloog=$LIBPREFIX >$LOGS/gdb-config.log 2>&1 || \
+			die "Could not configure GDB ${GDB_VERSION}"
 }
 
 make configure-host >$LOGS/gdb-configure-host.log 2>&1 || \
