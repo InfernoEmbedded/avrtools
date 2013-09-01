@@ -24,5 +24,9 @@ for file in `find examples -name '*.elf'`; do
 	cp $file $PREFIX/simavr/examples/${newname}${EXE}
 done
 
+mkdir $PREFIX/avr/include/simavr
+cp simavr/sim/avr/avr_mcu_section.h $PREFIX/avr/include/simavr/
+
 cp COPYING $PREFIX/licenses/COPYING.simavr
 echod "Done building simavr"
+

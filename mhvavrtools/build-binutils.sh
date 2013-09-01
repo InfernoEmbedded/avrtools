@@ -43,7 +43,7 @@ if test `uname` = 'MINGW32_NT-6.1'; then
 		newname="avr-`echo $newname | sed s/-new//`"
 		cp $file $PREFIX/bin/$newname
 	done
- fi
+fi
 	
 cd ..
 for file in COPYING*; do
