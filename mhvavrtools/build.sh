@@ -20,7 +20,7 @@ sleep 5
 test -e build/native/bin/gcc || (
 	[ `uname` = MINGW32_NT-6.1 ] && {
 		./build-coreutils.sh || \
-			die "coreutils build failed"
+			die "coreutils build failed"			
 	}
 
 	./build-gmp-native.sh || \
@@ -39,6 +39,14 @@ test -e build/native/bin/gcc || (
 
 	./build-gcc-native.sh || \
 		die "gcc build failed"
+		
+	[ `uname` = MINGW32_NT-6.1 ] && {
+		./build-iconv.sh || \
+			die "iconv build failed"
+			
+		./build-gettext.sh || \
+			die "gettext build failed"			
+	}		
 ) 
 
 test -f $FAIL_SENTRY && \

@@ -20,15 +20,17 @@ LIBUSB_WIN32_VERSION=0.1.12.2
 SQLITE_VERSION=3070800
 SPLINT_VERSION=3.1.2
 COREUTILS_VERSION=5.97-3
-MSYS_CORE_VERSION=1.0.17
-GETTEXT_VERSION=0.18.1.1-1
-LIBICONV_VERSION=1.14
 COCCINELLE_VERSION=1.0.0-rc17
 GLUT_VERSION=3.7.6
 GDB_VERSION=7.6
 
 # SimAVR dependancies
 LIBELF_VERSION=0.8.9
+
+# Windows Only
+MSYS_CORE_VERSION=1.0.17
+GETTEXT_VERSION=0.18.1.1
+LIBICONV_VERSION=1.14
 
 export TOP=`pwd`
 export BUILD="$TOP/build"
@@ -152,14 +154,12 @@ bootstrap() {
 
 	export CFLAGS="$CFLAGS -I$PREFIX/include -I$LIBPREFIX/include"
 	export CXXFLAGS="$CXXFLAGS -I$PREFIX/include -I$LIBPREFIX/include"
-	export LDFLAGS="-flto -L$PREFIX/lib -L$LIBPREFIX/lib"
+	export LDFLAGS="-flto -L$PREFIX/lib -L$LIBPREFIX/lib -static-libgcc -static-libstdc++"
 	export CC="$NATIVEPREFIX/bin/gcc"
 	export CXX="$NATIVEPREFIX/bin/g++"
 	export LD="$NATIVEPREFIX/bin/ld"
 	export PATH="$NATIVEPREFIX/bin:$PATH"
-
-	PATH="$NATIVEPREFIX/bin:$PATH"
-
+	
 	case $product in
 	libusb)
 		case `uname` in
@@ -175,14 +175,31 @@ bootstrap() {
 				CFLAGS="$NATIVECFLAGS"
 				;;
 			MINGW32_NT-6.1)
-				native $product
+				export LDFLAGS="-L$PREFIX/lib -L$LIBPREFIX/lib -static-libgcc -static-libstdc++"
+				for file in `find $LIBPREFIX -name '*.a'`; do
+					LDFLAGS="$LDFLAGS $file"
+				done
+				export GCCCONFIGFLAGS="--disable-shared --enable-static --disable-bootstrap"				
+			# Disable LTO
+				export CFLAGS="-O2 -I$PREFIX/include -I$LIBPREFIX/include"
+				export CXXFLAGS="-O2 -I$PREFIX/include -I$LIBPREFIX/include"			
 				;;
 		esac
 		;;
-	binutils)
+	gdb)
 		case `uname` in
 			MINGW32_NT-6.1)
-				native $product
+				for file in `find $LIBPREFIX -name '*.a'`; do
+					LDFLAGS="$LDFLAGS $file"
+				done
+				export GDBCONFIGFLAGS="--disable-shared --enable-static"
+				;;
+		esac
+		;;
+	gettext)
+		case `uname` in
+			MINGW32_NT-6.1)			
+				native gettext
 				;;
 		esac
 		;;
