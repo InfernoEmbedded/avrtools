@@ -13,9 +13,9 @@ test -d download || \
 	mkdir download
 
 cd download
-$FETCH http://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-${GCC_VERSION}.tar.bz2 &
+#$FETCH http://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-${GCC_VERSION}.tar.bz2 &
 # Use for GCC snapshot
-#$FETCH http://gcc.parentingamerica.com/snapshots/${GCC_VERSION}/gcc-${GCC_VERSION}.tar.bz2 &
+$FETCH http://gcc.parentingamerica.com/snapshots/${GCC_VERSION}/gcc-${GCC_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/make/make-${MAKE_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/gmp/gmp-${GMP_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/mpfr/mpfr-${MPFR_VERSION}.tar.bz2 &
@@ -26,9 +26,9 @@ $FETCH ftp://gcc.gnu.org/pub/gcc/infrastructure/cloog-${CLOOG_VERSION}.tar.gz &
 $FETCH http://download-mirror.savannah.gnu.org/releases/avrdude/avrdude-${AVRDUDE_VERSION}.tar.gz &
 $FETCH http://download-mirror.savannah.gnu.org/releases/avrdude/avrdude-doc-${AVRDUDE_VERSION}.tar.gz &
 #$FETCH http://ftp.gnu.org/gnu/autoconf/autoconf-${AUTOCONF_VERSION}.tar.gz &
-$FETCH http://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.bz2 &
+#$FETCH http://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.bz2 &
 # Used for binutils snapshots
-#$FETCH ftp://sourceware.org/pub/binutils/snapshots/binutils-${BINUTILS_VERSION}.tar.bz2 &
+$FETCH ftp://sourceware.org/pub/binutils/snapshots/binutils-${BINUTILS_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/libtool/libtool-${LIBTOOL_VERSION}.tar.gz &
 #$FETCH http://download-mirror.savannah.gnu.org/releases/avr-libc/avr-libc-${AVRLIBC_VERSION}.tar.bz2 &
 #$FETCH http://downloads.sourceforge.net/project/swig/swig/swig-${SWIG_VERSION}/swig-${SWIG_VERSION}.tar.gz &

@@ -77,7 +77,7 @@ test -f $FAIL_SENTRY && \
 		die "gcc build failed"
 
 	./build-gdb.sh || \
-		die "gcc build failed"
+		die "gdb build failed"
 
 	./build-avrlibc.sh || \
 		die "avrlibc build failed"
