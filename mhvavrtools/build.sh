@@ -49,10 +49,6 @@ test -e build/native/bin/gcc || (
 	}		
 ) 
 
-test -f $FAIL_SENTRY && \
-	rm $FAIL_SENTRY && \
-	exit 1
-
 (
 
 	./build-gmp.sh || \
