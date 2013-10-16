@@ -81,14 +81,6 @@ for file in ../../patches/gmp-*.patch; do
 done
 cd ..
 
-cd make-${MAKE_VERSION}
-for file in ../../patches/make-*.patch; do
-	echod Patching with $file
-	patch -p1 < $file || \
-		die "Patch failed"
-done
-cd ..
-
 cd smatch
 for file in ../../patches/smatch-*.patch; do
 	echod Patching with $file
