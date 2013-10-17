@@ -11,7 +11,11 @@ export PATH="$PATH:$PREFIX/bin"
 cd build/simavr || \
 	die "Could not CD to build/simavr"
 
-$MAKE V=1 AVR_ROOT=$PREFIX AVR_INC=$PREFIX/avr \
+if [ `uname` = MINGW32_NT-6.1 ]; then
+	WIN=Msys
+fi
+
+$MAKE WIN=$WIN V=1 AVR_ROOT=$PREFIX AVR_INC=$PREFIX/avr \
 	IPATH+=.:`pwd`/include:`pwd`/simavr/sim:`pwd`/examples/parts:`pwd`/examples/shared:$PREFIX/include \
 	AVR=$PREFIX/bin/avr- \
 		>$LOGS/simavr-make.log 2>&1 || \
