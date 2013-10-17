@@ -8,7 +8,7 @@ case `uname` in
 	Darwin)
 		echod "Building libusb ${LIBUSB_VERSION}"
 
-		cd build/libusb-${LIBUSB_VERSION} || \
+		cd build/libusbx-${LIBUSB_VERSION} || \
 			die "Could not CD to build/libusb-$LIBUSB_VERSION"
 
 		test -f config.log || {
@@ -25,7 +25,7 @@ case `uname` in
 	Linux)
 		echod "Building libusb ${LIBUSB_VERSION}"
 
-		cd build/libusb-${LIBUSB_VERSION} || \
+		cd build/libusbx-${LIBUSB_VERSION} || \
 			die "Could not CD to build/libusb-$LIBUS_VERSION"
 
 		test -f config.log || {
