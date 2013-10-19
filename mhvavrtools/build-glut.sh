@@ -2,15 +2,29 @@
 
 . ./config.sh
 
-cd build || \
-	die "Could not CD to build"
+bootstrap freeglut
 
-echod "Installing GLUT ${GLUT_VERSION}"
+echod "Building freeglut ${FREEGLUT_VERSION}"
 
-cp glut-${GLUT_VERSION}-bin/glut32.dll $PREFIX/bin
-cp glut-${GLUT_VERSION}-bin/glut32.lib $PREFIX/lib
-cp glut-${GLUT_VERSION}-bin/glut.def $PREFIX/lib
-mkdir $PREFIX/include/GL
-cp glut-${GLUT_VERSION}-bin/glut.h $PREFIX/include/GL
+export PATH="$PATH:$PREFIX/bin"
 
-echod "Done building GLUT ${GLUT_VERSION}"
+cd build/freeglut-${FREEGLUT_VERSION} || \
+	die "Could not CD to build/freeglut-${FREEGLUT_VERSION}"
+
+test -f config.status || {
+	./configure --prefix=$LIBPREFIX  >$LOGS/freeglut-${FREEGLUT_VERSION}-config.log 2>&1 || \
+		die "Could not configure GETTEXT ${GETTEXT_VERSION}"
+}
+
+$MAKE >$LOGS/freeglut-${FREEGLUT_VERSION}-make.log 2>&1 || \
+	die "Could not build GETTEXT ${GETTEXT_VERSION}"
+
+$MAKE install >$LOGS/freeglut-${FREEGLUT_VERSION}-install.log 2>&1 || \
+	die "Could not install ${GETTEXT_VERSION}"
+
+for file in COPYING*; do
+	cp $file $PREFIX/licenses/$file.freeglut
+done
+
+echod "Done building freeglut ${FREEGLUT_VERSION}"
+

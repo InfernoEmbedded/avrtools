@@ -61,7 +61,7 @@ case `uname` in
 		$FETCH http://downloads.sourceforge.net/project/mingw/MSYS/Base/coreutils/coreutils-5.97-3/coreutils-${COREUTILS_VERSION}-msys-1.0.13-doc.tar.lzma &
 		$FETCH http://downloads.sourceforge.net/project/mingw/MSYS/Base/coreutils/coreutils-5.97-3/coreutils-${COREUTILS_VERSION}-msys-1.0.13-lic.tar.lzma &
 		$FETCH http://downloads.sourceforge.net/project/mingw/MSYS/Base/msys-core/msys-${MSYS_CORE_VERSION}-1/msysCORE-${MSYS_CORE_VERSION}-1-msys-${MSYS_CORE_VERSION}-bin.tar.lzma &
-		$FETCH http://www.xmission.com/~nate/glut/glut-${GLUT_VERSION}-bin.zip &
+		$FETCH http://downloads.sourceforge.net/project/freeglut/freeglut/${FREEGLUT_VERSION}/freeglut-${FREEGLUT_VERSION}.tar.gz &
 		$FETCH http://ftp.gnu.org/pub/gnu/libiconv/libiconv-${LIBICONV_VERSION}.tar.gz &
 		$FETCH http://ftp.gnu.org/pub/gnu/gettext/gettext-${GETTEXT_VERSION}.tar.gz &
 		;;
