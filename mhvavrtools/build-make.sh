@@ -31,7 +31,8 @@ case `uname` in
 			die "Could not install make ${MAKE_VERSION}"
 		;;
 	*)
-		$TOP/patches/make-build-msys.sh >$LOGS/make.log 2>&1
+		$TOP/patches/make-build-msys.sh >$LOGS/make.log 2>&1 || \
+			die "Could not build make ${MAKE_VERSION}"
 		;;
 esac
 
