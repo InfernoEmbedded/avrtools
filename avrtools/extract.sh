@@ -45,7 +45,7 @@ for file in ../download/*.xz; do
 done
 
 cp -R ../download/smatch smatch
-cp -R ../download/mhvlib mhvlib
+cp -R ../download/flame flame
 cp -R ../download/simavr simavr
 cp -R ../download/avr-libc avr-libc
 

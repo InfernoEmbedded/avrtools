@@ -34,7 +34,7 @@ LIBICONV_VERSION=1.14
 
 export TOP=`pwd`
 export BUILD="$TOP/build"
-export PREFIX="$TOP/mhvavrtools"
+export PREFIX="$TOP/avrtools"
 
 case `uname` in
 	Darwin)

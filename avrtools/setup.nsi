@@ -7,9 +7,9 @@ RequestExecutionLevel admin
 
 # General Symbol Definitions
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 20131101
-!define COMPANY "Make, Hack, Void, Inc."
-!define URL http://www.makehackvoid.com
+!define VERSION 20140501
+!define COMPANY "Inferno Embedded"
+!define URL http://infernoembedded.com
 
 # MUI Symbol Definitions
 !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\modern-install-blue-full.ico"
@@ -18,7 +18,7 @@ RequestExecutionLevel admin
 !define MUI_STARTMENUPAGE_NODISABLE
 !define MUI_STARTMENUPAGE_REGISTRY_KEY ${REGKEY}
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME StartMenuGroup
-!define MUI_STARTMENUPAGE_DEFAULTFOLDER "MHV AVR Tools"
+!define MUI_STARTMENUPAGE_DEFAULTFOLDER "Inferno AVR Tools"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall-blue-full.ico"
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
 
@@ -46,13 +46,13 @@ Var StartMenuGroup
 
 
 # Installer attributes
-OutFile MHV_AVR_Tools_${VERSION}.exe
-InstallDir "$PROGRAMFILES\MHV AVR Tools"
+OutFile Inferno_AVR_Tools_${VERSION}.exe
+InstallDir "$PROGRAMFILES\Inferno AVR Tools"
 CRCCheck on
 XPStyle on
 ShowInstDetails show
-VIProductVersion 2013.11.01.00
-VIAddVersionKey ProductName "MHV AVR Tools"
+VIProductVersion 2014.05.01.00
+VIAddVersionKey ProductName "Inferno AVR Tools"
 VIAddVersionKey ProductVersion "${VERSION}"
 VIAddVersionKey CompanyName "${COMPANY}"
 VIAddVersionKey CompanyWebsite "${URL}"
@@ -105,26 +105,26 @@ Section -Main SEC0000
     SetOutPath $INSTDIR
     SetOverwrite on
     File /r C:\mhvavrtools\mhvavrtools\mhvavrtools\*
-    WriteRegStr HKLM "SOFTWARE\Free Software Foundation\MHV-AVR-Tools" GCC $INSTDIR
-    WriteRegStr HKLM "SOFTWARE\Free Software Foundation\MHV-AVR-Tools" BINUTILS $INSTDIR
-    WriteRegStr HKLM "SOFTWARE\Free Software Foundation\MHV-AVR-Tools" G++ $INSTDIR
+    WriteRegStr HKLM "SOFTWARE\Free Software Foundation\Inferno-AVR-Tools" GCC $INSTDIR
+    WriteRegStr HKLM "SOFTWARE\Free Software Foundation\Inferno-AVR-Tools" BINUTILS $INSTDIR
+    WriteRegStr HKLM "SOFTWARE\Free Software Foundation\Inferno-AVR-Tools" G++ $INSTDIR
     WriteRegStr HKLM "${REGKEY}\Components" Main 1
 
     FileOpen $9 "avrvars.bat" W
     FileWrite $9 "@echo off$\r$\n"
-    FileWrite $9 "echo Setting up environment for MHV AVR Tools ${VERSION}$\r$\n"
-    FileWrite $9 "title MHV AVR Tools ${VERSION}$\r$\n"
+    FileWrite $9 "echo Setting up environment for Inferno AVR Tools ${VERSION}$\r$\n"
+    FileWrite $9 "title Inferno AVR Tools ${VERSION}$\r$\n"
     FileWrite $9 "set USE_SMATCH=$use_smatch$\r$\n$\r$\n"
-    FileWrite $9 "set MHVAVRTOOLS=$INSTDIR$\r$\n$\r$\n"
+    FileWrite $9 "set INFERNOAVRTOOLS=$INSTDIR$\r$\n$\r$\n"
     FileWrite $9 "$\r$\n"
-    FileWrite $9 "set PATH=%MHVAVRTOOLS%\bin;%PATH%$\r$\n"
-    FileWrite $9 "set INCLUDE=%MHVAVRTOOLS%\include;%MHVAVRTOOLS%\avr\include$\r$\n"
-    FileWrite $9 "set CC=%MHVAVRTOOLS%\bin\avr-gcc$\r$\n"
+    FileWrite $9 "set PATH=%INFERNOAVRTOOLS%\bin;%PATH%$\r$\n"
+    FileWrite $9 "set INCLUDE=%INFERNOAVRTOOLS%\include;%INFERNOAVRTOOLS%\avr\include$\r$\n"
+    FileWrite $9 "set CC=%INFERNOAVRTOOLS%\bin\avr-gcc$\r$\n"
     FileWrite $9 "$\r$\n"
     FileWrite $9 "if  not $\"1$\" == $\"%USE_SMATCH%$\" goto nosmatch$\r$\n"
-    FileWrite $9 "set REAL_CC=%MHVAVRTOOLS%\bin\avr-gcc.exe$\r$\n"
-    FileWrite $9 "set CHECK=%MHVAVRTOOLS%\bin\smatch.exe --full-path$\r$\n"
-    FileWrite $9 "set CC=%MHVAVRTOOLS%\bin\cgcc$\r$\n"
+    FileWrite $9 "set REAL_CC=%INFERNOAVRTOOLS%\bin\avr-gcc.exe$\r$\n"
+    FileWrite $9 "set CHECK=%INFERNOAVRTOOLS%\bin\smatch.exe --full-path$\r$\n"
+    FileWrite $9 "set CC=%INFERNOAVRTOOLS%\bin\cgcc$\r$\n"
     FileWrite $9 "$\r$\n"
     FileWrite $9 ":end$\r$\n"
     FileWrite $9 "set USE_SMATCH=$\r$\n"
@@ -139,7 +139,7 @@ Section -post SEC0001
     SetOutPath $SMPROGRAMS\$StartMenuGroup
     CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Uninstall $(^Name).lnk" $INSTDIR\uninstall.exe
     SetOutPath $PROFILE
-    CreateShortCut "$SMPROGRAMS\$StartMenuGroup\MHV AVR Shell.lnk" "cmd.exe" "/k $\"$INSTDIR\avrvars.bat$\""
+    CreateShortCut "$SMPROGRAMS\$StartMenuGroup\Inferno AVR Shell.lnk" "cmd.exe" "/k $\"$INSTDIR\avrvars.bat$\""
     !insertmacro MUI_STARTMENU_WRITE_END
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayName "$(^Name)"
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayVersion "${VERSION}"
@@ -167,9 +167,9 @@ done${UNSECTION_ID}:
 
 # Uninstaller sections
 Section /o -un.Main UNSEC0000
-    DeleteRegValue HKLM "SOFTWARE\Free Software Foundation\MHV-AVR-Tools" GCC
-    DeleteRegValue HKLM "SOFTWARE\Free Software Foundation\MHV-AVR-Tools" BINUTILS
-    DeleteRegValue HKLM "SOFTWARE\Free Software Foundation\MHV-AVR-Tools" G++
+    DeleteRegValue HKLM "SOFTWARE\Free Software Foundation\Inferno-AVR-Tools" GCC
+    DeleteRegValue HKLM "SOFTWARE\Free Software Foundation\Inferno-AVR-Tools" BINUTILS
+    DeleteRegValue HKLM "SOFTWARE\Free Software Foundation\Inferno-AVR-Tools" G++
 
     RmDir /r /REBOOTOK $INSTDIR
     DeleteRegValue HKLM "${REGKEY}\Components" Main

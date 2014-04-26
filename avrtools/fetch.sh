@@ -93,12 +93,12 @@ test -d simavr && ( \
 	) || \
 	"$GIT" clone git://gitorious.org/simavr/simavr.git &
 
-test -d mhvlib && ( \
-		cd mhvlib
+test -d flame && ( \
+		cd flame
 		"$GIT" pull
 		cd ..
 	) || \
-	"$GIT" clone http://git.makehackvoid.com/mhvlib.git &
+	"$GIT" clone http://git.infernoembedded.com/flame.git &
 
 test -d smatch && ( \
 		cd smatch

@@ -50,7 +50,7 @@ test -f config.log || {
 #			../gcc-${GCC_VERSION}/configure --prefix=$PREFIX --host=i686-pc-mingw32 --target=avr \
 			../gcc-${GCC_VERSION}/configure --prefix=$PREFIX --target=avr \
 			       --enable-languages=c,c++ --with-dwarf2 \
-			       -enable-win32-registry=MHV-AVR-Tools \
+			       -enable-win32-registry=Inferno-AVR-Tools \
 				   --enable-lto \
 			        --with-avrlibc=yes \
 			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \

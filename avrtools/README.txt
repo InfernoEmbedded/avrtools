@@ -20,4 +20,5 @@ The tools were built using:
 MinGW/MSYS        http://www.mingw.org
 
 For an efficiency-oriented runtime library, we recommend:
-MHVLib            http://www.makehackvoid.com/mhvlib
+Flame            https://infernoembedded.com/products/flame-runtime
+
