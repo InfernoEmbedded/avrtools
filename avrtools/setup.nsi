@@ -1,4 +1,4 @@
-Name "MHV AVR Tools"
+Name "Inferno AVR Tools"
 
 SetCompressor /SOLID lzma
 SetCompressorDictSize 128
@@ -68,7 +68,7 @@ Section "Enable SMATCH" smatch
     StrCpy $use_smatch "1"
 SectionEnd
 
-Section "Add MHV AVR Tools to the system path"
+Section "Add Inferno AVR Tools to the system path"
     ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\bin"
 #    ${EnvVarUpdate} $0 "INCLUDE" "A" "HKLM" "$INSTDIR\include"
 SectionEnd
@@ -104,7 +104,7 @@ LangString DESC_smatch ${LANG_ENGLISH} "Smatch provides additional compile time 
 Section -Main SEC0000
     SetOutPath $INSTDIR
     SetOverwrite on
-    File /r C:\mhvavrtools\mhvavrtools\mhvavrtools\*
+    File /r C:\avrtools\avrtools\avrtools\*
     WriteRegStr HKLM "SOFTWARE\Free Software Foundation\Inferno-AVR-Tools" GCC $INSTDIR
     WriteRegStr HKLM "SOFTWARE\Free Software Foundation\Inferno-AVR-Tools" BINUTILS $INSTDIR
     WriteRegStr HKLM "SOFTWARE\Free Software Foundation\Inferno-AVR-Tools" G++ $INSTDIR

@@ -10,10 +10,11 @@ mkdir bin
 echod Extracting native toolchain
 mkdir native
 cd native
-tar jxf ../../download/binutils*.bz2
+tar zxf ../../download/gawk*.gz
 tar jxf ../../download/gmp*.bz2
 tar jxf ../../download/mpfr*.bz2
 tar zxf ../../download/mpc*.tar.gz
+cp -R ../../download/binutils-gdb binutils-gdb
 cd ..
 
 for file in ../download/*.bz2 ../download/gcc-4.7-binary/*.bz2; do
@@ -48,6 +49,7 @@ cp -R ../download/smatch smatch
 cp -R ../download/flame flame
 cp -R ../download/simavr simavr
 cp -R ../download/avr-libc avr-libc
+cp -R ../download/binutils-gdb binutils-gdb
 
 cd binutils-${BINUTILS_VERSION}
 for file in ../../patches/binutils-*.patch; do
@@ -73,7 +75,7 @@ cd ..
 #done
 #cd ..
 
-cd gmp-${GMP_VERSION}
+cd gmp-*
 for file in ../../patches/gmp-*.patch; do
 	echod Patching with $file
 	patch -p0 < $file || \

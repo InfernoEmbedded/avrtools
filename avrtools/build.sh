@@ -23,6 +23,9 @@ test -e build/native/bin/gcc || (
 			die "coreutils build failed"			
 	}
 
+	./build-gawk-native.sh || \
+		die "gmp build failed"
+
 	./build-gmp-native.sh || \
 		die "gmp build failed"
 

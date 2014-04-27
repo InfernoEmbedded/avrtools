@@ -13,13 +13,14 @@ test -d download || \
 	mkdir download
 
 cd download
-#$FETCH http://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-${GCC_VERSION}.tar.bz2 &
+$FETCH http://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-${GCC_VERSION}.tar.bz2 &
 # Use for GCC snapshot
-$FETCH http://gcc.parentingamerica.com/snapshots/${GCC_VERSION}/gcc-${GCC_VERSION}.tar.bz2 &
+#$FETCH http://gcc.parentingamerica.com/snapshots/${GCC_VERSION}/gcc-${GCC_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/make/make-${MAKE_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/gmp/gmp-${GMP_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/mpfr/mpfr-${MPFR_VERSION}.tar.bz2 &
 $FETCH http://ftp.gnu.org/gnu/gdb/gdb-${GDB_VERSION}.tar.bz2 &
+$FETCH http://ftp.gnu.org/gnu/gawk/gawk-${GAWK_VERSION}.tar.gz &
 $FETCH http://www.multiprecision.org/mpc/download/mpc-${MPC_VERSION}.tar.gz &
 $FETCH ftp://gcc.gnu.org/pub/gcc/infrastructure/isl-${ISL_VERSION}.tar.bz2 &
 $FETCH ftp://gcc.gnu.org/pub/gcc/infrastructure/cloog-${CLOOG_VERSION}.tar.gz &
@@ -77,7 +78,7 @@ test ! -f "$GIT" && \
 test ! -f "$GIT" && \
 	die "git not found"
 
-SVN="`which SVN`"
+SVN="`which svn`"
 
 #test -d ppl || \
 #	"$GIT" clone git://git.cs.unipr.it/ppl/ppl.git &
@@ -111,6 +112,12 @@ test -d avr-libc && ( \
 		"$SVN" update
 	) || \
 	"$SVN" co svn://svn.sv.gnu.org/avr-libc/trunk/avr-libc  &
+
+test -d binutils-gdb && ( \
+		cd binutils-gdb
+		"$GIT" pull
+	) || \
+	"$GIT" clone git://sourceware.org/git/binutils-gdb.git &
 
 wait
 
