@@ -11,7 +11,7 @@ cd build/native/mpfr-${MPFR_VERSION} || \
 
 test -f config.log || {
 	./configure --prefix=$NATIVEPREFIX --with-gmp-build=$BUILD/native/gmp-${GMP_VERSION} \
-	   --enable-static --disable-shared >$LOGS/mpfr-config-native.log 2>&1 || \
+	   >$LOGS/mpfr-config-native.log 2>&1 || \
 		die "Could not configure MPFR ${MPFR_VERSION}"
 }
 

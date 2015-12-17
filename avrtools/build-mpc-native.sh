@@ -10,7 +10,7 @@ cd build/native/mpc-${MPC_VERSION} || \
 	die "Could not CD to build/mpc-${MPC_VERSION}"
 
 test -f config.log || {
-	./configure --prefix=$NATIVEPREFIX --enable-static --disable-shared \
+	./configure --prefix=$NATIVEPREFIX \
 	--with-mpfr-include=$NATIVEPREFIX/include \
 	--with-gmp-include=$NATIVEPREFIX/include >$LOGS/mpc-config.log 2>&1 || \
 		die "Could not configure MPC ${MPC_VERSION}"

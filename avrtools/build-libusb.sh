@@ -8,7 +8,7 @@ case `uname` in
 	Darwin)
 		echod "Building libusb ${LIBUSB_VERSION}"
 
-		cd build/libusbx-${LIBUSB_VERSION} || \
+		cd build/libusb-${LIBUSB_VERSION} || \
 			die "Could not CD to build/libusb-$LIBUSB_VERSION"
 
 		test -f config.log || {
@@ -16,7 +16,7 @@ case `uname` in
 				die "Could not configure libusb $LIBUSB_VERSION"
 		}
 
-		$MAKE $MAKEFLAGS >$LOGS/libusb-make.log 2>&1 || \
+		$MAKE >$LOGS/libusb-make.log 2>&1 || \
         		die "Could not build libusb ${LIBUSB_VERSION}"
 
 		$MAKE install >$LOGS/libusb-install.log 2>&1 || \
@@ -25,7 +25,7 @@ case `uname` in
 	Linux)
 		echod "Building libusb ${LIBUSB_VERSION}"
 
-		cd build/libusbx-${LIBUSB_VERSION} || \
+		cd build/libusb-${LIBUSB_VERSION} || \
 			die "Could not CD to build/libusb-$LIBUS_VERSION"
 
 		test -f config.log || {
@@ -33,7 +33,7 @@ case `uname` in
 				die "Could not configure libusb $LIBUSB_VERSION"
 		}
 
-		$MAKE $MAKEFLAGS >$LOGS/libusb-make.log 2>&1 || \
+		$MAKE  >$LOGS/libusb-make.log 2>&1 || \
         		die "Could not build libusb ${LIBUSB_VERSION}"
 
 		$MAKE install >$LOGS/libusb-install.log 2>&1 || \

@@ -28,7 +28,7 @@ test -f config.log || {
 			       --enable-lto \
 			        --with-avrlibc=yes \
 			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
-				--with-ppl=$LIBPREFIX --with-cloog=$LIBPREFIX --with-isl=$LIBPREFIX \
+				--with-ppl=$LIBPREFIX --with-isl=$LIBPREFIX \
 					--disable-isl-version-check $GCCCONFIGFLAGS \
 			       --disable-libssp --disable-multilib >$LOGS/gcc-config.log 2>&1 || \
 					die "Could not configure GCC ${GCC_VERSION}"
@@ -40,7 +40,7 @@ test -f config.log || {
 			       --enable-lto \
 			        --with-avrlibc=yes \
 			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
-					--with-ppl=$LIBPREFIX --with-cloog=$LIBPREFIX --with-isl=$LIBPREFIX \
+					--with-ppl=$LIBPREFIX --with-isl=$LIBPREFIX \
 					--disable-isl-version-check $GCCCONFIGFLAGS \
 			       --disable-libssp --disable-multilib >$LOGS/gcc-config.log 2>&1 || \
 					die "Could not configure GCC ${GCC_VERSION}"
@@ -54,7 +54,7 @@ test -f config.log || {
 				   --enable-lto \
 			        --with-avrlibc=yes \
 			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
-					--with-ppl=$LIBPREFIX --with-cloog=$LIBPREFIX --with-isl=$LIBPREFIX \
+					--with-ppl=$LIBPREFIX --with-isl=$LIBPREFIX \
 					--disable-isl-version-check $GCCCONFIGFLAGS \
 			       --disable-libssp --disable-multilib >$LOGS/gcc-config.log 2>&1 || \
 					die "Could not configure GCC ${GCC_VERSION}"

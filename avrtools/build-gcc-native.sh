@@ -40,20 +40,19 @@ test -f config.log || {
 			       --enable-lto \
 			       --with-gmp=$NATIVEPREFIX --with-mpfr=$NATIVEPREFIX --with-mpc=$NATIVEPREFIX \
                                --with-binutils=$NATIVEPREFIX \
-                               --without-cloog \
                                --without-ppl \
 			       --disable-libssp --disable-multilib --disable-shared >$LOGS/gcc-config-native.log 2>&1 || \
 					die "Could not configure Native GCC ${GCC_VERSION}"
 			;;
 		Linux)
 			export PATH="$NATIVEPREFIX/bin:$PATH"
-#			export CFLAGS="-fvisibility=hidden"
+#			export CFLAGS="-fvisibility=hidden -fPIC"
 			../../gcc-${GCC_VERSION}/configure --prefix=$NATIVEPREFIX \
 			       --enable-languages=c,c++ \
 			       --enable-lto \
 			       --with-gmp=$NATIVEPREFIX --with-mpfr=$NATIVEPREFIX --with-mpc=$NATIVEPREFIX \
-                               --with-binutils=$NATIVEPREFIX \
-			       --disable-libssp --disable-multilib --disable-shared >$LOGS/gcc-config-native.log 2>&1 || \
+                               --with-binutils=$NATIVEPREFIX >$LOGS/gcc-config-native.log 2>&1 || \
+#			       --disable-libssp --disable-multilib --disable-shared >$LOGS/gcc-config-native.log 2>&1 || \
 					die "Could not configure Native GCC ${GCC_VERSION}"
 			;;
 		*)

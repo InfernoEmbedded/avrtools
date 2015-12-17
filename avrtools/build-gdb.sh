@@ -13,7 +13,7 @@ echo LDFLAGS="$LDFLAGS"
 	
 test -f config.status || {
 	./configure $GDBCONFIGFLAGS --target=avr --prefix=$PREFIX --with-mpc=$LIBPREFIX --with-mpfr=$LIBPREFIX \
-		--with-gmp=$LIBPREFIX --with-cloog=$LIBPREFIX >$LOGS/gdb-config.log 2>&1 || \
+		--with-gmp=$LIBPREFIX >$LOGS/gdb-config.log 2>&1 || \
 			die "Could not configure GDB ${GDB_VERSION}"
 }
 

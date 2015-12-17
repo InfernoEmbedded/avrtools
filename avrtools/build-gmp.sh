@@ -10,7 +10,7 @@ cd build/gmp-* || \
 	die "Could not CD to build/gmp-${GMP_VERSION}"
 
 test -f config.log || {
-	./configure --prefix=$LIBPREFIX --enable-cxx --enable-static --disable-shared \
+	./configure --prefix=$LIBPREFIX --enable-cxx --enable-static \
 	   >$LOGS/gmp-config.log 2>&1 || \
 		die "Could not configure GMP ${GMP_VERSION}"
 }

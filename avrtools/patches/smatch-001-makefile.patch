@@ -1,12 +1,24 @@
---- smatch/Makefile.orig	2012-05-12 11:16:10 +1000
-+++ smatch/Makefile	2012-05-12 13:45:37 +1000
-@@ -1,11 +1,11 @@
- VERSION=0.4.4
+--- smatch/Makefile.orig	2015-07-29 11:08:38.441896696 +1000
++++ smatch/Makefile	2015-07-29 15:12:01.345521886 +1000
+@@ -8,14 +8,23 @@
+ $(shell echo '#define SPARSE_VERSION "$(SPARSE_VERSION)"' > version.h)
+ endif
  
 -OS = linux
++ifeq ($(OS),Windows_NT)
 +OS = mingw
++else
++UNAME_S := $(shell uname -s)
++ifeq ($(UNAME_S),Darwin)
++OS = bsd
++else
++OS = linux 
++endif
++endif
  
+ ifeq ($(CC),"")
  CC = gcc
+ endif
 -CFLAGS = -O2 -finline-functions -fno-strict-aliasing -g
 -CFLAGS += -Wall -Wwrite-strings
 -LDFLAGS += -g -lm -lsqlite3
@@ -15,8 +27,8 @@
 +LDFLAGS += -lm -lsqlite3
  LD = gcc
  AR = ar
- 
-@@ -33,7 +33,6 @@
+ PKG_CONFIG = pkg-config
+@@ -47,7 +56,6 @@
  endif
  
  DESTDIR=
@@ -24,7 +36,7 @@
  BINDIR=$(PREFIX)/bin
  LIBDIR=$(PREFIX)/lib
  MANDIR=$(PREFIX)/share/man
-@@ -187,7 +186,7 @@
+@@ -211,7 +219,7 @@
  	$(QUIET_LINK)$(LD) -o $@ $^ $($@_EXTRA_OBJS) $(LDFLAGS)
  
  smatch: smatch.o $(SMATCH_FILES) $(SMATCH_CHECKS) $(LIBS) 

@@ -14,7 +14,11 @@ tar zxf ../../download/gawk*.gz
 tar jxf ../../download/gmp*.bz2
 tar jxf ../../download/mpfr*.bz2
 tar zxf ../../download/mpc*.tar.gz
+#tar jxf ../../download/binutils*.tar.bz2
 cp -R ../../download/binutils-gdb binutils-gdb
+if [ $GMP_VERSION = '6.0.0a' ] ; then
+	ln -s gmp-6.0.0 gmp-6.0.0a
+fi
 cd ..
 
 for file in ../download/*.bz2 ../download/gcc-4.7-binary/*.bz2; do
@@ -82,6 +86,10 @@ for file in ../../patches/gmp-*.patch; do
 		die "Patch failed"
 done
 cd ..
+
+if [ $GMP_VERSION = '6.0.0a' ] ; then
+	ln -s gmp-6.0.0 gmp-6.0.0a
+fi
 
 cd smatch
 for file in ../../patches/smatch-*.patch; do
