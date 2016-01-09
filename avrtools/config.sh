@@ -50,12 +50,12 @@ case `uname` in
 		case `uname -m` in
 			i686)
 				export ABI=32
-				export CFLAGS="-march=atom -flto -O2"
-				export CXXFLAGS="-march=atom -flto -O2"
+				export CFLAGS="-march=atom -O2"
+				export CXXFLAGS="-march=atom -O2"
 				;;
 			*)
-				export CFLAGS="-march=corei7 -flto -O2"
-				export CXXFLAGS="-march=corei7 -flto -O2"
+				export CFLAGS="-march=corei7 -O2"
+				export CXXFLAGS="-march=corei7 -O2"
 				;;
 			esac
 		export EXE=
@@ -151,13 +151,16 @@ bootstrap() {
 
 	export CFLAGS="$CFLAGS -I$PREFIX/include -I$LIBPREFIX/include"
 	export CXXFLAGS="$CXXFLAGS -I$PREFIX/include -I$LIBPREFIX/include"
-	export LDFLAGS="-flto -L$PREFIX/lib -L$LIBPREFIX/lib -static-libgcc -static-libstdc++"
+	export LDFLAGS="-L$PREFIX/lib -L$LIBPREFIX/lib -static-libgcc -static-libstdc++"
 	export CC="$NATIVEPREFIX/bin/gcc"
 	export CXX="$NATIVEPREFIX/bin/g++"
 	export LD="$NATIVEPREFIX/bin/ld"
 	export PATH="$NATIVEPREFIX/bin:$PATH"
 	
 	case $product in
+	libelf)
+	    CFLAGS="$CFLAGS -fPIC"
+	    ;;
 	libusb)
 		case `uname` in
 			Darwin)
