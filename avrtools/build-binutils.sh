@@ -13,7 +13,7 @@ mkdir obj-avr
 cd obj-avr
 
 test -f config.status || {
-	../configure --target=avr --disable-werror --enable-lto --prefix=$PREFIX --with-mpc=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-gmp=$LIBPREFIX >$LOGS/binutils-config.log 2>&1 || \
+	../configure --target=avr --disable-werror --prefix=$PREFIX --with-mpc=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-gmp=$LIBPREFIX --disable-gdb --enable-lto >$LOGS/binutils-config.log 2>&1 || \
 		die "Could not configure BINUTILS ${BINUTILS_VERSION}"
 }
 

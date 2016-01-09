@@ -37,7 +37,7 @@ test -f config.log || {
 			export CFLAGS="-fvisibility=hidden"
 			../gcc-${GCC_VERSION}/configure --prefix=$PREFIX --target=avr \
 			       --enable-languages=c,c++ --with-dwarf2 \
-			       --enable-lto \
+			       --disable-shared --enable-static \
 			        --with-avrlibc=yes \
 			       --with-gmp=$LIBPREFIX --with-mpfr=$LIBPREFIX --with-mpc=$LIBPREFIX \
 					--with-ppl=$LIBPREFIX --with-isl=$LIBPREFIX \

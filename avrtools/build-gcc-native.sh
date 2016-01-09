@@ -29,6 +29,7 @@ cd gcc-native || \
 	die "Could not cd to gcc-native"
 
 GCCDIR=$BUILD/gcc-${GCC_VERSION}
+CFLAGS="$CFLAGS -fPIC"
 
 
 test -f config.log || {
@@ -51,8 +52,8 @@ test -f config.log || {
 			       --enable-languages=c,c++ \
 			       --enable-lto \
 			       --with-gmp=$NATIVEPREFIX --with-mpfr=$NATIVEPREFIX --with-mpc=$NATIVEPREFIX \
-                               --with-binutils=$NATIVEPREFIX >$LOGS/gcc-config-native.log 2>&1 || \
-#			       --disable-libssp --disable-multilib --disable-shared >$LOGS/gcc-config-native.log 2>&1 || \
+                               --with-binutils=$NATIVEPREFIX \
+			       --disable-libssp --disable-multilib >$LOGS/gcc-config-native.log 2>&1 || \
 					die "Could not configure Native GCC ${GCC_VERSION}"
 			;;
 		*)
